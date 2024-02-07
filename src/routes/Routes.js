@@ -5,6 +5,7 @@ import {
   Routes
 } from "react-router-dom";
 import Home from '../views//Home'
+import Login from "../views/Login";
 export default function Routing() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -23,6 +24,7 @@ export default function Routing() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={Login} />
 
           {/* {
             !loading && isLoggedIn ? (
