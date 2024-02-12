@@ -1,0 +1,79 @@
+/* * {
+  font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans",
+  Garamond,serif,
+  "Helvetica Neue", Arial, sans-serif;
+  } */
+
+  input::placeholder {
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans",
+      "Helvetica Neue", Arial, sans-serif !important;
+  }
+  
+  body{
+    --primary-color: #68942c;
+    margin: 0;
+    background-color: #F5F5F5;
+  }
+
+  .btn-primary {
+    background-color: #35482e !important;
+    border: #d3d3d3 !important;
+    &:hover {
+      background-color: #b5d9a3 !important;
+    }
+  }
+  
+  
+  
+  .login {
+    background-color: #F5F5F5;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .login-form {
+      height: 700px;
+      background-color: var(--primary-color);
+      width: 600px;
+      border: 2px solid #000000;
+      border-radius: 50px;
+      padding: 0px 20px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      .img-holder {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        .img-sdc {
+          aspect-ratio: 2 / 2;
+          height: 300px;
+          width: 300px;
+        }
+      }
+      .lgn-txt {
+        margin-top: 10px;
+        font-size: 40px;
+        font-weight: 500;
+      }
+      .form-holder {
+        max-width: 400px;
+        margin: 0 auto;
+        .form-control {
+          height: 50px;
+          border-radius: 0px;
+        }
+      }
+      .btn-holder {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        .login-btn {
+          background-color: black !important;
+          border-radius: 0px;
+          width: 200px;
+          height: 50px;
+        }
+      }
+    }
+  }
+
+  

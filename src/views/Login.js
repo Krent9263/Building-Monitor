@@ -1,49 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Container, Row, Form, Button } from "react-bootstrap";
+import SDC from "../assets/images/SDC.png";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("@deped.com.ph");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!email || !password) {
-      setError('Please enter both email and password');
-      return;
+    if (email === "example@deped.com" && password === "password") {
+      alert("Login successful!");
+    } else {
+      alert("Invalid email or password");
     }
-    console.log('Email:', email);
-    console.log('Password:', password);
+  };
 
-    setEmail('');
-    setPassword('');
-    setError('');
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <Container fluid className="login">
+      <div className="login-form">
+        <Row>
+          <div className="img-holder mt-3">
+            <img src={SDC} alt="" className="img-sdc" />
+          </div>
+          <div className="text-center lgn-txt">
+            <p>Login</p>
+          </div>
+          <Form onSubmit={handleSubmit}>
+            <div className="form-holder">
+              <Form.Label>EMAIL</Form.Label>
+              <Form.Control
+                type="email"
+                className="form-control"
+                placeholder="Enter email"
+                value={email}
+                onChange={handleEmailChange}
+              />
+
+              <Form.Label className="mt-3">PASSWORD</Form.Label>
+                <Form.Control
+                  type={showPassword ? "text" : "password"}
+                  className="form-control"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+            </div>
+            <div className="btn-holder">
+              <Button type="submit" className="login-btn">
+                Login
+              </Button>
+            </div>
+          </Form>
+        </Row>
+      </div>
+    </Container>
   );
 };
 
