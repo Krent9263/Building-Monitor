@@ -1,44 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 import {
-  BrowserRouter,
+  BrowserRouter as Router,
+  Switch,
   Route,
-  Routes
+  Redirect
 } from "react-router-dom";
-import Home from '../views//Home'
-import Login from "../views/Login";
+import Login from '../views/Login'
+import Home from "../views/Home";
+import AuthRoute from "../routes/components/AuthRoute";
+import PrivateRoute from "../routes/components/PrivateRoute"
+
+
+
+
+
 export default function Routing() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(false)
+  const userContext = useContext(UserContext);
+  const {refreshUser, user, loading} = userContext.data
 
   useEffect(() => {
-    const token = window.localStorage.getItem("token")
-    console.log({token})
-    if(token != null){
-      setIsLoggedIn(true)
-      setLoading(false)
-    }
+    refreshUser()
   }, [])
+
+  console.log('user:', user)
+
+
+
 
   return (
     <div className="content">
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/login' element={Login} />
+      <Router>
+          {loading ? <></> :
+                  <Switch>
+                    <AuthRoute path='/' exact component={Login} />
+                    <PrivateRoute path='/home' exact component={Home} />
+                    {/* <Route path='/' exact component={Login}/> */}
 
-          {/* {
-            !loading && isLoggedIn ? (
-              <>
-                <Route path='/home' element={<Home/>}/>
-              </>
-            ) : (
-              <>
-                <Route path='/home' element={<Home/>}/>
-              </>
-            )
-          } */}
-        </Routes>
-      </BrowserRouter>
+
+                </Switch>
+          }
+        </Router>
     </div>
   );
 }

@@ -1,9 +1,15 @@
 import React from "react";
 import Routes from "../src/routes/Routes";
-import Login from "./views/Login";
+import UserContextProvider from "./context/UserContext";
+import { ToastContainer } from 'react-toastify';
+
+
 
 export default function App() {
   return (
-      <Login />
+    <UserContextProvider >
+    <Routes/>
+    <ToastContainer />
+  </UserContextProvider>
   );
 }
