@@ -10,6 +10,7 @@ import Login from '../views/Login'
 import Home from "../views/Home";
 import AuthRoute from "../routes/components/AuthRoute";
 import PrivateRoute from "../routes/components/PrivateRoute"
+import QRScreen from "../views/QRScreen";
 
 
 
@@ -36,7 +37,7 @@ export default function Routing() {
                   <Switch>
                     <AuthRoute path='/' exact component={Login} />
                     <PrivateRoute path='/home' exact component={Home} />
-                    {/* <Route path='/' exact component={Login}/> */}
+                    <PrivateRoute path='/qrscreen' exact component={QRScreen}/>
 
 
                 </Switch>

@@ -12,8 +12,8 @@ function Home() {
   }
 
   return (
-    <div className=''>HARU
-      <Button   onClick={logout} >
+    <div className=''>
+      <Button onClick={logout} >
         Logout
       </Button>
     </div>
