@@ -168,7 +168,7 @@
       align-items: center;
       padding: 10px 30px;
       border-width: 0px 0px 2px 0px;
-      justify-content: space-between;
+      // justify-content: space-between;
       .logo {
         display: flex;
         align-items: center;
@@ -181,6 +181,10 @@
           font-weight: 900;
           letter-spacing: 1px;
         }
+      }
+      .menu {
+        width: 20px;
+        margin-right: 30px;
       }
       .lg-container {
         display: flex;
