@@ -7,7 +7,20 @@ export default function MainDashboard() {
   return (
     <Container fluid className="main-dashboard">
       <Row className="row-1">
-        <div>123</div>
+        <Col className="display-total" sm={12} md={6}>
+          <div className="total">45</div>
+          <div className="total-text">
+            <span>Total Employees</span> <br />
+            <span>Inside the Office</span>
+          </div>
+        </Col>
+        <Col className="display-total">
+          <div className="total">45</div>
+          <div className="total-text">
+            <span>Total Employees</span> <br />
+            <span>Outside the Office</span>
+          </div>
+        </Col>
       </Row>
       <Row className="row-2">
         <div className="sdo-department">
