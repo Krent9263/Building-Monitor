@@ -10,13 +10,13 @@ export default function Header() {
 
   return (
     <div className="header">
-			<div className="logo">
-      <img className="img" src={SchoolLogo} alt="" />
-      <h2>Project Name</h2>
-			</div>
-			<div>
-				<Button onClick={logout}>Logout</Button>
-			</div>
+      <div className="logo">
+        <img className="img" src={SchoolLogo} alt="" />
+        <h2>Project Name</h2>
+      </div>
+      <div>
+        <Button onClick={logout}>Logout</Button>
+      </div>
     </div>
   );
 }

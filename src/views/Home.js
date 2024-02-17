@@ -1,22 +1,23 @@
 import "../assets/index.scss";
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Header from "./Components/Header";
+import MainDashboard from "./Components/MainDashboard";
+import History from "./Components/History";
 
 function Home() {
-
   return (
     <Container fluid className="dashboard">
-      <div class="grid-container">
-        <div class="item1">
-          <Header />
-        </div>
-        <div class="item2">Menu</div>
-        <div class="item3">Main</div>
-        <div class="item4">Right</div>
-      </div>
-
-      
+      <Row>
+        <Header />
+      </Row>
+      <Row>
+        <Col>SIDE NAV</Col>
+        <Col sm={12} md={12} lg={12} xl={7}><MainDashboard /> </Col>
+        <Col className="right-history" sm={12} md={12} lg={12} xl={3}>
+          <History />
+        </Col>
+      </Row>
     </Container>
   );
 }
