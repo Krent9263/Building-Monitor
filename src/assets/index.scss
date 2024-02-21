@@ -427,30 +427,103 @@
     }
   }
 
-  // .container{
-  //   display:flex;
-  //   .sidebar{
-  //     background: #000;
-  //     color: #fff;
-  //     height: 100vh;
-  //     width: 200px;
-  //     transition: all 0.5s;
-  //     .logo{
-  //       font-size: 30px;
-  //     }
-  //     .bars{
-  //       display: flex;
-  //       font-size: 25px;
-  //       margin-left: 50px;
-  //     }
-  //     .link{
-  //       display: flex;
-  //       color: #fff;
-  //       padding: 10px 15px;
-  //       gap: 15px;
-  //       transition: all 0.5s;
-  //     }
-  //   }
-  // }
+  .reports {
+    .dept-name {
+      font-size: 36px;
+      text-align: center;
+      font-weight: 500;
+      letter-spacing: 3px;
+      // color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    .reports-header {
+      display: flex !important;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      .filter {
+        display: flex;
+        gap: 10px;
+        font-size: 15px;
+        // color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        border-radius: 5px;
+        padding: 0px 10px;
+        height: 36.5px;
+        align-items: center;
+        cursor: pointer;
+        .f-img {
+          width: 20px;
+        }
+      }
+      .btn-group-header {
+        gap: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        .btn-r {
+          background-color: transparent !important;
+          border: 1px solid var(--primary-color) !important;
+          font-size: 15px !important;
+          color: #000000;
+          &:focus {
+           box-shadow: none !important;
+          }
+        }
+        .searchbar {
+          height: 36.5px !important;
+          width: 300px;
+        }
+      }
+    }
+    
+    .table-container {
+      margin-top: 20px !important;
+      height: 70vh;
+      border: 1px solid var(--primary-color);
+      border-radius: 10px;
+      overflow: auto !important;
+    }
 
-  
+    .table-container thead th {
+      position: sticky;
+      top: 0;
+      padding-bottom: 10px !important;
+    }
+
+    thead,
+    th {
+      background: var(--primary-color) !important;
+      color: white !important;
+      height: 50px;
+    }
+  }
+
+
+  .form-control {
+    border: 1px solid var(--primary-color) !important;
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+  .form-select {
+    border: 1px solid var(--primary-color) !important;
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+  .input-group-text {
+    border: 1px solid var(--primary-color) !important;
+    background-color: transparent !important;
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+
+
+  th {
+    background: white;
+    position: sticky;
+    top: 0; /* Don't forget this, required for the stickiness */
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+  }

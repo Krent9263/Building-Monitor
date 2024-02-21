@@ -2,8 +2,11 @@ import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import SDC from "../../assets/images/SDC.png";
 import Depts from "../../assets/images/Depts.png";
+import { useHistory } from "react-router-dom";
 
 export default function MainDashboard() {
+  const history = useHistory();
+
   return (
     <Container fluid className="main-dashboard">
       <Row className="row-1">
@@ -29,7 +32,7 @@ export default function MainDashboard() {
               <img className="depts-logo" src={Depts} />
               SDO DEPARTMENTS
             </span>
-            <span className="see-all">See All Report</span>
+            <span className="see-all" onClick={() => history.push("/reports")}>See All Report</span>
           </span>
           <div className="departments">
             <div className="icon-holder">
