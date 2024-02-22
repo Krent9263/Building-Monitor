@@ -12,6 +12,9 @@ import AuthRoute from "../routes/components/AuthRoute";
 import PrivateRoute from "../routes/components/PrivateRoute";
 import QRScreen from "../views/QRScreen";
 import Reports from "../views/Reports";
+import Divisions from "../views/division/Divisions";
+import Offices from "../views/office/Offices";
+import Qrcodegen from "../views/QRCODE/Qrcodegen";
 
 export default function Routing() {
   // const [loading, setLoading] = useState(false)
@@ -35,6 +38,10 @@ export default function Routing() {
             <PrivateRoute path="/home" exact component={Home} />
             <PrivateRoute path="/qrscreen" exact component={QRScreen} />
             <PrivateRoute path="/reports" exact component={Reports} />
+            <PrivateRoute path="/divisions" exact component={Divisions} />
+            <PrivateRoute path="/divisions/office" exact component={Offices} />
+            <PrivateRoute path="/qrcode" exact component={Qrcodegen} />
+
           </Switch>
         )}
       </Router>

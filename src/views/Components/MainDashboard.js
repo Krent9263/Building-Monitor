@@ -30,9 +30,9 @@ export default function MainDashboard() {
           <span className="header-sdo">
             <span className="title-holder">
               <img className="depts-logo" src={Depts} />
-              SDO DEPARTMENTS
+              Division
             </span>
-            <span className="see-all" onClick={() => history.push("/reports")}>See All Report</span>
+            <span className="see-all" onClick={() => history.push("/divisions")}>See All Divison</span>
           </span>
           <div className="departments">
             <div className="icon-holder">
