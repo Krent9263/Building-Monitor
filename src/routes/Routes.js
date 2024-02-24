@@ -11,10 +11,10 @@ import Home from "../views/Home";
 import AuthRoute from "../routes/components/AuthRoute";
 import PrivateRoute from "../routes/components/PrivateRoute";
 import QRScreen from "../views/QRScreen";
-import Reports from "../views/Reports";
 import Divisions from "../views/division/Divisions";
 import Offices from "../views/office/Offices";
 import Qrcodegen from "../views/QRCODE/Qrcodegen";
+import Employee from "../views/employee/Employee";
 
 export default function Routing() {
   // const [loading, setLoading] = useState(false)
@@ -37,12 +37,10 @@ export default function Routing() {
             <AuthRoute path="/" exact component={Login} />
             <PrivateRoute path="/home" exact component={Home} />
             <PrivateRoute path="/qrscreen" exact component={QRScreen} />
-            <PrivateRoute path="/reports" exact component={Reports} />
             <PrivateRoute path="/divisions" exact component={Divisions} />
             <PrivateRoute path="/divisions/office" exact component={Offices} />
-            {/* <PrivateRoute path="/qrcode" exact component={Qrcodegen} /> */}
-            <Route path="/qrcode" exact component={Qrcodegen} />
-
+            <PrivateRoute path="/divisions/office/employees" exact component={Employee} />
+            <PrivateRoute path="/qrcode" exact component={Qrcodegen}/>
           </Switch>
         )}
       </Router>

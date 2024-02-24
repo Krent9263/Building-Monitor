@@ -1,7 +1,10 @@
 import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
-import SDC from "../../assets/images/SDC.png";
-import Depts from "../../assets/images/Depts.png";
+import CID from "../../assets/images/CID.png";
+import SGOD from "../../assets/images/SGOD.png";
+import OSDS from "../../assets/images/OSDS.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSitemap } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 
 export default function MainDashboard() {
@@ -29,22 +32,22 @@ export default function MainDashboard() {
         <div className="sdo-department">
           <span className="header-sdo">
             <span className="title-holder">
-              <img className="depts-logo" src={Depts} />
-              Division
+              <FontAwesomeIcon icon={faSitemap} className="dept-ficon" />
+              DIVISION
             </span>
-            <span className="see-all" onClick={() => history.push("/divisions")}>See All Divison</span>
+            <span className="see-all" onClick={() => history.push("/divisions")}>See all division</span>
           </span>
           <div className="departments">
             <div className="icon-holder">
-              <img className="icons" src={SDC} alt="" />
+              <img className="icons" src={CID} alt="" />
               <span className="titles">Office of the President</span>
             </div>
             <div className="icon-holder">
-              <img className="icons" src={SDC} alt="" />
+              <img className="icons" src={SGOD} alt="" />
               <span className="titles">Office of the President</span>
             </div>
             <div className="icon-holder">
-              <img className="icons" src={SDC} alt="" />
+              <img className="icons" src={OSDS} alt="" />
               <span className="titles">Office of the President</span>
             </div>
           </div>

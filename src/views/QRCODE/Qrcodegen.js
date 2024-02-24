@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import QRCode from 'qrcode';
 import { Button, Col, FloatingLabel, Form, Modal, Row } from 'react-bootstrap';
-import useScanDetection from 'use-scan-detection';
 
 const Qrcodegen = () => {
   const [url, setUrl] = useState()
@@ -17,11 +16,6 @@ const Qrcodegen = () => {
       setQrCodeText(url)
     })
   };
-
-  useScanDetection({
-    onComplete: setCodeValue,
-    minLength: 3,
-  })
 
   console.log('qrCodeText:' , qrCodeText)
 

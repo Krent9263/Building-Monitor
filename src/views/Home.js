@@ -1,20 +1,21 @@
 import "../assets/index.scss";
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Header from "./Components/Header";
-import MainDashboard from "./Components/MainDashboard";
-import History from "./Components/History";
-import SideNav from "./Components/SideNav";
+import Header from "./dashboard/Header";
+import MainDashboard from "./dashboard/MainDashboard";
+import History from "./dashboard/History";
+import SideBar from "../components/SideBar";
 
 function Home() {
   return (
     <Container fluid className="dashboard">
       <Row>
-        <Header />
+        <SideBar />
       </Row>
-      <Row>
-        <Col><SideNav /></Col>
-        <Col sm={12} md={12} lg={12} xl={7}><MainDashboard /> </Col>
+      <Row className="containers-dashboard">
+        <Col>
+          <MainDashboard />
+        </Col>
         <Col className="right-history" sm={12} md={12} lg={12} xl={3}>
           <History />
         </Col>
