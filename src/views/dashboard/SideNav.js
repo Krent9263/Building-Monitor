@@ -12,7 +12,6 @@ export default function SideNav() {
       name: "Dashboard",
     },
     {
-      path: "/divisions",
       name: "Division",
       submenu: [
         {
@@ -28,34 +27,32 @@ export default function SideNav() {
     {
       path: "/home",
       name: "Reports",
-    }
+    },
   ];
 
   const handleItemClick = (path) => {
-    history.push(path); // Navigate to the specified path
+    history.push(path);
   };
 
   const handleDivisionClick = (path) => {
-    setShowSubmenu(!showSubmenu); // Toggle the visibility of submenu
+    setShowSubmenu(!showSubmenu);
   };
 
   return (
     <div className="side-nav">
       {superAdmin.map((item, index) => (
-        <div key={index} className="titles" onClick={() => handleDivisionClick(item.path)}>
+        <Link key={index} className="titles">
           {item.name}
           {showSubmenu && item.submenu && (
             <div className="submenu">
               {item.submenu.map((subItem, subIndex) => (
                 <div key={subIndex}>
-                  <Link to={subItem.path} onClick={() => handleItemClick(subItem.path)}>
-                    {subItem.name}
-                  </Link>
+                  <Link to={subItem.path}>{subItem.name}</Link>
                 </div>
               ))}
             </div>
           )}
-        </div>
+        </Link>
       ))}
     </div>
   );

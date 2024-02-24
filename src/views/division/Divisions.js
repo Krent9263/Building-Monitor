@@ -6,6 +6,7 @@ import SideNav from '../dashboard/SideNav';
 import DvisionHeader from './components/DvisionHeader';
 import CreateDivisionModal from './components/CreateDivisionModal';
 import { useHistory } from "react-router-dom";
+import SideBar from '../../components/SideBar';
 
 
 function Divisions() {
@@ -21,21 +22,20 @@ function Divisions() {
     <Container fluid className="dashboard">
       <CreateDivisionModal showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal} />
       <Row>
-        <Header />
+        <SideBar />
       </Row>
-      <Row>
-        <Col><SideNav /></Col>
-        <Col sm={12} md={12} lg={12} xl={10}>
+      <Row className="containers-dashboard">
+        <Col>
           <div className="reports" >
             <DvisionHeader setShowCreateModal={setShowCreateModal} />
             <div className="table-container">
-              <Table striped bordered hover className='table' >
+              <Table striped bordered hover className='table'>
                 <thead>
                   <tr>
-                    <th>Division</th>
-                    <th>Divisions Description</th>
-                    <th>Total Employee</th>
-                    <th>Action </th>
+                    <th className='table-titles'>Division</th>
+                    <th className='table-titles'>Divisions Description</th>
+                    <th className='table-titles'>Total Employee</th>
+                    <th className='table-titles'>Action </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -43,19 +43,18 @@ function Divisions() {
                     <td>Division 1</td>
                     <td>Division OF THE PRESIDENT</td>
                     <td>120</td>
-                    <td>Add Personel<Button  onClick={() => handleViewOffice()} variant="primary">View</Button></td>
+                    <td className='act-grp-btn'>Add Personel<Button  onClick={() => handleViewOffice()} variant="primary">View</Button></td>
                   </tr>
                   <tr>
                     <td>Division 1</td>
                     <td>Division OF THE PRESIDENT</td>
                     <td>120</td>
-                    <td>Add Personel <Button  onClick={() => handleViewOffice()} variant="primary">View</Button></td>
-                  </tr>
-                  <tr>
+                    <td className='act-grp-btn'>Add Personel<Button  onClick={() => handleViewOffice()} variant="primary">View</Button></td>
+                  </tr><tr>
                     <td>Division 1</td>
                     <td>Division OF THE PRESIDENT</td>
                     <td>120</td>
-                    <td>Add Personel <Button  onClick={() => handleViewOffice()} variant="primary">View</Button></td>
+                    <td className='act-grp-btn'>Add Personel<Button  onClick={() => handleViewOffice()} variant="primary">View</Button></td>
                   </tr>
                 </tbody>
               </Table>

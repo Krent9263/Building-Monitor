@@ -11,7 +11,7 @@ function DvisionHeader({ setShowCreateModal }) {
 
   return (
     <div>
-      <div className="dept-name">Division</div>
+      <h1 className="dept-name">DIVISION</h1>
       <div className="reports-header">
         <div>
           <Button className="btn-r" onClick={handleBackButton}>Back</Button>

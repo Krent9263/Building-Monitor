@@ -15,7 +15,7 @@ function OfficeHeader({setShowCreateModal}) {
 
   return (
     <div>
-    <div className="dept-name">Division Office</div>
+    <h1 className="dept-name">DIVISION OFFICE</h1>
     <div className="reports-header">
       <div >
       <Button className="btn-r" onClick={handleBackButton}>Back</Button>
