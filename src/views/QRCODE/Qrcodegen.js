@@ -6,19 +6,27 @@ const Qrcodegen = () => {
   const [url, setUrl] = useState()
   const [qrCodeText, setQrCodeText] = useState('');
 
+  const[qrCodeValue, setCodeValue] = useState('No qrcode scanned')
+
   const downloadQRCode = () => {
     QRCode.toDataURL(url, (err, url) => {
       if(err)
       return console.error(err)
-      console.log(url)
+      console.log('url:' , url)
       setQrCodeText(url)
     })
   };
+
+  console.log('qrCodeText:' , qrCodeText)
+
+
   
 
   return (
     <div>
-      {qrCodeText &&  <> <img src={qrCodeText} /> <a href={qrCodeText} download={`${url}.png`} > download </a> </> }
+      <div style={{textAlign:'center'}} > 
+      {qrCodeText &&  <> <img src={qrCodeText} style={{height:'20%', width:'20%'}} /> <a href={qrCodeText} download={`${url}.png`} > download </a> </> }
+      </div>
      
   
         <Modal.Body>
@@ -36,7 +44,7 @@ const Qrcodegen = () => {
         <Modal.Footer>
           <Button type="button" download={qrCodeText} variant="primary" onClick={downloadQRCode}>Download QR Code</Button>
         </Modal.Footer>
-    
+      QRCODE: {qrCodeValue}
     </div>
   );
 };

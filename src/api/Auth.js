@@ -21,4 +21,11 @@ export default class Auth extends Base {
       path: `/api/School/Theme`,
     });
   };
+
+  getAllUsers = async () => {
+    return this.sendRequest({
+      path:`/api/User`,
+      method: 'GET'
+    })
+  }
 }
