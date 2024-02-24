@@ -4,13 +4,14 @@ import Header from '../Components/Header';
 import SideNav from '../Components/SideNav';
 import { useHistory } from "react-router-dom";
 import OfficeHeader from './components/OfficeHeader';
+import CreateOfficeModal from './components/CreateOfficeModal';
 
 function Offices() {
   const [showCreateModal, setShowCreateModal] = useState()
   
   return (
     <Container fluid className="dashboard">
-      {/* <CreateDivisionModal showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal} /> */}
+      <CreateOfficeModal showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal} />
       <Row>
         <Header />
       </Row>
@@ -18,7 +19,7 @@ function Offices() {
         <Col><SideNav /></Col>
         <Col sm={12} md={12} lg={12} xl={10}>
           <div className="reports" >
-            <OfficeHeader />
+            <OfficeHeader setShowCreateModal={setShowCreateModal} />
             <div className="table-container">
               <Table striped bordered hover className='table' >
                 <thead>
