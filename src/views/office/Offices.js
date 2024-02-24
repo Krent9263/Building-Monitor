@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Container, Table, Button } from 'react-bootstrap'
-import Header from '../Components/Header';
-import SideNav from '../Components/SideNav';
+import Header from '../dashboard/Header';
+import SideNav from '../dashboard/SideNav';
 import { useHistory } from "react-router-dom";
 import OfficeHeader from './components/OfficeHeader';
 import CreateOfficeModal from './components/CreateOfficeModal';
@@ -24,7 +24,7 @@ function Offices() {
               <Table striped bordered hover className='table' >
                 <thead>
                   <tr>
-                    <th>Division</th>
+                    <th>Office ID</th>
                     <th>Office</th>
                     <th>Office Description</th>
                     <th>Total Employee</th>
@@ -33,21 +33,21 @@ function Offices() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Division 1</td>
+                    <td>1</td>
                     <td>Office OF THE PRESIDENT</td>
                     <td>Office OF THE PRESIDENT</td>
                     <td>120</td>
                     <td><Button variant="primary">Delete</Button><Button variant="primary">Edit</Button><Button variant="primary">View</Button></td>
                   </tr>
                   <tr>
-                    <td>Division 1</td>
+                    <td>2</td>
                     <td>Office OF THE PRESIDENT</td>
                     <td>Office OF THE PRESIDENT</td>
                     <td>120</td>
                     <td><Button variant="primary">Delete</Button><Button variant="primary">Edit</Button><Button variant="primary">View</Button></td>
                   </tr>
                   <tr>
-                    <td>Division 1</td>
+                    <td>3</td>
                     <td>Office OF THE PRESIDENT</td>
                     <td>Office OF THE PRESIDENT</td>
                     <td>120</td>

@@ -1,10 +1,10 @@
 import "../assets/index.scss";
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Header from "./Components/Header";
-import MainDashboard from "./Components/MainDashboard";
-import History from "./Components/History";
-import SideNav from "./Components/SideNav";
+import Header from "./dashboard/Header";
+import MainDashboard from "./dashboard/MainDashboard";
+import History from "./dashboard/History";
+import SideNav from "./dashboard/SideNav";
 
 function Home() {
   return (

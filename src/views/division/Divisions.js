@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Row, Col, Container, Table, Button } from 'react-bootstrap'
-import Header from '../Components/Header';
-import SideNav from '../Components/SideNav';
-import TeacherReports from '../Components/TeacherReports';
+import Header from '../dashboard/Header';
+import SideNav from '../dashboard/SideNav';
+// import TeacherReports from '../dashboard/TeacherReports';
 import DvisionHeader from './components/DvisionHeader';
 import CreateDivisionModal from './components/CreateDivisionModal';
 import { useHistory } from "react-router-dom";

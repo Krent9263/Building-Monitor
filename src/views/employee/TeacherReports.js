@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, InputGroup, Form, Table } from "react-bootstrap";
 import Filter from "../../assets/images/icons/filter-solid.svg";
-import AddEmployeeModal from "./Modals/AddEmployeeModal";
-import BulkUpload from "./Modals/BulkUpload";
+import AddEmployeeModal from "../Components/Modals/AddEmployeeModal";
+import BulkUpload from "../Components/Modals/BulkUpload";
 
 function TeacherReports() {
 	const [showAddEmployee, setShowAddEmployee] = useState(false)

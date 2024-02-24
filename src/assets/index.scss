@@ -286,9 +286,33 @@
 
     .side-nav {
       // background-color: #d3d3d3;
-      padding: 0px 10px;
+      padding: 10px 10px;
       border-width: 0px 1px 0px 0px;
       border-style: solid;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .titles {
+        // background-color: #68942c;
+        font-size: 20px;
+        letter-spacing: 2px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        cursor: pointer;
+        font-weight: 600 !important;
+        &:hover {
+          background-color: #68942c !important;
+          border-radius: 10px;
+        }
+        .submenu {
+          display: flex;
+          flex-direction: column;
+        }
+
+      }
     }
 
 
