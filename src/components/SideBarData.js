@@ -45,8 +45,8 @@ export const SideBarData = [
     icon: <FontAwesomeIcon icon={faTable} />
   },
   {
-    title: "QR Screen ",
-    path: "/qrscreen",
+    title: "QR Generator ",
+    path: "/qrcode",
     icon: <FontAwesomeIcon icon={faQrcode} />
   },
   {
