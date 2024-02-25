@@ -2,11 +2,11 @@ import React from 'react'
 import { Button} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bulkUpload}) {
+function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bulkUpload, divisionId}) {
   const history = useHistory();
 
   const handleBackButton = () => {
-    history.push("/divisions/office")
+    history.push(`/divisions/${divisionId}/office/`)
   }
 
   // const handleCreateOffice = () => {

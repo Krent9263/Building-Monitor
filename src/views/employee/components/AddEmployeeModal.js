@@ -1,11 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
+import UserAccountAPI from "../../../api/UserAccountAPI";
+import { toast } from 'react-toastify';
 
 export default function AddEmployeeModal({
   setShowAddEmployee,
   showAddEmployee,
+  departments,
+  departmentId
 }) {
-  const handleClose = () => setShowAddEmployee(false);
+
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [middleName, setMiddleName] = useState('')
+  const [employeeIdNumber, setEmployeeIdNumber] = useState('')
+  const [contactNumber, setContactNumber] = useState()
+  const [officeId, setOfficeId] = useState(departmentId)
+  var email = 'asasdas@sample.com'
+
+  const handleClose = () => {
+    setShowAddEmployee(false);
+    setFirstName('')
+    setLastName('')
+    setMiddleName('')
+    setEmployeeIdNumber('')
+    setContactNumber('')
+  }
+
+  const createUserAccount = async (e) => {
+    e.preventDefault()
+    let data = {
+      "username": "string",
+      "password": "string",
+      "roleId": 3,
+      "firstName": firstName,
+      "lastName": lastName,
+      "middleName": middleName,
+      "contactNumber": contactNumber,
+      "emailAddress": email,
+      "qrCode": employeeIdNumber,
+      "departmentId": departmentId,
+      "employeeId": employeeIdNumber
+    }
+    let response = await new UserAccountAPI().createUserAccount(data)
+    if(response.ok){
+      toast.success('Successfully add employee!', {
+        position: "top-center",
+        autoClose: 5000,
+        });
+      handleClose()
+    }else{
+      alert('err')
+    }
+  }
+
 
   return (
     <>
@@ -19,7 +67,7 @@ export default function AddEmployeeModal({
         <Modal.Header closeButton>
           <Modal.Title>Add Employee</Modal.Title>
         </Modal.Header>
-        <Form>
+        <Form onSubmit={createUserAccount} > 
           <Modal.Body>
             <Row>
               <Col>
@@ -27,7 +75,7 @@ export default function AddEmployeeModal({
                   controlId="floatingInput"
                   label="First Name"
                 >
-                  <Form.Control type="email" placeholder="name@example.com" />
+                  <Form.Control type="text" placeholder="" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                 </FloatingLabel>
               </Col>
 							<Col>
@@ -35,7 +83,7 @@ export default function AddEmployeeModal({
                   controlId="floatingInput"
                   label="Middle Name"
                 >
-                  <Form.Control type="email" placeholder="name@example.com" />
+                  <Form.Control type="text" placeholder="" value={middleName} onChange={(e) => setMiddleName(e.target.value)} />
                 </FloatingLabel>
               </Col>
 							<Col>
@@ -43,7 +91,7 @@ export default function AddEmployeeModal({
                   controlId="floatingInput"
                   label="Last Name"
                 >
-                  <Form.Control type="email" placeholder="name@example.com" />
+                  <Form.Control type="text" placeholder="" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 </FloatingLabel>
               </Col>
             </Row>
@@ -54,7 +102,7 @@ export default function AddEmployeeModal({
                   controlId="floatingInput"
                   label="Email"
                 >
-                  <Form.Control type="email" placeholder="name@example.com" />
+                  <Form.Control type="email" placeholder="name@example.com" value={email} />
                 </FloatingLabel>
               </Col>
 							<Col>
@@ -62,7 +110,7 @@ export default function AddEmployeeModal({
                   controlId="floatingInput"
                   label="Employee ID Number"
                 >
-                  <Form.Control type="email" placeholder="name@example.com" />
+                  <Form.Control type="text" placeholder="" value={employeeIdNumber} onChange={(e) => setEmployeeIdNumber(e.target.value)} />
                 </FloatingLabel>
               </Col>
 						</Row>
@@ -73,7 +121,7 @@ export default function AddEmployeeModal({
                   controlId="floatingInput"
                   label="Contact Number"
                 >
-                  <Form.Control type="email" placeholder="name@example.com" />
+                  <Form.Control type="number" placeholder="" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)} />
                 </FloatingLabel>
               </Col>
 							<Col>
@@ -81,10 +129,14 @@ export default function AddEmployeeModal({
                   controlId="floatingInput"
                   label="Office Department"
                 >
-                  <Form.Select placeholder="Office Department">
+                  <Form.Select placeholder="Office Department" value={officeId} onChange={(e) => setOfficeId(parseInt(e.target.value))} >
 										<option disabled> Select Department </option>
-										<option > Office of the President </option>
-										<option > Office of the Vice President </option>
+                    {departments?.map(item => {
+                      return(
+                        <option value={item?.id} > {item?.departmentName} </option>
+                      )
+                    })}
+	
 									</Form.Select>
                 </FloatingLabel>
               </Col>

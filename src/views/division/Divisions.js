@@ -9,6 +9,7 @@ import SideBar from '../../components/SideBar';
 import DivisionAPI from '../../api/DivisionAPI';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditDivisiionModal from './components/EditDivisiionModal';
+import { toast } from 'react-toastify';
 
 
 function Divisions() {
@@ -57,8 +58,12 @@ function Divisions() {
   const deleteDivision = async () => {
     let response = await new DivisionAPI().deleteDivision(divisionId)
     if(response.ok){
-      alert('delete')
+      toast.success('Successfully Deleted Division!', {
+        position: "top-center",
+        autoClose: 5000,
+        });
       getAllDivision()
+      cancelSweetAlert()
     }else{
       alert('no good')
     }

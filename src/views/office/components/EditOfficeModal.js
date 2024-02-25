@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 import departmentAPI from "../../../api/DepartmentAPI";
 import { toast } from 'react-toastify';
 
-function CreateOfficeModal({ showCreateModal, setShowCreateModal, divisionId, getAllDepartment }) {
+function EditOfficeModal({setShowEditModal, showEditModal, divisionId, getAllDepartment, departmentId, departments}) {
 
   const [officeName, setOfficeName] = useState('')
   const [officeDescritop, setOfficeDescription] = useState('')
 
+  useEffect(() => {
+    handleOffice()
+  },[departmentId])
+
   const handleCloseModal = () => {
-    setShowCreateModal(false);
+    setShowEditModal(false)
     setOfficeName('')
     setOfficeDescription('')
-  };
+  }
 
-  const createDepartment = async (e) => {
+  const handleOffice = () => {
+    departments
+    ?.filter((item) => item?.id === departmentId )
+    ?.map(item => {
+      setOfficeName(item?.departmentName)
+      setOfficeDescription(item?.departmentDescription)
+    })
+  }
+
+  const updateDepartment = async (e) => {
     e.preventDefault()
     let data = {
+      "id": departmentId,
       "departmentName": officeName,
       "departmentDescription": officeDescritop,
       "divisionId": divisionId
     }
-    let response = await new departmentAPI().createDepartment(data)
+    let response = await new departmentAPI().updateDepartment(departmentId, data)
     if(response.ok){
       toast.success('Successfully Created Office!', {
         position: "top-center",
@@ -29,15 +43,14 @@ function CreateOfficeModal({ showCreateModal, setShowCreateModal, divisionId, ge
         });
       handleCloseModal()
       getAllDepartment()
-    }else{
-      alert('err')
-    }
+    }else
+    alert('err')
   }
 
   return (
     <>
       <Modal
-        show={showCreateModal}
+        show={showEditModal}
         onHide={handleCloseModal}
         backdrop="static"
         keyboard={false}
@@ -46,7 +59,7 @@ function CreateOfficeModal({ showCreateModal, setShowCreateModal, divisionId, ge
         <Modal.Header closeButton>
           <Modal.Title>Create Office</Modal.Title>
         </Modal.Header>
-        <Form onSubmit={createDepartment} >
+        <Form onSubmit={updateDepartment} >
           <Modal.Body>
             <Row className="mt-3">
               <Col>
@@ -72,7 +85,7 @@ function CreateOfficeModal({ showCreateModal, setShowCreateModal, divisionId, ge
         </Form>
       </Modal>
     </>
-  );
+  )
 }
 
-export default CreateOfficeModal;
+export default EditOfficeModal

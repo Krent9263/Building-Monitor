@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Row, Col, Container, Table } from "react-bootstrap";
 import Filter from "../../assets/images/icons/filter-solid.svg";
 import AddEmployeeModal from "./components/AddEmployeeModal";
 import BulkUpload from "./components/BulkUpload";
 import SideBar from "../../components/SideBar";
 import EmployeeHeader from "./components/EmployeeHeader";
+import { useHistory, useParams } from "react-router-dom";
+import departmentAPI from "../../api/DepartmentAPI";
+
 
 function Employee() {
+  const {divisionId, departmentId } = useParams();
+
   const [showAddEmployee, setShowAddEmployee] = useState(false);
   const [showBulkUpload, setShowBulkUpload] = useState(false);
+
+  const [departments, setDepartments] = useState()
+
+  useEffect(() => {
+    getAllDepartment()
+  })
 
   const addEmployee = () => {
     setShowAddEmployee(true);
@@ -48,6 +59,16 @@ function Employee() {
       contact: "09123456789"
     }
   ];
+
+  const getAllDepartment = async () => {
+    let response = await new departmentAPI().getAllDepartment()
+    if(response.ok){
+      let tempData = response.data.filter(i => i?.divisionId == divisionId)
+      setDepartments(tempData)
+    }else{
+      alert('err')
+    }
+  }
   
 
 
@@ -59,9 +80,9 @@ function Employee() {
       <Row className="containers-dashboard">
         <Col>
           <div className="reports">
-            <EmployeeHeader setShowBulkUpload={setShowBulkUpload} setShowAddEmployee={setShowAddEmployee} addEmployee={addEmployee} bulkUpload={bulkUpload}  />
+            <EmployeeHeader divisionId={divisionId} setShowBulkUpload={setShowBulkUpload} setShowAddEmployee={setShowAddEmployee} addEmployee={addEmployee} bulkUpload={bulkUpload}  />
             <BulkUpload showBulkUpload={showBulkUpload} setShowBulkUpload={setShowBulkUpload} />
-            <AddEmployeeModal showAddEmployee={showAddEmployee} setShowAddEmployee={setShowAddEmployee} />
+            <AddEmployeeModal departmentId={departmentId} departments={departments} showAddEmployee={showAddEmployee} setShowAddEmployee={setShowAddEmployee} />
             <div className="table-container">
               <Table striped bordered hover className="table">
                 <thead>

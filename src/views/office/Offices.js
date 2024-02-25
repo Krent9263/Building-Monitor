@@ -5,20 +5,41 @@ import { useHistory, useParams } from "react-router-dom";
 import OfficeHeader from './components/OfficeHeader';
 import CreateOfficeModal from './components/CreateOfficeModal';
 import departmentAPI from '../../api/DepartmentAPI';
+import { toast } from 'react-toastify';
+import SweetAlert from 'react-bootstrap-sweetalert';
+import EditOfficeModal from './components/EditOfficeModal';
+
 
 function Offices() {
   const history = useHistory();
   const { divisionId } = useParams();
   const [showCreateModal, setShowCreateModal] = useState()
+  const [deleteNotify, setDeleteNotify] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
 
   const [departments, setDepartments] = useState()
+  const [departmentId, setDeparntmentId] = useState()
 
   useEffect(() => {
     getAllDepartment()
   }, [divisionId])
 
-  const handleViewOffice = () => {
-    history.push("/divisions/office/employees")
+  const handleViewOffice = (departmentId) => {
+    history.push(`/divisions/${divisionId}/office/${departmentId}/employee`)
+  }
+
+  const cancelSweetAlert = () => {
+    setDeleteNotify(false)
+  }
+
+  const handleDelete = (id) =>{
+    setDeleteNotify(true)
+    setDeparntmentId(id)
+  }
+
+  const handleEdit = (id) => {
+    setDeparntmentId(id)
+    setShowEditModal(true)
   }
 
   const getAllDepartment = async () => {
@@ -29,12 +50,27 @@ function Offices() {
     }
   }
 
+  const deleteDepartment = async () => {
+    let response = await new departmentAPI().deleteDepartment(departmentId)
+    if(response.ok){
+      toast.success('Successfully Deleted Office!', {
+        position: "top-center",
+        autoClose: 5000,
+        });
+        cancelSweetAlert()
+        getAllDepartment()
+    }else{
+      alert('err')
+    }
+  }
+
   console.log('divisionId:', divisionId)
   console.log('departments:', departments)
 
   return (
     <Container fluid className="dashboard">
-      <CreateOfficeModal showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal} />
+      <CreateOfficeModal getAllDepartment={getAllDepartment} divisionId={divisionId} showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal} />
+      <EditOfficeModal departments={departments} departmentId={departmentId} getAllDepartment={getAllDepartment} divisionId={divisionId} setShowEditModal={setShowEditModal} showEditModal={showEditModal}  />
       <Row>
         <SideBar />
       </Row>
@@ -62,9 +98,9 @@ function Offices() {
                         <td>{item?.departmentDescription}</td>
                         {/* <td>120</td> */}
                         <td className='act-grp-btn'>
-                          <Button onClick={handleViewOffice} variant="primary">View</Button>
-                          <Button variant="primary">Edit</Button>
-                          <Button variant="primary">Delete</Button></td>
+                          <Button onClick={() => handleViewOffice(item?.id)} variant="primary">View</Button>
+                          <Button variant="primary" onClick={() => handleEdit(item?.id)} >Edit</Button>
+                          <Button variant="primary" onClick={() => handleDelete(item?.id)} >Delete</Button></td>
                       </tr>
                     )
                   })}
@@ -74,6 +110,19 @@ function Offices() {
           </div>
         </Col>
       </Row>
+      <SweetAlert
+        warning
+        showCancel
+        show={deleteNotify}
+        confirmBtnText="Yes, delete it!"
+        confirmBtnBsStyle="danger"
+        title="Are you sure?"
+        onConfirm={() => deleteDepartment()}
+        onCancel={cancelSweetAlert}
+        focusCancelBtn
+          >
+            You will not be able to recover this Division!
+      </SweetAlert>
     </Container>
   )
 }

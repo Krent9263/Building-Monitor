@@ -15,4 +15,20 @@ export default class departmentAPI extends Base {
     })
   }
 
+  createDepartment = async (data) => {
+    return this.sendRequest({
+      path: `/api/Department`,
+      method: 'POST',
+      data
+    })
+  } 
+
+  updateDepartment = async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Department/${id}`,
+      method: 'PUT',
+      data
+    })
+  }
+
 }
