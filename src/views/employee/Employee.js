@@ -19,7 +19,7 @@ function Employee() {
 
   useEffect(() => {
     getAllDepartment()
-  })
+  },[])
 
   const addEmployee = () => {
     setShowAddEmployee(true);
