@@ -38,7 +38,7 @@ export default function Routing() {
             <PrivateRoute path="/home" exact component={Home} />
             <PrivateRoute path="/qrscreen" exact component={QRScreen} />
             <PrivateRoute path="/divisions" exact component={Divisions} />
-            <PrivateRoute path="/divisions/office" exact component={Offices} />
+            <PrivateRoute path="/divisions/:divisionId/office/" exact component={Offices} />
             <PrivateRoute path="/divisions/office/employees" exact component={Employee} />
             <PrivateRoute path="/qrcode" exact component={Qrcodegen}/>
           </Switch>
