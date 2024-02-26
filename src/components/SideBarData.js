@@ -10,6 +10,11 @@ import {
   faRightFromBracket
 } from "@fortawesome/free-solid-svg-icons";
 
+const logout = async () => {
+  await window.localStorage.clear()
+  window.location.href = "/";
+}
+
 export const SideBarData = [
   {
     title: "Dashboard",
@@ -36,6 +41,6 @@ export const SideBarData = [
   {
     title: "Log out",
     path: "/",
-    icon: <FontAwesomeIcon icon={faRightFromBracket} />
+    icon: <FontAwesomeIcon onClick={() => logout()} icon={faRightFromBracket} />
   },
 ];

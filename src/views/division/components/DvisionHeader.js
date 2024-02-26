@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-function DvisionHeader({ setShowCreateModal }) {
+function DvisionHeader({ setShowCreateModal, handlePersonnelModal }) {
   const history = useHistory();
 
   const handleBackButton = () => {
@@ -17,6 +17,9 @@ function DvisionHeader({ setShowCreateModal }) {
           <Button className="btn-r" onClick={handleBackButton}>Back</Button>
         </div>
         <div className="btn-group-header" style={{ float: "left" }}>
+          <Button className="btn-r" onClick={() => handlePersonnelModal()} >
+            Add Personnel
+          </Button>
           <Button className="btn-r" onClick={() => setShowCreateModal(true)}>
             Create Division
           </Button>

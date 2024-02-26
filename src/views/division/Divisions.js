@@ -10,6 +10,9 @@ import DivisionAPI from '../../api/DivisionAPI';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditDivisiionModal from './components/EditDivisiionModal';
 import { toast } from 'react-toastify';
+import { faL } from '@fortawesome/free-solid-svg-icons';
+import CreatePesonnelModal from './components/CreatePesonnelModal';
+import departmentAPI from '../../api/DepartmentAPI';
 
 
 function Divisions() {
@@ -18,17 +21,23 @@ function Divisions() {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
   const [deleteNotify, setDeleteNotify] = useState(false)
+  const [showCreatePersonnelModal, setShowCreatePersonnelModal] = useState(false)
 
   const [divisions, setDivisions] = useState()
   const [divisionId, setDivisionId] = useState()
-
+  const [departments, setDepartments] = useState()
 
   useEffect(() => {
     getAllDivision()
+    getAllDepartment()
   }, [])
 
   const handleViewOffice = (divisionId) => {
     history.push(`/divisions/${divisionId}/office/`)
+  }
+
+  const handlePersonnelModal = () =>{
+    setShowCreatePersonnelModal(true)
   }
 
   const handleDelete = (id) =>{
@@ -69,10 +78,20 @@ function Divisions() {
     }
   }
 
+  const getAllDepartment = async () => {
+    let response = await new departmentAPI().getAllDepartment()
+    if(response.ok){
+      setDepartments(response.data)
+    }else{
+      alert('err12123')
+    }
+  }
+
 
 
   return (
     <Container fluid className="dashboard">
+      <CreatePesonnelModal departments={departments}   setShowCreatePersonnelModal={setShowCreatePersonnelModal} showCreatePersonnelModal={showCreatePersonnelModal} />
       <CreateDivisionModal getAllDivision={getAllDivision} showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal} />
       <EditDivisiionModal setDivisionId={setDivisionId} showEditModal={showEditModal} setShowEditModal={setShowEditModal} divisionId={divisionId} getAllDivision={getAllDivision} divisions={divisions}   />
       <Row>
@@ -81,7 +100,7 @@ function Divisions() {
       <Row className="containers-dashboard">
         <Col>
           <div className="reports" >
-            <DvisionHeader setShowCreateModal={setShowCreateModal} />
+            <DvisionHeader handlePersonnelModal={handlePersonnelModal} setShowCreateModal={setShowCreateModal} />
             <div className="table-container">
               <Table striped bordered hover className='table'>
                 <thead>

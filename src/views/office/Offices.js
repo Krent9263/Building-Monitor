@@ -64,9 +64,6 @@ function Offices() {
     }
   }
 
-  console.log('divisionId:', divisionId)
-  console.log('departments:', departments)
-
   return (
     <Container fluid className="dashboard">
       <CreateOfficeModal getAllDepartment={getAllDepartment} divisionId={divisionId} showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal} />

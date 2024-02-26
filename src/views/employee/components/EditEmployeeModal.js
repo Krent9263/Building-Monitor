@@ -1,16 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 import UserAccountAPI from "../../../api/UserAccountAPI";
 import { toast } from 'react-toastify';
 
-export default function AddEmployeeModal({
-  setShowAddEmployee,
-  showAddEmployee,
-  departments,
-  officeId,
-  getAllUserAccountByDivisionIdAndOfficeId,
-  divisionId
-}) {
+function EditEmployeeModal({userAccountId, departments, employeeId, setEmployeeId, showEditEmployee, setShowEditEmployee, employees, officeId, divisionId, getAllUserAccountByDivisionIdAndOfficeId}) {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -20,8 +13,12 @@ export default function AddEmployeeModal({
   const [departmentId, setDepartmentId] = useState(officeId)
   var email = 'gilbert.manucduc@deped.gov.ph'
 
+  useEffect(() => {
+    handleEmployeeData()
+  },[userAccountId])
+
   const handleClose = () => {
-    setShowAddEmployee(false);
+    setShowEditEmployee(false);
     setFirstName('')
     setLastName('')
     setMiddleName('')
@@ -29,42 +26,52 @@ export default function AddEmployeeModal({
     setContactNumber('')
   }
 
-  const createUserAccount = async (e) => {
-    e.preventDefault()
-    let data = {
-      "username": "string",
-      "password": "string",
-      "roleId": 3,
-      "firstName": firstName,
-      "lastName": lastName,
-      "middleName": middleName,
-      "contactNumber": contactNumber,
-      "emailAddress": email,
-      "qrCode": employeeIdNumber,
-      "departmentId": departmentId,
-      "employeeId": employeeIdNumber
-    }
-    let response = await new UserAccountAPI().createUserAccount(data)
-    if(response.ok){
-      toast.success('Successfully add employee!', {
-        position: "top-center",
-        autoClose: 5000,
-        });
-      handleClose()
-      getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId)
-    }else{
-      toast.warning(response?.data?.ErrorMessage, {
-        position: "top-center",
-        autoClose: 5000,
-        });
-    }
+  const handleEmployeeData = () => {
+    employees
+    ?.filter((item) => item?.userAccountId === userAccountId )
+    ?.map(item => {
+      console.log('item:', item)
+      setFirstName(item?.firstName)
+      setLastName(item?.lastName)
+      setMiddleName(item?.middleName)
+      setEmployeeIdNumber(item?.employeeId)
+      setContactNumber(item?.contactNumber)
+    
+    })
   }
 
+const updateUserAccount = async (e) => {
+  e.preventDefault()
+  let data = {
+    "id": userAccountId,
+    "firstName": firstName,
+    "lastName": lastName,
+    "middleName": middleName,
+    "contactNumber": contactNumber,
+    "emailAddress": email,
+    "password": "string",
+    "qrCode": employeeIdNumber,
+    "departmentId": departmentId
+  }
+  let response = await new UserAccountAPI().updateUserAccount(userAccountId, data)
+  if(response.ok){
+    toast.success('Successfully add employee!', {
+      position: "top-center",
+      autoClose: 5000,
+      });
+      handleClose()
+      getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId)
+  }else{
+    alert('err')
+  }
+}
+
+console.log('userAccnoutId:', userAccountId)
 
   return (
     <>
       <Modal
-        show={showAddEmployee}
+        show={showEditEmployee}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -73,7 +80,7 @@ export default function AddEmployeeModal({
         <Modal.Header closeButton>
           <Modal.Title>Add Employee</Modal.Title>
         </Modal.Header>
-        <Form onSubmit={createUserAccount} > 
+        <Form onSubmit={updateUserAccount} > 
           <Modal.Body>
             <Row>
               <Col>
@@ -156,6 +163,7 @@ export default function AddEmployeeModal({
           </Modal.Footer>
         </Form>
       </Modal>
-    </>
-  );
+    </>  )
 }
+
+export default EditEmployeeModal

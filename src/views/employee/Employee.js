@@ -7,19 +7,34 @@ import SideBar from "../../components/SideBar";
 import EmployeeHeader from "./components/EmployeeHeader";
 import { useHistory, useParams } from "react-router-dom";
 import departmentAPI from "../../api/DepartmentAPI";
+import UserAccountAPI from "../../api/UserAccountAPI";
+import { toast } from 'react-toastify';
+import EditEmployeeModal from "./components/EditEmployeeModal";
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 function Employee() {
-  const {divisionId, departmentId } = useParams();
+  const { officeId } = useParams();
+  const { divisionId } = useParams();
 
   const [showAddEmployee, setShowAddEmployee] = useState(false);
   const [showBulkUpload, setShowBulkUpload] = useState(false);
+  const [showEditEmployee, setShowEditEmployee] = useState(false)
+  const [deleteNotify, setDeleteNotify] = useState(false)
 
   const [departments, setDepartments] = useState()
 
+  const [employees, setEmployees] = useState()
+  const [employeeId, setEmployeeId] = useState()
+  const [userAccountId, setUserAccountId] = useState()
+
   useEffect(() => {
     getAllDepartment()
-  },[])
+  }, [])
+
+  useEffect(() => {
+    getAllUserAccountByDivisionIdAndOfficeId()
+  }, [divisionId, officeId])
 
   const addEmployee = () => {
     setShowAddEmployee(true);
@@ -29,47 +44,59 @@ function Employee() {
     setShowBulkUpload(true);
   };
 
-  const employees = [
-    {
-      name: "Juan Dela Cruz",
-      position: "teacher",
-      id: "123456",
-      email: "Sample@email.com",
-      contact: "09123456789"
-    },
-    {
-      name: "Maria Garcia",
-      position: "engineer",
-      id: "789012",
-      email: "Sample@email.com",
-      contact: "09123456789"
-    },
-    {
-      name: "John Smith",
-      position: "developer",
-      id: "345678",
-      email: "Sample@email.com",
-      contact: "09123456789"
-    },
-    {
-      name: "Emily Johnson",
-      position: "designer",
-      id: "901234",
-      email: "Sample@email.com",
-      contact: "09123456789"
-    }
-  ];
+  const cancelSweetAlert = () => {
+    setDeleteNotify(false)
+  }
+
+  const handleEditModal = (id) => {
+    setShowEditEmployee(true)
+    setUserAccountId(id)
+  }
+
+  const handleDelete = (id) => {
+    setDeleteNotify(true)
+    setEmployeeId(id)
+  }
 
   const getAllDepartment = async () => {
     let response = await new departmentAPI().getAllDepartment()
-    if(response.ok){
+    if (response.ok) {
       let tempData = response.data.filter(i => i?.divisionId == divisionId)
       setDepartments(tempData)
+    } else {
+      alert('err')
+    }
+  }
+
+  const getAllUserAccountByDivisionIdAndOfficeId = async () => {
+    let response = await new UserAccountAPI().getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId)
+    if (response.ok) {
+      setEmployees(response.data)
+    } else {
+      toast.warning(response?.data?.errorMessage, {
+        position: "top-center",
+        autoClose: 5000,
+      });
+    }
+  }
+
+  const deleteUserAccount = async () => {
+    let response = await new UserAccountAPI().deleteUserAccount(employeeId)
+    if(response.ok){
+      toast.warning('Successfully deleted employee!', {
+        position: "top-center",
+        autoClose: 5000,
+      });
+      cancelSweetAlert()
+      getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId)
     }else{
       alert('err')
     }
   }
-  
+
+
+  console.log('divisionId:', divisionId)
+  console.log('departments:', officeId)
 
 
   return (
@@ -80,9 +107,10 @@ function Employee() {
       <Row className="containers-dashboard">
         <Col>
           <div className="reports">
-            <EmployeeHeader divisionId={divisionId} setShowBulkUpload={setShowBulkUpload} setShowAddEmployee={setShowAddEmployee} addEmployee={addEmployee} bulkUpload={bulkUpload}  />
+            <EditEmployeeModal userAccountId={userAccountId} divisionId={divisionId} getAllUserAccountByDivisionIdAndOfficeId={getAllUserAccountByDivisionIdAndOfficeId} officeId={officeId} employees={employees} departments={departments} employeeId={employeeId} setEmployeeId={setEmployeeId} showEditEmployee={showEditEmployee} setShowEditEmployee={setShowEditEmployee} />
+            <EmployeeHeader divisionId={divisionId} setShowBulkUpload={setShowBulkUpload} setShowAddEmployee={setShowAddEmployee} addEmployee={addEmployee} bulkUpload={bulkUpload} />
             <BulkUpload showBulkUpload={showBulkUpload} setShowBulkUpload={setShowBulkUpload} />
-            <AddEmployeeModal departmentId={departmentId} departments={departments} showAddEmployee={showAddEmployee} setShowAddEmployee={setShowAddEmployee} />
+            <AddEmployeeModal divisionId={divisionId} getAllUserAccountByDivisionIdAndOfficeId={getAllUserAccountByDivisionIdAndOfficeId} officeId={officeId} departments={departments} showAddEmployee={showAddEmployee} setShowAddEmployee={setShowAddEmployee} />
             <div className="table-container">
               <Table striped bordered hover className="table">
                 <thead>
@@ -91,22 +119,19 @@ function Employee() {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Contact Number</th>
-                    <th>Position</th>
                     <th>Action </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {employees.map((employee) => (
+                  {employees?.map((employee) => (
                     <tr>
-                      <td>{employee.id}</td>
-                      <td>{employee.name}</td>
-                      <td>{employee.email}</td>
-                      <td>{employee.contact}</td>
-                      <td>{employee.position}</td>
+                      <td>{employee.employeeId}</td>
+                      <td>{employee.firstName} {employee.middleName} {employee.lastName}</td>
+                      <td>{employee.emailAddress}</td>
+                      <td>{employee.contactNumber}</td>
                       <td className="act-grp-btn">
-                        <Button variant="primary">View</Button>
-                        <Button variant="primary">Edit</Button>
-                        <Button variant="primary">Delete</Button>
+                        <Button variant="primary" onClick={() => handleEditModal(employee?.userAccountId)} >Edit</Button>
+                        <Button variant="primary" onClick={() => handleDelete(employee?.id)} >Delete</Button>
                       </td>
                     </tr>
                   ))}
@@ -116,62 +141,20 @@ function Employee() {
           </div>
         </Col>
       </Row>
+      <SweetAlert
+        warning
+        showCancel
+        show={deleteNotify}
+        confirmBtnText="Yes, delete it!"
+        confirmBtnBsStyle="danger"
+        title="Are you sure?"
+        onConfirm={() => deleteUserAccount()}
+        onCancel={cancelSweetAlert}
+        focusCancelBtn
+          >
+            You will not be able to recover this Division!
+      </SweetAlert>
     </Container>
-    // <div className="reports">
-    // 	<div className="dept-name">OFFICE OF THE PRESIDENT</div>
-    //   <div className="reports-header">
-    //     <div className="filter">
-    //       <img className="f-img" src={Filter} alt="" />
-    //       Filter Office
-    //     </div>
-    //     <div className="btn-group-header">
-    // 			<BulkUpload showBulkUpload={showBulkUpload} setShowBulkUpload={setShowBulkUpload} />
-    // 			<AddEmployeeModal setShowAddEmployee={setShowAddEmployee} showAddEmployee={showAddEmployee} />
-    //       <Button className="btn-r" onClick={() => addEmployee()}>Add Employee</Button>
-    // 			<Button className="btn-r" onClick={() => bulkUpload()}>Bulk Upload	</Button>
-    //       <Button className="btn-r">Generate Report</Button>
-    //       <InputGroup className="searchbar">
-    //         <InputGroup.Text>$</InputGroup.Text>
-    //         <Form.Control />
-    //       </InputGroup>
-    //     </div>
-    //   </div>
-    // 	<div>
-
-    // 	<div className="table-container">
-    //       <Table striped bordered hover className='table' >
-    //         <thead>
-    //           <tr>
-    //             <th>Name</th>
-    //             <th>Position</th>
-    //             <th>Employee No.</th>
-    //             <th>Office</th>
-    // 						<th>Department</th>
-    //           </tr>
-    //         </thead>
-    //         <tbody>
-    //           <tr>
-    //             <td>1</td>
-    //             <td>Mark</td>
-    //             <td>Otto</td>
-    //             <td>@mdo</td>
-    //           </tr>
-    //           <tr>
-    //             <td>2</td>
-    //             <td>Jacob</td>
-    //             <td>Thornton</td>
-    //             <td>@fat</td>
-    //           </tr>
-    //           <tr>
-    //             <td>3</td>
-    //             <td colSpan={2}>Larry the Bird</td>
-    //             <td>@twitter</td>
-    //           </tr>
-    //         </tbody>
-    //       </Table>
-    //     </div>
-    // 	</div>
-    // </div>
   );
 }
 
