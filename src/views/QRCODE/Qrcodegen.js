@@ -1,50 +1,64 @@
-import React, { useState } from 'react';
-import QRCode from 'qrcode';
-import { Button, Col, FloatingLabel, Form, Modal, Row } from 'react-bootstrap';
+import React, { useState } from "react";
+import QRCode from "qrcode";
+import { Button, Col, FloatingLabel, Form, Modal, Row } from "react-bootstrap";
 
 const Qrcodegen = () => {
-  const [url, setUrl] = useState()
-  const [qrCodeText, setQrCodeText] = useState('');
+  const [url, setUrl] = useState();
+  const [qrCodeText, setQrCodeText] = useState("");
 
-  const[qrCodeValue, setCodeValue] = useState('No qrcode scanned')
+  const [qrCodeValue, setCodeValue] = useState("No qrcode scanned");
 
   const downloadQRCode = () => {
     QRCode.toDataURL(url, (err, url) => {
-      if(err)
-      return console.error(err)
-      console.log('url:' , url)
-      setQrCodeText(url)
-    })
+      if (err) return console.error(err);
+      console.log("url:", url);
+      setQrCodeText(url);
+    });
   };
 
-  console.log('qrCodeText:' , qrCodeText)
-
-
-  
+  console.log("qrCodeText:", qrCodeText);
 
   return (
-    <div>
-      <div style={{textAlign:'center'}} > 
-      {qrCodeText &&  <> <img src={qrCodeText} style={{height:'20%', width:'20%'}} /> <a href={qrCodeText} download={`${url}.png`} > download </a> </> }
+    <div className="qr-container">
+      <div className="box">
+        <div className="qr-gen">
+          {qrCodeText != '' ? (
+            <>
+              <img src={qrCodeText} className="qr" />
+              <br />
+              <a href={qrCodeText} download={`${url}.png`} className="d-btn">
+                Download
+              </a>
+            </>
+          ) : (
+            <>
+              <h1>Input Employee ID to generate QR</h1>
+            </>
+          )}
+        </div>
+        <Row className="generator">
+          <Col>
+            <FloatingLabel controlId="floatingInput" label="QR CODE">
+              <Form.Control
+                onChange={(e) => setUrl(e.target.value)}
+                value={url}
+                type="email"
+                placeholder="name@example.com"
+              />
+            </FloatingLabel>
+          </Col>
+        </Row>
+        <Button
+          type="button"
+          download={qrCodeText}
+          variant="primary"
+          onClick={downloadQRCode}
+          className="mt-4"
+        >
+          Generate QR Code
+        </Button>
+        {/* <span className="mt-4">Scan QR for testing: {qrCodeValue}</span> */}
       </div>
-     
-  
-        <Modal.Body>
-          <Row className="mt-3">
-            <Col>
-              <FloatingLabel
-                controlId="floatingInput"
-                label="QR CODE"
-              >
-                <Form.Control  onChange={(e) => setUrl(e.target.value)} value={url} type="email" placeholder="name@example.com" />
-              </FloatingLabel>
-            </Col>
-          </Row>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button type="button" download={qrCodeText} variant="primary" onClick={downloadQRCode}>Download QR Code</Button>
-        </Modal.Footer>
-      QRCODE: {qrCodeValue}
     </div>
   );
 };
