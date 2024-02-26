@@ -55,9 +55,9 @@ export const SideBarData = [
     path: "/qrscreen",
     icon: <FontAwesomeIcon icon={faDisplay} />
   },
-  {
-    title: "Log out",
-    path: "/",
-    icon: <FontAwesomeIcon icon={faRightFromBracket} />
-  },
+  // {
+  //   title: "Log out",
+  //   path: "/",
+  //   icon: <FontAwesomeIcon icon={faRightFromBracket} />
+  // },
 ];

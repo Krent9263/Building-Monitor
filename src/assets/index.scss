@@ -617,3 +617,13 @@
     color: #35482e;
     border: 1px solid #000000;
   }
+
+  .logout {
+    font-size: 25px;
+    padding-right: 10px;
+    color: #fff;
+    cursor: pointer;
+    &:hover {
+      font-size: 27px;
+    }
+  }
