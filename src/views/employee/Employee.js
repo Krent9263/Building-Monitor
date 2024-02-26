@@ -5,9 +5,12 @@ import AddEmployeeModal from "./components/AddEmployeeModal";
 import BulkUpload from "./components/BulkUpload";
 import SideBar from "../../components/SideBar";
 import EmployeeHeader from "./components/EmployeeHeader";
+import EditEmployeeModal from "./components/EditEmployeeModal";
+import Swal from 'sweetalert2'
 
 function Employee() {
   const [showAddEmployee, setShowAddEmployee] = useState(false);
+  const [showEditEmployee, setShowEditEmployee] = useState(false);
   const [showBulkUpload, setShowBulkUpload] = useState(false);
 
   const addEmployee = () => {
@@ -17,6 +20,32 @@ function Employee() {
   const bulkUpload = () => {
     setShowBulkUpload(true);
   };
+
+  const handleEditEmployee = () => {
+    setShowEditEmployee(true)
+  }
+
+  const handleDeleteEmployee = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#35482e",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("Deleting employee...");
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your employee has been deleted.",
+          icon: "success",
+          confirmButtonColor: "#35482e",  
+        });
+      }
+    });
+  }
 
   const employees = [
     {
@@ -62,6 +91,7 @@ function Employee() {
             <EmployeeHeader setShowBulkUpload={setShowBulkUpload} setShowAddEmployee={setShowAddEmployee} addEmployee={addEmployee} bulkUpload={bulkUpload}  />
             <BulkUpload showBulkUpload={showBulkUpload} setShowBulkUpload={setShowBulkUpload} />
             <AddEmployeeModal showAddEmployee={showAddEmployee} setShowAddEmployee={setShowAddEmployee} />
+            <EditEmployeeModal showEditEmployee={showEditEmployee} setShowEditEmployee={setShowEditEmployee} />
             <div className="table-container">
               <Table striped bordered hover className="table">
                 <thead>
@@ -83,9 +113,9 @@ function Employee() {
                       <td>{employee.contact}</td>
                       <td>{employee.position}</td>
                       <td className="act-grp-btn">
-                        <Button variant="primary">View</Button>
-                        <Button variant="primary">Edit</Button>
-                        <Button variant="primary">Delete</Button>
+                        {/* <Button variant="primary">View</Button> */}
+                        <Button variant="primary" onClick={handleEditEmployee}>Edit</Button>
+                        <Button variant="primary" onClick={handleDeleteEmployee}>Delete</Button>
                       </td>
                     </tr>
                   ))}
