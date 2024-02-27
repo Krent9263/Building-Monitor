@@ -56,18 +56,21 @@ function QRScreen() {
         toast.success('Successfully Login!', {
           position: "top-center",
           autoClose: 5000,
-          });
-          console.log('allUsers:', res.data)
+        });
+        console.log('allUsers:', res.data)
       } else {
         setUserInfo(res.data)
         getLogStatus(allUsers)
         toast.success('Successfully Logout!', {
           position: "top-center",
           autoClose: 5000,
-          });
+        });
       }
     } else {
-      alert('No good')
+      toast.warning('Wrong QRCODE please Contact Admin!', {
+        position: "top-center",
+        autoClose: 5000,
+      });
     }
   }
 
@@ -87,8 +90,8 @@ function QRScreen() {
       let tempDataInSide = []
       let tempDataInOutSide = []
       data?.map(item => {
-        let tempInSide = res?.data?.find(i => i?.userAccountId == item?.id && i?.status == true)
-        let tempOutSide = res?.data?.find(i => i?.userAccountId == item?.id && i?.status == false)
+        let tempInSide = res?.data?.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate))?.find(i => i?.userAccountId == item?.id && i?.status == true)
+        let tempOutSide = res?.data?.sort((a, b) => new Date(b.updatedDate) - new Date(a.updatedDate))?.find(i => i?.userAccountId == item?.id && i?.status == false)
         if (tempInSide !== undefined) {
           return tempDataInSide.push(tempInSide)
         }
@@ -100,8 +103,7 @@ function QRScreen() {
       setAllUsersLog(res.data)
       setUsersInSide(tempDataInSide)
       setUsersOutSide(tempDataInOutSide)
-      console.log('tempDataInSide:', tempDataInSide)
-      console.log('tempDataOutSide:', tempDataInOutSide)
+    } else {
     }
   }
 
@@ -146,7 +148,8 @@ function QRScreen() {
                 flexDirection: "column",
               }}
             >
-              {usersInSide?.map((item) => {
+              {usersInSide?.slice(0, 3)
+              ?.map((item) => {
                 return (
                   <div className="users mt-2">
                     <div className="column1">
@@ -156,7 +159,8 @@ function QRScreen() {
                     </div>
                     <div className="column2">
                       <span>{item?.firstName} {item?.lastName}</span>
-                      <span className="department">{item?.departmentName}</span>
+                      <span className="department">{moment(item?.createdDate).format("MMMM Do YYYY h:mm a")}</span>
+
                     </div>
                     <div className="column3">
                       <img className="check-img" src={Check} alt="" />
@@ -179,25 +183,27 @@ function QRScreen() {
                 flexDirection: "column",
               }}
             >
-              {usersOutSide?.map((item) => {
-                return (
-                  <div className="users mt-2">
-                    <div className="column1">
-                      <div className="frame">
-                        <img className="user-img" src={User} alt="" />
+              {usersOutSide
+                ?.slice(0, 3)
+                ?.map((item) => {
+                  return (
+                    <div className="users mt-2">
+                      <div className="column1">
+                        <div className="frame">
+                          <img className="user-img" src={User} alt="" />
+                        </div>
+                      </div>
+                      <div className="column2">
+                        <span>{item?.firstName} {item?.lastName}</span>
+                        <span className="department">{moment(item?.updatedDate).format("MMMM Do YYYY h:mm a")}</span>
+                      </div>
+                      <div className="column3">
+                        <img className="check-img" src={Checkout} alt="" />
+                        <span className="failed">Outside</span>
                       </div>
                     </div>
-                    <div className="column2">
-                      <span>{item?.firstName} {item?.lastName}</span>
-                      <span className="department">{item?.departmentName}</span>
-                    </div>
-                    <div className="column3">
-                      <img className="check-img" src={Checkout} alt="" />
-                      <span className="failed">Outside</span>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </div>
         </Col>
