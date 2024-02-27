@@ -1,72 +1,84 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 import UserAccountAPI from "../../../api/UserAccountAPI";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-function EditEmployeeModal({userAccountId, departments, employeeId, setEmployeeId, showEditEmployee, setShowEditEmployee, employees, officeId, divisionId, getAllUserAccountByDivisionIdAndOfficeId}) {
-
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [middleName, setMiddleName] = useState('')
-  const [employeeIdNumber, setEmployeeIdNumber] = useState('')
-  const [contactNumber, setContactNumber] = useState()
-  const [departmentId, setDepartmentId] = useState(officeId)
-  var email = 'gilbert.manucduc@deped.gov.ph'
+function EditEmployeeModal({
+  userAccountId,
+  departments,
+  employeeId,
+  setEmployeeId,
+  showEditEmployee,
+  setShowEditEmployee,
+  employees,
+  officeId,
+  divisionId,
+  getAllUserAccountByDivisionIdAndOfficeId,
+}) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [employeeIdNumber, setEmployeeIdNumber] = useState("");
+  const [contactNumber, setContactNumber] = useState();
+  const [departmentId, setDepartmentId] = useState(officeId);
+  var email = "gilbert.manucduc@deped.gov.ph";
 
   useEffect(() => {
-    handleEmployeeData()
-  },[userAccountId])
+    handleEmployeeData();
+  }, [userAccountId]);
 
   const handleClose = () => {
     setShowEditEmployee(false);
-    setFirstName('')
-    setLastName('')
-    setMiddleName('')
-    setEmployeeIdNumber('')
-    setContactNumber('')
-  }
+    setFirstName("");
+    setLastName("");
+    setMiddleName("");
+    setEmployeeIdNumber("");
+    setContactNumber("");
+  };
 
   const handleEmployeeData = () => {
     employees
-    ?.filter((item) => item?.userAccountId === userAccountId )
-    ?.map(item => {
-      console.log('item:', item)
-      setFirstName(item?.firstName)
-      setLastName(item?.lastName)
-      setMiddleName(item?.middleName)
-      setEmployeeIdNumber(item?.employeeId)
-      setContactNumber(item?.contactNumber)
-    
-    })
-  }
-
-const updateUserAccount = async (e) => {
-  e.preventDefault()
-  let data = {
-    "id": userAccountId,
-    "firstName": firstName,
-    "lastName": lastName,
-    "middleName": middleName,
-    "contactNumber": contactNumber,
-    "emailAddress": email,
-    "password": "string",
-    "qrCode": employeeIdNumber,
-    "departmentId": departmentId
-  }
-  let response = await new UserAccountAPI().updateUserAccount(userAccountId, data)
-  if(response.ok){
-    toast.success('Successfully add employee!', {
-      position: "top-center",
-      autoClose: 5000,
+      ?.filter((item) => item?.userAccountId === userAccountId)
+      ?.map((item) => {
+        console.log("item:", item);
+        setFirstName(item?.firstName);
+        setLastName(item?.lastName);
+        setMiddleName(item?.middleName);
+        setEmployeeIdNumber(item?.employeeId);
+        setContactNumber(item?.contactNumber);
       });
-      handleClose()
-      getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId)
-  }else{
-    alert('err')
-  }
-}
+  };
 
-console.log('userAccnoutId:', userAccountId)
+  const updateUserAccount = async (e) => {
+    e.preventDefault();
+    let data = {
+      id: userAccountId,
+      firstName: firstName,
+      lastName: lastName,
+      middleName: middleName,
+      contactNumber: contactNumber,
+      emailAddress: email,
+      password: "string",
+      qrCode: employeeIdNumber,
+      departmentId: departmentId,
+    };
+    let response = await new UserAccountAPI().updateUserAccount(
+      userAccountId,
+      data
+    );
+    if (response.ok) {
+      toast.success("Successfully add employee!", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+      handleClose();
+      getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId);
+    } else {
+      alert("err");
+    }
+  };
+
+  console.log("userAccnoutId:", userAccountId);
 
   return (
     <>
@@ -75,95 +87,115 @@ console.log('userAccnoutId:', userAccountId)
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
-				size="lg"
+        size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Employee</Modal.Title>
+          <Modal.Title>Edit Employee Details</Modal.Title>
         </Modal.Header>
-        <Form onSubmit={updateUserAccount} > 
+        <Form onSubmit={updateUserAccount}>
           <Modal.Body>
             <Row>
               <Col>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="First Name"
-                >
-                  <Form.Control type="text" placeholder="" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                <FloatingLabel controlId="floatingInput" label="First Name">
+                  <Form.Control
+                    type="text"
+                    placeholder=""
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
                 </FloatingLabel>
               </Col>
-							<Col>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Middle Name"
-                >
-                  <Form.Control type="text" placeholder="" value={middleName} onChange={(e) => setMiddleName(e.target.value)} />
+              <Col>
+                <FloatingLabel controlId="floatingInput" label="Middle Name">
+                  <Form.Control
+                    type="text"
+                    placeholder=""
+                    value={middleName}
+                    onChange={(e) => setMiddleName(e.target.value)}
+                  />
                 </FloatingLabel>
               </Col>
-							<Col>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Last Name"
-                >
-                  <Form.Control type="text" placeholder="" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+              <Col>
+                <FloatingLabel controlId="floatingInput" label="Last Name">
+                  <Form.Control
+                    type="text"
+                    placeholder=""
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
                 </FloatingLabel>
               </Col>
             </Row>
 
-						<Row className="mt-3">
-						<Col>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Email"
-                >
-                  <Form.Control type="email" placeholder="name@example.com" value={email} />
+            <Row className="mt-3">
+              <Col>
+                <FloatingLabel controlId="floatingInput" label="Email">
+                  <Form.Control
+                    type="email"
+                    placeholder="name@example.com"
+                    value={email}
+                  />
                 </FloatingLabel>
               </Col>
-							<Col>
+              <Col>
                 <FloatingLabel
                   controlId="floatingInput"
                   label="Employee ID Number"
                 >
-                  <Form.Control type="text" placeholder="" value={employeeIdNumber} onChange={(e) => setEmployeeIdNumber(e.target.value)} />
+                  <Form.Control
+                    type="text"
+                    placeholder=""
+                    value={employeeIdNumber}
+                    onChange={(e) => setEmployeeIdNumber(e.target.value)}
+                  />
                 </FloatingLabel>
               </Col>
-						</Row>
+            </Row>
 
-						<Row className="mt-3">
-						<Col>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Contact Number"
-                >
-                  <Form.Control type="number" placeholder="" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)} />
+            <Row className="mt-3">
+              <Col>
+                <FloatingLabel controlId="floatingInput" label="Contact Number">
+                  <Form.Control
+                    type="number"
+                    placeholder=""
+                    value={contactNumber}
+                    onChange={(e) => setContactNumber(e.target.value)}
+                  />
                 </FloatingLabel>
               </Col>
-							<Col>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Division"
-                >
-                  <Form.Select placeholder="Office Department" value={departmentId} onChange={(e) => setDepartmentId(parseInt(e.target.value))} >
-										<option disabled> Select Department </option>
-                    {departments?.map(item => {
-                      return(
-                        <option value={item?.id} > {item?.departmentName} </option>
-                      )
+              <Col>
+                <FloatingLabel controlId="floatingInput" label="Division">
+                  <Form.Select
+                    placeholder="Office Department"
+                    value={departmentId}
+                    onChange={(e) => setDepartmentId(parseInt(e.target.value))}
+                  >
+                    <option disabled> Select Department </option>
+                    {departments?.map((item) => {
+                      return (
+                        <option value={item?.id}>
+                          {" "}
+                          {item?.departmentName}{" "}
+                        </option>
+                      );
                     })}
-	
-									</Form.Select>
+                  </Form.Select>
                 </FloatingLabel>
               </Col>
-						</Row>
+            </Row>
           </Modal.Body>
           <Modal.Footer>
             {/* <Button variant="secondary" onClick={handleClose}>
               Close
             </Button> */}
-            <Button type="submit" variant="primary">Submit</Button>
+            <Button type="submit" variant="primary">
+              Submit
+            </Button>
           </Modal.Footer>
         </Form>
       </Modal>
-    </>  )
+    </>
+  );
 }
 
-export default EditEmployeeModal
+export default EditEmployeeModal;

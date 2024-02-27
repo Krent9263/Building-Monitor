@@ -11,7 +11,7 @@ import UserAccountAPI from "../../api/UserAccountAPI";
 import { toast } from 'react-toastify';
 import EditEmployeeModal from "./components/EditEmployeeModal";
 import SweetAlert from 'react-bootstrap-sweetalert';
-
+import Swal from 'sweetalert2';
 
 function Employee() {
   const { officeId } = useParams();
@@ -19,22 +19,22 @@ function Employee() {
 
   const [showAddEmployee, setShowAddEmployee] = useState(false);
   const [showBulkUpload, setShowBulkUpload] = useState(false);
-  const [showEditEmployee, setShowEditEmployee] = useState(false)
-  const [deleteNotify, setDeleteNotify] = useState(false)
+  const [showEditEmployee, setShowEditEmployee] = useState(false);
+  const [deleteNotify, setDeleteNotify] = useState(false);
 
-  const [departments, setDepartments] = useState()
+  const [departments, setDepartments] = useState();
 
-  const [employees, setEmployees] = useState()
-  const [employeeId, setEmployeeId] = useState()
-  const [userAccountId, setUserAccountId] = useState()
-
-  useEffect(() => {
-    getAllDepartment()
-  }, [])
+  const [employees, setEmployees] = useState();
+  const [employeeId, setEmployeeId] = useState();
+  const [userAccountId, setUserAccountId] = useState();
 
   useEffect(() => {
-    getAllUserAccountByDivisionIdAndOfficeId()
-  }, [divisionId, officeId])
+    getAllDepartment();
+  }, []);
+
+  useEffect(() => {
+    getAllUserAccountByDivisionIdAndOfficeId();
+  }, [divisionId, officeId]);
 
   const addEmployee = () => {
     setShowAddEmployee(true);
@@ -45,59 +45,74 @@ function Employee() {
   };
 
   const cancelSweetAlert = () => {
-    setDeleteNotify(false)
-  }
+    setDeleteNotify(false);
+  };
 
   const handleEditModal = (id) => {
-    setShowEditEmployee(true)
-    setUserAccountId(id)
-  }
+    setShowEditEmployee(true);
+    setUserAccountId(id);
+  };
 
   const handleDelete = (id) => {
-    setDeleteNotify(true)
-    setEmployeeId(id)
-  }
+    setDeleteNotify(true);
+    setEmployeeId(id);
+  };
 
   const getAllDepartment = async () => {
-    let response = await new departmentAPI().getAllDepartment()
+    let response = await new departmentAPI().getAllDepartment();
     if (response.ok) {
-      let tempData = response.data.filter(i => i?.divisionId == divisionId)
-      setDepartments(tempData)
+      let tempData = response.data.filter(i => i?.divisionId == divisionId);
+      setDepartments(tempData);
     } else {
-      alert('err')
+      alert('err');
     }
-  }
+  };
+
+  const handleDeleteEmployee = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#35482e",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("Deleting employee...");
+        deleteUserAccount();
+      }
+    });
+  };
 
   const getAllUserAccountByDivisionIdAndOfficeId = async () => {
-    let response = await new UserAccountAPI().getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId)
+    let response = await new UserAccountAPI().getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId);
     if (response.ok) {
-      setEmployees(response.data)
+      setEmployees(response.data);
     } else {
       toast.warning(response?.data?.errorMessage, {
         position: "top-center",
         autoClose: 5000,
       });
     }
-  }
+  };
 
   const deleteUserAccount = async () => {
-    let response = await new UserAccountAPI().deleteUserAccount(employeeId)
+    let response = await new UserAccountAPI().deleteUserAccount(employeeId);
     if(response.ok){
       toast.warning('Successfully deleted employee!', {
         position: "top-center",
         autoClose: 5000,
       });
-      cancelSweetAlert()
-      getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId)
-    }else{
-      alert('err')
+      cancelSweetAlert();
+      getAllUserAccountByDivisionIdAndOfficeId();
+    } else {
+      alert('err');
     }
-  }
+  };
 
-
-  console.log('divisionId:', divisionId)
-  console.log('departments:', officeId)
-
+  console.log('divisionId:', divisionId);
+  console.log('officeId:', officeId);
 
   return (
     <Container fluid className="dashboard">
@@ -124,7 +139,7 @@ function Employee() {
                 </thead>
                 <tbody>
                   {employees?.map((employee) => (
-                    <tr>
+                    <tr key={employee.id}>
                       <td>{employee.employeeId}</td>
                       <td>{employee.firstName} {employee.middleName} {employee.lastName}</td>
                       <td>{employee.emailAddress}</td>
@@ -148,11 +163,11 @@ function Employee() {
         confirmBtnText="Yes, delete it!"
         confirmBtnBsStyle="danger"
         title="Are you sure?"
-        onConfirm={() => deleteUserAccount()}
+        onConfirm={handleDeleteEmployee}
         onCancel={cancelSweetAlert}
         focusCancelBtn
-          >
-            You will not be able to recover this Division!
+      >
+        You will not be able to recover this Division!
       </SweetAlert>
     </Container>
   );

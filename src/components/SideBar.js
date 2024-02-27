@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SideBarData } from "./SideBarData";
 import SubMenu from "./SubMenu";
-import { Dropdown } from "react-bootstrap";
 import SDC from '../assets/images/SDC.png'
 // import user from "../../assets/icons/user.svg";
 // import school from "../../assets/icons/logo.png";
@@ -98,6 +97,7 @@ const SideBar = () => {
             <Dropdown.Item onClick={() => logout()}> Log Out</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown> */}
+        <span className="logout" onClick={logout}><FontAwesomeIcon icon={faRightFromBracket} /> <span>Logout</span></span>
       </Nav>
       <SidebarNav sideBar={sideBar} onMouseLeave={closeSideBar}>
         <SidebarWrap className="school-wrap">
@@ -112,6 +112,7 @@ const SideBar = () => {
               <SubMenu item={item} key={index} closeSideBar={closeSideBar} />
             );
           })}
+          
         </SidebarWrap>
       </SidebarNav>
     </>

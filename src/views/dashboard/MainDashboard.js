@@ -4,7 +4,7 @@ import CID from "../../assets/images/CID.png";
 import SGOD from "../../assets/images/SGOD.png";
 import OSDS from "../../assets/images/OSDS.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSitemap } from "@fortawesome/free-solid-svg-icons";
+import { faSitemap, faBuilding, faRoute } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 
 export default function MainDashboard() {
@@ -14,14 +14,14 @@ export default function MainDashboard() {
     <Container fluid className="main-dashboard">
       <Row className="row-1">
         <Col className="display-total" sm={12} md={6}>
-          <div className="total">45</div>
+          <div className="total">45 <FontAwesomeIcon icon={faBuilding} /></div>
           <div className="total-text">
             <span>Total Employees</span> <br />
             <span>Inside the Office</span>
           </div>
         </Col>
         <Col className="display-total">
-          <div className="total">45</div>
+          <div className="total">45 <FontAwesomeIcon icon={faRoute} /></div>
           <div className="total-text">
             <span>Total Employees</span> <br />
             <span>Outside the Office</span>

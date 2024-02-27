@@ -8,6 +8,7 @@ import departmentAPI from '../../api/DepartmentAPI';
 import { toast } from 'react-toastify';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditOfficeModal from './components/EditOfficeModal';
+import Swal from 'sweetalert2'
 
 
 function Offices() {

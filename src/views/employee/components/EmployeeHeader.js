@@ -1,6 +1,8 @@
 import React from 'react'
 import { Button} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bulkUpload, divisionId}) {
   const history = useHistory();
@@ -18,7 +20,7 @@ function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bul
     <h1 className="dept-name">OFFICE EMPLOYEES</h1>
     <div className="reports-header">
       <div >
-      <Button className="btn-r" onClick={handleBackButton}>Back</Button>
+      <Button onClick={handleBackButton}><FontAwesomeIcon icon={faArrowLeftLong} /> Back</Button> &nbsp;
       </div>
       <div className="btn-group-header" >
         <Button className="btn-r" onClick={addEmployee}>Create Employee</Button>

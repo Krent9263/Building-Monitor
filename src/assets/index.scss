@@ -251,7 +251,7 @@
           font-size: 20px;
           margin: 20px 0px;
           .logo {
-            width: 40px;
+            font-size: 30px;
             margin-left: 10px;
           }
           .h-header-title {
@@ -560,4 +560,70 @@
     position: sticky;
     top: 0; /* Don't forget this, required for the stickiness */
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+  }
+
+  .qr-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    // background-color: #35482e;
+    .box {
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+      width: 700px;
+      background-color: #F5F5F5 !important;
+      padding: 50px 10px;
+      border-radius: 10px;
+      // border: 1px solid #000000;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+      .qr-gen {
+        // background-color: #918484;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .qr {
+          height: 400px;
+          width: 400px;
+          border: 1px solid #000000;
+          padding: 10px 10px;
+          border-radius: 10px;
+        }
+        .d-btn {
+          border: 1px solid #000000;
+          padding: 10px 10px;
+          border-radius: 10px;
+          text-align: none !important;
+          font-style: none !important;
+          background-color: #35482e !important;
+          color: #F5F5F5 !important;
+        }
+      }
+      .generator {
+        width: 600px;
+        // background-color: #918484;
+      }
+    }
+  }
+
+  .back {
+    color: #35482e;
+    border: 1px solid #000000;
+  }
+
+  .logout {
+    font-size: 25px;
+    padding-right: 10px;
+    color: #fff;
+    cursor: pointer;
+    &:hover {
+      font-size: 27px;
+    }
   }

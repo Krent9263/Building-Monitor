@@ -5,6 +5,8 @@ import IN from "../../assets/images/icons/arrow-in.svg";
 import OUT from "../../assets/images/icons/arrow-out.svg";
 import Check from "../../assets/images/icons/circle-check-in.svg";
 import Checkout from "../../assets/images/icons/circle-check-out.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPersonShelter, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function History() {
   let users = [
@@ -26,13 +28,14 @@ export default function History() {
     <div className="display-history mt-3">
       <div className="container">
         <span className="history-header">
-          <img className="logo" src={IN} alt="" /> <span className="h-header-title">In Scan:</span>
+          <FontAwesomeIcon className="logo" icon={faPersonShelter} />
+          <span className="h-header-title">In Scan:</span>
         </span>
         {users?.map((item, index) => {
           return (
             <div className="teacher">
               <span className="name">
-                <img src={User} className="logo" />{" "}
+                <img src={User} className="logo" />
                 <span className="text-name">
                   {item?.name} <br />
                   <span className="department">{item?.department}</span>
@@ -48,13 +51,14 @@ export default function History() {
       </div>
       <div className="container mt-3">
         <span className="history-header">
-          <img className="logo" src={IN} alt="" /> <span className="h-header-title">Out Scan:</span>
+          <FontAwesomeIcon className="logo" icon={faArrowRightFromBracket} />
+          <span className="h-header-title">Out Scan:</span>
         </span>
         {users?.map((item, index) => {
           return (
             <div className="teacher">
               <span className="name">
-                <img src={User} className="logo" />{" "}
+                <img src={User} className="logo" />
                 <span className="text-name">
                   {item?.name} <br />
                   <span className="department">{item?.department}</span>
@@ -62,7 +66,7 @@ export default function History() {
               </span>
               <span className="out">
                 <img className="logo-in" src={Checkout} alt="OUT" />
-                <span>Inside</span>
+                <span>Outside</span>
               </span>
             </div>
           );
