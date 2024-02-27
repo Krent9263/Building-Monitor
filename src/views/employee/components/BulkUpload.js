@@ -21,7 +21,7 @@ function BulkUpload({setShowBulkUpload, showBulkUpload}) {
       data => {
         let employee = {
           "fileName": file.name,
-          "base64String": `string,${data}`
+          "base64String": data
         };
         setFilesToUpload({ employee });
       }
@@ -34,10 +34,9 @@ function BulkUpload({setShowBulkUpload, showBulkUpload}) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onload = () => resolve(reader.result);
       reader.onerror = error => reject(error);
     });
-    
   }
 
   

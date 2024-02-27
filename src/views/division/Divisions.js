@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Row, Col, Container, Table, Button } from 'react-bootstrap'
 import Header from '../dashboard/Header';
 import SideNav from '../dashboard/SideNav';
@@ -13,10 +13,14 @@ import { toast } from 'react-toastify';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import CreatePesonnelModal from './components/CreatePesonnelModal';
 import departmentAPI from '../../api/DepartmentAPI';
+import { UserContext } from '../../context/UserContext'
+
 
 
 function Divisions() {
   const history = useHistory();
+  const userContext = useContext(UserContext);
+  const {user} = userContext.data
 
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -58,7 +62,6 @@ function Divisions() {
     let response = await new DivisionAPI().getAllDivision()
     if (response.ok) {
       setDivisions(response.data)
-      console.log('div:', response.data)
     } else {
       console.log('err')
     }
@@ -87,7 +90,7 @@ function Divisions() {
     }
   }
 
-
+console.log('user:', user)
 
   return (
     <Container fluid className="dashboard">
