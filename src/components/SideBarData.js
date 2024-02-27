@@ -11,10 +11,6 @@ import {
   faDisplay
 } from "@fortawesome/free-solid-svg-icons";
 
-const logout = async () => {
-  await window.localStorage.clear()
-  window.location.href = "/";
-}
 
 export const SideBarData = [
   {
@@ -43,10 +39,5 @@ export const SideBarData = [
     title: "QR Screen",
     path: "/qrscreen",
     icon: <FontAwesomeIcon icon={faDisplay} />
-  },
-  // {
-  //   title: "Log out",
-  //   path: "/",
-  //   icon: <FontAwesomeIcon icon={faRightFromBracket} />
-  // },
+  }
 ];
