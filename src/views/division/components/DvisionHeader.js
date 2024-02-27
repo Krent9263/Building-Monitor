@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function DvisionHeader({ setShowCreateModal }) {
+function DvisionHeader({ setShowCreateModal, handlePersonnelModal }) {
   const history = useHistory();
 
   const handleBackButton = () => {
@@ -19,6 +19,9 @@ function DvisionHeader({ setShowCreateModal }) {
           <Button onClick={handleBackButton}><FontAwesomeIcon icon={faArrowLeftLong} /> Back</Button> &nbsp;
         </div>
         <div className="btn-group-header" style={{ float: "left" }}>
+          <Button className="btn-r" onClick={() => handlePersonnelModal()} >
+            Add Personnel
+          </Button>
           <Button className="btn-r" onClick={() => setShowCreateModal(true)}>
             Create Division
           </Button>

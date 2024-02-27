@@ -1,8 +1,59 @@
-import React from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import React, { useState } from "react";
+import { Modal, Button, Form, useAccordionButton } from "react-bootstrap";
+import UserAccountAPI from "../../../api/UserAccountAPI";
+import { toast } from 'react-toastify';
 
 function BulkUpload({setShowBulkUpload, showBulkUpload}) {
-	const handleClose = () => setShowBulkUpload(false);
+  const [filesToUpload, setFilesToUpload] = useState()
+
+	const handleClose = () => {
+    setShowBulkUpload(false);
+    setFilesToUpload()
+  }
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    handleGetUploadedFile(file);
+  }
+
+  const handleGetUploadedFile = (file) => {
+    getBase64(file).then(
+      data => {
+        let employee = {
+          "fileName": file.name,
+          "base64String": data
+        };
+        setFilesToUpload({ employee });
+      }
+    ).catch(error => {
+      console.error('Error converting file to base64:', error);
+    });
+  }
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  
+
+  console.log('filesToUpload:', filesToUpload)
+
+  const uploadEmployees = async (e) => {
+    e.preventDefault()
+    let response = await new UserAccountAPI().uploadEmployees(filesToUpload)
+    if(response.ok){
+      handleClose()
+      toast.success("Successfully uploaded the employee list.")
+    }else{
+      toast.error("Something went wrong while uploading employee list.")
+    }
+  }
+
   return (
     <>
       <Modal
@@ -15,11 +66,11 @@ function BulkUpload({setShowBulkUpload, showBulkUpload}) {
         <Modal.Header closeButton>
           <Modal.Title>Bulk Upload Employee</Modal.Title>
         </Modal.Header>
-        <Form>
+        <Form onSubmit={uploadEmployees} >
           <Modal.Body>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Employee Template</Form.Label>
-              <Form.Control type="file" />
+              <Form.Control accept=".xls,.xlsx," type="file" onChange={handleFileChange} />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>

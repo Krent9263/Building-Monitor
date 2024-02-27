@@ -4,11 +4,11 @@ import { useHistory } from "react-router-dom";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bulkUpload}) {
+function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bulkUpload, divisionId}) {
   const history = useHistory();
 
   const handleBackButton = () => {
-    history.push("/divisions/office")
+    history.push(`/divisions/${divisionId}/office/`)
   }
 
   // const handleCreateOffice = () => {
