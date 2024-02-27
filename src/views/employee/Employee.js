@@ -64,7 +64,7 @@ function Employee() {
       let tempData = response.data.filter(i => i?.divisionId == divisionId);
       setDepartments(tempData);
     } else {
-      alert('err');
+      console.error('Something went wrong while fetching Departments');
     }
   };
 
