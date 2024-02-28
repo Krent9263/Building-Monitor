@@ -20,32 +20,32 @@ export default function MainDashboard() {
   const history = useHistory();
 
   const [departments, setDepartments] = useState();
-  const [divisions, setDivisions] = useState()
-  
+  const [divisions, setDivisions] = useState();
 
   useEffect(() => {
     getAllDepartment();
-    getAllDivision()
-  }, []);
+    getAllDivision();
+  }, [user]);
 
   const getAllDepartment = async () => {
-    let response = await new departmentAPI().getAllDepartment()
+    let response = await new departmentAPI().getAllDepartment();
     if (response.ok) {
-      let tempData = response?.data?.filter(item => item?.divisionId == user?.divisionId)
-      setDepartments(tempData)
-    }else{
-      console.log('err')
+      let tempData = response?.data?.filter(
+        (item) => item?.divisionId == user?.divisionId
+      );
+      setDepartments(tempData);
+    } else {
+      console.log("err");
     }
-  }
+  };
 
   const getAllDivision = async () => {
-    let response = await new DivisionAPI().getAllDivision()
-    if(response?.ok){
-      setDivisions(response?.data)
+    let response = await new DivisionAPI().getAllDivision();
+    if (response?.ok) {
+      setDivisions(response?.data);
     }
-    console.log('err')
-  }
-
+    console.log("err");
+  };
 
   return (
     <Container fluid className="main-dashboard">
@@ -81,17 +81,17 @@ export default function MainDashboard() {
                 className="see-all"
                 onClick={() => history.push("/divisions")}
               >
-                See all division
+                See all
               </span>
             </span>
             <div className="departments">
-              {divisions?.map(item => {
-                return(
+              {divisions?.map((item) => {
+                return (
                   <div className="icon-holder">
-                  <img className="icons" src={CID} alt="" />
-                  <span className="titles">{item?.divisionName}</span>
-                </div>
-                )
+                    <img className="icons" src={CID} alt="" />
+                    <span className="titles">{item?.divisionName}</span>
+                  </div>
+                );
               })}
             </div>
           </div>
@@ -108,7 +108,7 @@ export default function MainDashboard() {
                 className="see-all"
                 onClick={() => history.push(`/office/${user?.divisionId}`)}
               >
-                See all offices
+                See all
               </span>
             </span>
             <div className="table-div">
