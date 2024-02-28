@@ -12,6 +12,7 @@ import moment from "moment";
 import { toast } from 'react-toastify';
 
 
+
 function QRScreen() {
 
   const [qrCode, setQrCode] = useState(null)
@@ -22,7 +23,7 @@ function QRScreen() {
   const [usersInSide, setUsersInSide] = useState()
   const [usersOutSide, setUsersOutSide] = useState()
 
-  const dateCompareNow = moment().format('MMMM Do YYYY h:mm a')
+  const dateCompareNow = moment().format('MMMM DD YYYY h:mm a')
 
 
   useEffect(() => {
@@ -84,13 +85,15 @@ function QRScreen() {
   }
 
   const getLogStatus = async (data) => {
-    let res = await new QrCodeAPI().getLogStatus()
+    let res = await new QrCodeAPI().getRecentLog()
     if (res.ok) {
       console.log('data:', data)
       let tempDataInSide = []
       let tempDataInOutSide = []
       data?.map(item => {
-        let tempInSide = res?.data?.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate))?.find(i => i?.userAccountId == item?.id && i?.status == true)
+
+        let tempInSide = res?.data
+          ?.find(i => i?.userAccountId == item?.id && i?.status == true);
         let tempOutSide = res?.data?.sort((a, b) => new Date(b.updatedDate) - new Date(a.updatedDate))?.find(i => i?.userAccountId == item?.id && i?.status == false)
         if (tempInSide !== undefined) {
           return tempDataInSide.push(tempInSide)
@@ -99,8 +102,7 @@ function QRScreen() {
           return tempDataInOutSide.push(tempOutSide)
         }
       })
-
-      setAllUsersLog(res.data)
+      console.log('tempDataInSide:', tempDataInSide)
       setUsersInSide(tempDataInSide)
       setUsersOutSide(tempDataInOutSide)
     } else {
@@ -148,27 +150,29 @@ function QRScreen() {
                 flexDirection: "column",
               }}
             >
-              {usersInSide?.slice(0, 3)
-              ?.map((item) => {
-                return (
-                  <div className="users mt-2">
-                    <div className="column1">
-                      <div className="frame">
-                        <img className="user-img" src={User} alt="" />
+              {usersInSide
+                ?.sort((a, b) => b?.id - a?.id)
+                ?.slice(0, 3)
+                ?.map((item) => {
+                  return (
+                    <div className="users mt-2">
+                      <div className="column1">
+                        <div className="frame">
+                          <img className="user-img" src={User} alt="" />
+                        </div>
+                      </div>
+                      <div className="column2">
+                        <span>{item?.firstName} {item?.lastName}</span>
+                        <span className="department">{moment(item?.createdDate).format("MMMM DD YYYY h:mm a")}</span>
+
+                      </div>
+                      <div className="column3">
+                        <img className="check-img" src={Check} alt="" />
+                        <span className="success">Inside</span>
                       </div>
                     </div>
-                    <div className="column2">
-                      <span>{item?.firstName} {item?.lastName}</span>
-                      <span className="department">{moment(item?.createdDate).format("MMMM Do YYYY h:mm a")}</span>
-
-                    </div>
-                    <div className="column3">
-                      <img className="check-img" src={Check} alt="" />
-                      <span className="success">Inside</span>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </div>
           <div className="in">
@@ -184,6 +188,7 @@ function QRScreen() {
               }}
             >
               {usersOutSide
+                ?.sort((a, b) => b?.id - a?.id)
                 ?.slice(0, 3)
                 ?.map((item) => {
                   return (
@@ -195,7 +200,7 @@ function QRScreen() {
                       </div>
                       <div className="column2">
                         <span>{item?.firstName} {item?.lastName}</span>
-                        <span className="department">{moment(item?.updatedDate).format("MMMM Do YYYY h:mm a")}</span>
+                        <span className="department">{moment(item?.updatedDate).format("MMMM DD YYYY h:mm a")}</span>
                       </div>
                       <div className="column3">
                         <img className="check-img" src={Checkout} alt="" />

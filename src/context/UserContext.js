@@ -25,8 +25,13 @@ export class UserContextProvider extends Component {
         case "Administrator":
           user.userAccountId = user.userAccountId
           user.firstName =  user?.firstName
-          user.isSchoolAdmin = true
+          user.isSystemAdmin = true
           break;
+          case "Office Admin":
+            user.userAccountId = user.userAccountId
+            user.firstName =  user?.firstName
+            user.isOfficeAdmin = true
+            break;
         default:
           user.name = 'No name'
           break;
