@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 
-function FilterModal({ showFilterModal, setShowFilterModal }) {
+function FilterModal({ showFilterModal, setShowFilterModal, user }) {
   const handleClose = () => setShowFilterModal(false);
+
+  console.log('USER:', user)
+
   return (
     <>
       <Modal
@@ -17,6 +20,7 @@ function FilterModal({ showFilterModal, setShowFilterModal }) {
         </Modal.Header>
         <Form>
           <Modal.Body>
+            {user?.roleId === 1 ? 
             <Row>
               <Col>
                 <FloatingLabel controlId="floatingSelect" label="Division">
@@ -41,6 +45,15 @@ function FilterModal({ showFilterModal, setShowFilterModal }) {
                 </FloatingLabel>
               </Col>
             </Row>
+            :
+            <Row>
+              <Col>
+                <FloatingLabel controlId="floatingSelect" label="Date">
+                  <Form.Control type="date" />
+                </FloatingLabel>
+              </Col>
+            </Row>
+            }
           </Modal.Body>
           <Modal.Footer>
             <Button type="submit" variant="primary">

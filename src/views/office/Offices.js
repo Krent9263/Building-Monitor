@@ -48,8 +48,8 @@ function Offices() {
     if (response.ok) {
       let tempData = response?.data?.filter(item => item?.divisionId == divisionId)
       setDepartments(tempData)
-    }else{
-      alert('err')
+    } else {
+      console.error('Something went wrong while fetching offices')
     }
   }
 
