@@ -247,14 +247,16 @@
       .container {
         box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
         border-radius: 5px;
-        padding: 20px 15px;
+        padding: 10px 15px;
+        height: 400px;
         .history-header {
           display: flex;
           flex-wrap: wrap;
           gap: 20px;
           align-items: center;
           font-size: 20px;
-          margin: 20px 0px;
+          margin: 10px 0px 20px 0px;
+          // background-color: pink;
           .logo {
             font-size: 15px;
             margin-left: 10px;
@@ -633,4 +635,12 @@
     &:hover {
       font-size: 27px;
     }
+  }
+
+  .text-center {
+    display: flex;
+    // background-color: pink !important;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
   }

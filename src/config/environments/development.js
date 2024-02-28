@@ -7,7 +7,7 @@ const developmentConfig = {
   // SIGNALR_URL: "https://rtc-dev-v3.tekteachlms.com/tekteach"
   // API: 'https://marketplace-api.tekteachlms.com',
     //  API: 'https://projectinout.tekteachlms.com'
-     API: 'https://localhost:5001'
+     API: 'https://localhost:44319'
 
 
 };
