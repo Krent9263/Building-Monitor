@@ -10,7 +10,7 @@ function CreatePesonnelModal({
   departments,
 
 }) {
-  const [userName, setUserName] = useState('')
+  const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -33,7 +33,7 @@ function CreatePesonnelModal({
   const createUserAccount = async (e) => {
     e.preventDefault()
     let data = {
-      "username": userName,
+      "username": username,
       "password": password,
       "roleId": 2,
       "firstName": firstName,
@@ -81,7 +81,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="username"
               >
-                <Form.Control type="text" placeholder="" value={userName} onChange={(e) => setUserName(e.target.value)}  />
+                <Form.Control type="text" placeholder="" value={username} onChange={(e) => setUserName(e.target.value)}  />
               </FloatingLabel>
             </Col>
             <Col>
