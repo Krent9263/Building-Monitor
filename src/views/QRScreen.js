@@ -78,7 +78,7 @@ function QRScreen() {
   const getAllUsers = async () => {
     let res = await new Auth().getAllUsers()
     if (res.ok) {
-      console.log('res.data:', res.data);
+      console.log('res.data1:', res.data?.length);
 
       setAllUsers(res.data)
     }
@@ -87,7 +87,6 @@ function QRScreen() {
   const getLogStatus = async (data) => {
     let res = await new QrCodeAPI().getRecentLog()
     if (res.ok) {
-      console.log('data:', data)
       let tempDataInSide = []
       let tempDataInOutSide = []
       data?.map(item => {
@@ -102,9 +101,9 @@ function QRScreen() {
           return tempDataInOutSide.push(tempOutSide)
         }
       })
-      console.log('tempDataInSide:', tempDataInSide)
       setUsersInSide(tempDataInSide)
       setUsersOutSide(tempDataInOutSide)
+      console?.log('res.data1', allUsers?.length -  tempDataInSide?.length)
     } else {
     }
   }
