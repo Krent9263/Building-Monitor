@@ -86,7 +86,7 @@ function Divisions() {
     if(response.ok){
       setDepartments(response.data)
     }else{
-      alert('err12123')
+      // alert('err12123')
     }
   }
 

@@ -16,4 +16,11 @@ export default class QrCodeAPI extends Base {
     })
   }
 
+  getRecentLog = async () => {
+    return this.sendRequest({
+      path:`/api/DeviceLog/recent`,
+      method:'GET'
+    })
+  }
+
 }
