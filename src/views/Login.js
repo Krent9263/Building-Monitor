@@ -49,7 +49,7 @@ const LoginForm = () => {
           <div className="img-holder mt-3">
             <img src={SDC} alt="" className="img-sdc" />
           </div>
-          <div className="text-center lgn-txt">
+          <div className="lgn-txt">
             <p>Login</p>
           </div>
           <Form onSubmit={handleLogin} >

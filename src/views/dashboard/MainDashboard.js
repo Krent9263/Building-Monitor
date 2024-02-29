@@ -12,24 +12,40 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import departmentAPI from "../../api/DepartmentAPI";
+import DivisionAPI from "../../api/DivisionAPI";
 
 export default function MainDashboard() {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   const history = useHistory();
-  const [departments, setDepartments] = useState();
 
-  const getAllDepartment = async () => {
-    let response = await new departmentAPI().getAllDepartment()
-    if (response.ok) {
-      let tempData = response?.data?.filter(item => item?.divisionId == user?.divisionId)
-      setDepartments(tempData)
-    }
-  }
+  const [departments, setDepartments] = useState();
+  const [divisions, setDivisions] = useState();
 
   useEffect(() => {
     getAllDepartment();
-  }, []);
+    getAllDivision();
+  }, [user]);
+
+  const getAllDepartment = async () => {
+    let response = await new departmentAPI().getAllDepartment();
+    if (response.ok) {
+      let tempData = response?.data?.filter(
+        (item) => item?.divisionId == user?.divisionId
+      );
+      setDepartments(tempData);
+    } else {
+      console.log("err");
+    }
+  };
+
+  const getAllDivision = async () => {
+    let response = await new DivisionAPI().getAllDivision();
+    if (response?.ok) {
+      setDivisions(response?.data);
+    }
+    console.log("err");
+  };
 
   return (
     <Container fluid className="main-dashboard">
@@ -65,22 +81,18 @@ export default function MainDashboard() {
                 className="see-all"
                 onClick={() => history.push("/divisions")}
               >
-                See all division
+                See all
               </span>
             </span>
             <div className="departments">
-              <div className="icon-holder">
-                <img className="icons" src={CID} alt="" />
-                <span className="titles">Office of the President</span>
-              </div>
-              <div className="icon-holder">
-                <img className="icons" src={SGOD} alt="" />
-                <span className="titles">Office of the President</span>
-              </div>
-              <div className="icon-holder">
-                <img className="icons" src={OSDS} alt="" />
-                <span className="titles">Office of the President</span>
-              </div>
+              {divisions?.map((item) => {
+                return (
+                  <div className="icon-holder">
+                    <img className="icons" src={CID} alt="" />
+                    <span className="titles">{item?.divisionName}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </Row>
@@ -96,7 +108,7 @@ export default function MainDashboard() {
                 className="see-all"
                 onClick={() => history.push(`/office/${user?.divisionId}`)}
               >
-                See all offices
+                See all
               </span>
             </span>
             <div className="table-div">
@@ -106,8 +118,6 @@ export default function MainDashboard() {
                     <th>Office ID</th>
                     <th>Office</th>
                     <th>Office Description</th>
-                    {/* <th>Total Employee</th> */}
-                    {/* <th>Action </th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -117,26 +127,6 @@ export default function MainDashboard() {
                         <td>{item?.id}</td>
                         <td>{item?.departmentName}</td>
                         <td>{item?.departmentDescription}</td>
-                        {/* <td className="act-grp-btn">
-                          <Button
-                            onClick={() => handleViewOffice(item?.id)}
-                            variant="primary"
-                          >
-                            View
-                          </Button>
-                          <Button
-                            variant="primary"
-                            onClick={() => handleEdit(item?.id)}
-                          >
-                            Edit
-                          </Button>
-                          <Button
-                            variant="primary"
-                            onClick={() => handleDelete(item?.id)}
-                          >
-                            Delete
-                          </Button>
-                        </td> */}
                       </tr>
                     );
                   })}
