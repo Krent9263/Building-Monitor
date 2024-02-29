@@ -18,7 +18,7 @@ function CreatePesonnelModal({
   const [employeeIdNumber, setEmployeeIdNumber] = useState('')
   const [contactNumber, setContactNumber] = useState()
   const [officeId, setOfficeId] = useState(0)
-  var email = 'gilbert.manucduc@deped.gov.ph'
+  const [email, setEmail] = useState('@deped.com.ph')
 
   const handleClose = () => {
     setShowCreatePersonnelModal(false);
@@ -27,6 +27,7 @@ function CreatePesonnelModal({
     setMiddleName('')
     setEmployeeIdNumber('')
     setContactNumber('')
+    setEmail('@deped.com.ph')
     setOfficeId(0)
   }
 
@@ -79,7 +80,7 @@ function CreatePesonnelModal({
           <Col>
               <FloatingLabel
                 controlId="floatingInput"
-                label="username"
+                label="Username"
               >
                 <Form.Control type="text" placeholder="" value={username} onChange={(e) => setUserName(e.target.value)}  />
               </FloatingLabel>
@@ -87,7 +88,7 @@ function CreatePesonnelModal({
             <Col>
               <FloatingLabel
                 controlId="floatingInput"
-                label="password"
+                label="Password"
               >
                 <Form.Control type="text" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} />
               </FloatingLabel>
@@ -126,7 +127,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="Email"
               >
-                <Form.Control type="email" placeholder="name@example.com" value={email} />
+                <Form.Control type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
               </FloatingLabel>
             </Col>
             <Col>
