@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bulkUpload, divisionId, departmentInfo}) {
+function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bulkUpload, divisionId, departmentInfo, officeId}) {
   const history = useHistory();
 
   const handleBackButton = () => {
@@ -14,6 +14,8 @@ function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bul
   // const handleCreateOffice = () => {
   //   setShowCreateModal(true);
   // }
+
+  console.log('departmentInfo',officeId , departmentInfo)
 
   return (
     <div>

@@ -70,7 +70,7 @@ function Employee() {
   };
 
   const getDepartmentById = async () => {
-    let response = await new departmentAPI().getDepartmentById(divisionId)
+    let response = await new departmentAPI().getDepartmentById(officeId)
     if (response.ok) {
       setDepartmentInfo(response.data)
     } else {
@@ -118,7 +118,7 @@ function Employee() {
         <Col>
           <div className="reports">
             <EditEmployeeModal setUserAccountId={setUserAccountId} userAccountId={userAccountId} divisionId={divisionId} getAllUserAccountByDivisionIdAndOfficeId={getAllUserAccountByDivisionIdAndOfficeId} officeId={officeId} employees={employees} departments={departments} employeeId={employeeId} setEmployeeId={setEmployeeId} showEditEmployee={showEditEmployee} setShowEditEmployee={setShowEditEmployee} />
-            <EmployeeHeader departmentInfo={departmentInfo} divisionId={divisionId} setShowBulkUpload={setShowBulkUpload} setShowAddEmployee={setShowAddEmployee} addEmployee={addEmployee} bulkUpload={bulkUpload} />
+            <EmployeeHeader officeId={officeId} departmentInfo={departmentInfo} divisionId={divisionId} setShowBulkUpload={setShowBulkUpload} setShowAddEmployee={setShowAddEmployee} addEmployee={addEmployee} bulkUpload={bulkUpload} />
             <BulkUpload showBulkUpload={showBulkUpload} setShowBulkUpload={setShowBulkUpload} />
             <AddEmployeeModal divisionId={divisionId} getAllUserAccountByDivisionIdAndOfficeId={getAllUserAccountByDivisionIdAndOfficeId} officeId={officeId} departments={departments} showAddEmployee={showAddEmployee} setShowAddEmployee={setShowAddEmployee} />
             <div className="table-container">
