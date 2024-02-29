@@ -158,6 +158,7 @@ function EditEmployeeModal({
           <Modal.Body>
             {showUploadProfile && (
               <Row className="mb-3">
+                <div className="img-profile-img"><img src={tempProfileImage} /></div>
                 <Form>
                   <Form.Control
                     accept="image/png, image/gif, image/jpeg"
