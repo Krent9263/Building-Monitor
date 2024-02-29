@@ -14,6 +14,7 @@ function EditEmployeeModal({
   officeId,
   divisionId,
   getAllUserAccountByDivisionIdAndOfficeId,
+  setUserAccountId
 }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -34,6 +35,7 @@ function EditEmployeeModal({
     setMiddleName("");
     setEmployeeIdNumber("");
     setContactNumber("");
+    setUserAccountId()
   };
 
   const handleEmployeeData = () => {
