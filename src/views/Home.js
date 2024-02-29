@@ -54,6 +54,8 @@ function Home() {
       let tempDataInSide = [];
       let tempDataInOutSide = [];
       data?.map((item) => {
+        let tempInsideByDivision = res?.data?.find((i) => i?.userAccountId == item?.id && i?.status == true && i?.divisionId == user?.divisionId)
+        console.log('TEMPDATA', item)
         let tempInSide = res?.data?.find(
           (i) => i?.userAccountId == item?.id && i?.status == true
         );
@@ -74,6 +76,8 @@ function Home() {
       console.log("err");
     }
   };
+
+  console.log('USER:', user)
 
   return (
     <Container fluid className="dashboard">

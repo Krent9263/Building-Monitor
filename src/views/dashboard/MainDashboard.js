@@ -62,7 +62,8 @@ export default function MainDashboard({allUsers, usersInSide, userByDivision}) {
         </Col>
         <Col className="display-total">
           <div className="total">
-            {allUsers?.length - usersInSide?.length} <FontAwesomeIcon icon={faRoute} />
+            {user?.isSystemAdmin && <> {allUsers?.length - usersInSide?.length} <FontAwesomeIcon icon={faRoute} /> </>}
+            {user?.isOfficeAdmin && <> {userByDivision - usersInSide?.length} <FontAwesomeIcon icon={faRoute} />  </>}
           </div>
           <div className="total-text">
             <span>Total Employees</span> <br />
