@@ -14,7 +14,7 @@ function EditEmployeeModal({
   officeId,
   divisionId,
   getAllUserAccountByDivisionIdAndOfficeId,
-  setUserAccountId
+  setUserAccountId,
 }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -22,7 +22,11 @@ function EditEmployeeModal({
   const [employeeIdNumber, setEmployeeIdNumber] = useState("");
   const [contactNumber, setContactNumber] = useState();
   const [departmentId, setDepartmentId] = useState(officeId);
-  const [email, setEmail] = useState('@deped.com.ph')
+  const [email, setEmail] = useState("@deped.com.ph");
+  const [showUploadProfile, setShowUploadProfile] = useState(false);
+  const [filesToUpload, setFilesToUpload] = useState("");
+  const [profileDataImage, setProfileDataImage] = useState({});
+  const [tempProfileImage, setTempProfileImage] = useState("");
 
   useEffect(() => {
     handleEmployeeData();
@@ -35,8 +39,8 @@ function EditEmployeeModal({
     setMiddleName("");
     setEmployeeIdNumber("");
     setContactNumber("");
-    setEmail('@deped.com.ph')
-    setUserAccountId()
+    setEmail("@deped.com.ph");
+    setUserAccountId();
   };
 
   const handleEmployeeData = () => {
@@ -49,7 +53,7 @@ function EditEmployeeModal({
         setMiddleName(item?.middleName);
         setEmployeeIdNumber(item?.employeeId);
         setContactNumber(item?.contactNumber);
-        setEmail(item?.emailAddress)
+        setEmail(item?.emailAddress);
       });
   };
 
@@ -82,6 +86,60 @@ function EditEmployeeModal({
     }
   };
 
+  const uploadProfile = () => {
+    setShowUploadProfile(!showUploadProfile);
+  };
+
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   handleGetUploadedFile(file);
+  // };
+
+  const handlefilesUpload = (file) => {
+    if (file != "") {
+      getBase64(file[0]).then((data) => {
+        setTempProfileImage(data);
+        // let toAdd = {
+        //   fileName: file[0].name,
+        //   base64String: data,
+        // };
+        let toAdd = {
+          id: userAccountId,
+          profileImage: {
+            fileName: file[0].name,
+            base64String: data,
+          },
+        };
+        setProfileDataImage(toAdd);
+      });
+    }
+  };
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  console.log("filesToUpload:", filesToUpload);
+
+  const uploadProfileImage = async (e) => {
+    e.preventDefault();
+    let response = await new UserAccountAPI().uploadEmployeeProfile(
+      userAccountId,
+      profileDataImage
+    );
+    if (response.ok) {
+      handleClose();
+      toast.success("Successfully uploaded the employee list.");
+    } else {
+      toast.error("Something went wrong while uploading employee list.");
+    }
+  };
+
   console.log("userAccnoutId:", userAccountId);
 
   return (
@@ -98,6 +156,18 @@ function EditEmployeeModal({
         </Modal.Header>
         <Form onSubmit={updateUserAccount}>
           <Modal.Body>
+            {showUploadProfile && (
+              <Row>
+                <Form>
+                  <Form.Control
+                    accept="image/png, image/gif, image/jpeg"
+                    id="inputFile"
+                    type="file"
+                    onChange={(e) => handlefilesUpload(e.target.files)}
+                  />
+                </Form>
+              </Row>
+            )}
             <Row>
               <Col>
                 <FloatingLabel controlId="floatingInput" label="First Name">
@@ -199,6 +269,11 @@ function EditEmployeeModal({
             {/* <Button variant="secondary" onClick={handleClose}>
               Close
             </Button> */}
+            {!showUploadProfile ? (
+              <Button onClick={uploadProfile}>Open Upload Profile</Button>
+            ) : (
+              <Button onClick={uploadProfileImage}>Upload Profile Image</Button>
+            )}
             <Button type="submit" variant="primary">
               Submit
             </Button>

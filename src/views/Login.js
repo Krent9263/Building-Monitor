@@ -53,7 +53,7 @@ const LoginForm = () => {
           </div> */}
           <Form onSubmit={handleLogin} className="mt-4">
             <div className="form-holder">
-              <Form.Label>EMAIL</Form.Label>
+              <Form.Label>USERNAME</Form.Label>
               <Form.Control
                 type="text"
                 className="form-control"

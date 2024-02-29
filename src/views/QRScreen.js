@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import IN from "../assets/images/icons/arrow-in.svg";
 import OUT from "../assets/images/icons/arrow-out.svg";
 import User from "../assets/images/icons/user-solid.svg";
@@ -41,7 +41,7 @@ function QRScreen() {
   const qrCodeScanner = async () => {
     let data = {
       deviceId: 1,
-      qrCode: qrCode,
+      qrCode: '12345-151',
     };
     let res = await new QrCodeAPI().qrCodeScanner(data);
     if (res.ok) {
@@ -104,6 +104,8 @@ function QRScreen() {
     }
   };
 
+  console.log('userOUTSIDE', usersOutSide)
+
   return (
     <Container fluid>
       <Row className="qr-screen">
@@ -116,7 +118,7 @@ function QRScreen() {
           <div className="display">
             <div className="id">
               <div className="img-holder">
-                <img className="img" src={User} alt="" />
+                <img className="img" src={userInfo?.profileImage === null ? User : userInfo?.profileImage} alt="" />
               </div>
               {userInfo != null ? (
                 <div className="details-holder">
@@ -131,6 +133,7 @@ function QRScreen() {
                   <div className="name">Please Scan Your QR Code</div>
                   <div className="office"></div>
                   <div className="department"></div>
+                  <Button onClick={qrCodeScanner}>123</Button>
                 </div>
               )}
             </div>
@@ -157,7 +160,7 @@ function QRScreen() {
                     <div className="users mt-2">
                       <div className="column1">
                         <div className="frame">
-                          <img className="user-img" src={User} alt="" />
+                          <img className="user-img" src={usersInSide?.profileImage} alt="" />
                         </div>
                       </div>
                       <div className="column2">
@@ -201,7 +204,7 @@ function QRScreen() {
                     <div className="users mt-2">
                       <div className="column1">
                         <div className="frame">
-                          <img className="user-img" src={User} alt="" />
+                          <img className="user-img" src={usersOutSide?.profileImage} alt="" />
                         </div>
                       </div>
                       <div className="column2">

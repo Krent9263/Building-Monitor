@@ -31,11 +31,19 @@ export default class UserAccountAPI extends Base {
   }
 
   uploadEmployees = async (data) => {
-    return (this.sendRequest({
+    return this.sendRequest({
       path: `/api/User/uploadEmployeeViaExcel`,
       method: 'POST',
       data
-    }))
+    })
+  }
+
+  uploadEmployeeProfile = async (id, data) => {
+    return this.sendRequest ({
+      path: `/api/User/${id}/uploadimage`,
+      method: 'PUT',
+      data
+    })
   }
 
 }
