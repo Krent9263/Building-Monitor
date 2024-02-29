@@ -14,6 +14,7 @@ function EditEmployeeModal({
   officeId,
   divisionId,
   getAllUserAccountByDivisionIdAndOfficeId,
+  setUserAccountId
 }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -35,6 +36,7 @@ function EditEmployeeModal({
     setEmployeeIdNumber("");
     setContactNumber("");
     setEmail('@deped.com.ph')
+    setUserAccountId()
   };
 
   const handleEmployeeData = () => {

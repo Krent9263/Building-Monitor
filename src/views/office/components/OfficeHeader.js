@@ -5,7 +5,7 @@ import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserContext } from "../../../context/UserContext";
 
-function OfficeHeader({ setShowCreateModal }) {
+function OfficeHeader({ setShowCreateModal, division }) {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   const history = useHistory();
@@ -20,7 +20,7 @@ function OfficeHeader({ setShowCreateModal }) {
 
   return (
     <div>
-      <h1 className="dept-name">DIVISION OFFICE</h1>
+      <h1 className="dept-name">{division?.divisionName} Offices</h1>
       <div className="reports-header">
         {user?.roleId != 1 ? (
           <></>

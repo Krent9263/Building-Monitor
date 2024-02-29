@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bulkUpload, divisionId}) {
+function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bulkUpload, divisionId, departmentInfo}) {
   const history = useHistory();
 
   const handleBackButton = () => {
@@ -17,7 +17,7 @@ function EmployeeHeader({setShowBulkUpload, setShowAddEmployee, addEmployee, bul
 
   return (
     <div>
-    <h1 className="dept-name">OFFICE EMPLOYEES</h1>
+    <h1 className="dept-name">{departmentInfo?.departmentName} Employees</h1>
     <div className="reports-header">
       <div >
       <Button onClick={handleBackButton}><FontAwesomeIcon icon={faArrowLeftLong} /> Back</Button> &nbsp;
