@@ -89,7 +89,8 @@ export default function MainDashboard({allUsers, usersInSide, userByDivision, us
               </span>
             </span>
             <div className="departments">
-              {divisions?.map((item) => {
+              {divisions?.slice(0, 3)
+              .map((item) => {
                 return (
                   <div className="icon-holder">
                     <img className="icons" src={CID} alt="" />

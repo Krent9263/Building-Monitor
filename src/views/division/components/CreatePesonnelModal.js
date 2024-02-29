@@ -82,7 +82,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="Username"
               >
-                <Form.Control type="text" placeholder="" value={username} onChange={(e) => setUserName(e.target.value)}  />
+                <Form.Control required  type="text" placeholder="" value={username} onChange={(e) => setUserName(e.target.value)}  />
               </FloatingLabel>
             </Col>
             <Col>
@@ -90,7 +90,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="Password"
               >
-                <Form.Control type="text" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <Form.Control required type="text" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} />
               </FloatingLabel>
             </Col>
           </Row>
@@ -100,7 +100,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="First Name"
               >
-                <Form.Control type="text" placeholder="" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                <Form.Control required type="text" placeholder="" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
               </FloatingLabel>
             </Col>
             <Col>
@@ -108,7 +108,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="Middle Name"
               >
-                <Form.Control type="text" placeholder="" value={middleName} onChange={(e) => setMiddleName(e.target.value)} />
+                <Form.Control required type="text" placeholder="" value={middleName} onChange={(e) => setMiddleName(e.target.value)} />
               </FloatingLabel>
             </Col>
             <Col>
@@ -116,7 +116,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="Last Name"
               >
-                <Form.Control type="text" placeholder="" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                <Form.Control required type="text" placeholder="" value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </FloatingLabel>
             </Col>
           </Row>
@@ -127,7 +127,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="Email"
               >
-                <Form.Control type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Form.Control required type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
               </FloatingLabel>
             </Col>
             <Col>
@@ -135,7 +135,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="Employee ID Number"
               >
-                <Form.Control type="text" placeholder="" value={employeeIdNumber} onChange={(e) => setEmployeeIdNumber(e.target.value)} />
+                <Form.Control required type="text" placeholder="" value={employeeIdNumber} onChange={(e) => setEmployeeIdNumber(e.target.value)} />
               </FloatingLabel>
             </Col>
           </Row>
@@ -146,7 +146,7 @@ function CreatePesonnelModal({
                 controlId="floatingInput"
                 label="Contact Number"
               >
-                <Form.Control type="number" placeholder="" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)} />
+                <Form.Control required type="number" placeholder="" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)} />
               </FloatingLabel>
             </Col>
             <Col>

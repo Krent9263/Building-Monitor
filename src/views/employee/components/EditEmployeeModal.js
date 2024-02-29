@@ -102,6 +102,7 @@ function EditEmployeeModal({
               <Col>
                 <FloatingLabel controlId="floatingInput" label="First Name">
                   <Form.Control
+                    required
                     type="text"
                     placeholder=""
                     value={firstName}
@@ -112,6 +113,7 @@ function EditEmployeeModal({
               <Col>
                 <FloatingLabel controlId="floatingInput" label="Middle Name">
                   <Form.Control
+                    required
                     type="text"
                     placeholder=""
                     value={middleName}
@@ -122,6 +124,7 @@ function EditEmployeeModal({
               <Col>
                 <FloatingLabel controlId="floatingInput" label="Last Name">
                   <Form.Control
+                    required
                     type="text"
                     placeholder=""
                     value={lastName}
@@ -135,6 +138,7 @@ function EditEmployeeModal({
               <Col>
                 <FloatingLabel controlId="floatingInput" label="Email">
                   <Form.Control
+                    required
                     type="email"
                     placeholder="name@example.com"
                     value={email}
@@ -148,6 +152,7 @@ function EditEmployeeModal({
                   label="Employee ID Number"
                 >
                   <Form.Control
+                    required
                     type="text"
                     placeholder=""
                     value={employeeIdNumber}
@@ -161,6 +166,7 @@ function EditEmployeeModal({
               <Col>
                 <FloatingLabel controlId="floatingInput" label="Contact Number">
                   <Form.Control
+                    required
                     type="number"
                     placeholder=""
                     value={contactNumber}

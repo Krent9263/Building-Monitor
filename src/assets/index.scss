@@ -645,6 +645,10 @@
       }
       .generator {
         width: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center !important;
+        align-items: center;
         // background-color: #918484;
       }
     }
@@ -671,4 +675,13 @@
     justify-content: center;
     align-items: center;
     height: 200px;
+  }
+
+  .f-10 {
+    font-size: 400px !important;
+    margin: 30px 0px;
+  }
+
+  .generate-btn1 {
+    width: 100%;
   }

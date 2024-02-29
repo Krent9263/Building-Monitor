@@ -54,7 +54,7 @@ function CreateDivisionModal({ showCreateModal, setShowCreateModal, getAllDivisi
                   controlId="floatingInput"
                   label="Division Name"
                 >
-                  <Form.Control type="tex" placeholder="" value={divisionName} onChange={(e) => setDivisionName(e.target.value)} />
+                  <Form.Control  required type="tex" placeholder="" value={divisionName} onChange={(e) => setDivisionName(e.target.value)} />
                 </FloatingLabel>
               </Col>
               <Col>
@@ -62,7 +62,7 @@ function CreateDivisionModal({ showCreateModal, setShowCreateModal, getAllDivisi
                   controlId="floatingInput"
                   label="Division Description"
                 >
-                  <Form.Control type="tex" placeholder="" value={divisionDescription} onChange={(e) => setDivisionDescription(e.target.value)} />
+                  <Form.Control  required type="tex" placeholder="" value={divisionDescription} onChange={(e) => setDivisionDescription(e.target.value)} />
                 </FloatingLabel>
               </Col>
             </Row>

@@ -128,7 +128,7 @@ function QRScreen() {
                 </div>
               ) : (
                 <div className="details-holder">
-                  <div className="name">Please Scan Your QRcode</div>
+                  <div className="name">Please Scan Your QR Code</div>
                   <div className="office"></div>
                   <div className="department"></div>
                 </div>

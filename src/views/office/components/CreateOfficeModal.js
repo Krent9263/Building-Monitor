@@ -51,7 +51,7 @@ function CreateOfficeModal({ showCreateModal, setShowCreateModal, divisionId, ge
             <Row className="mt-3">
               <Col>
                 <FloatingLabel controlId="floatingInput" label="Office Name">
-                  <Form.Control type="text" placeholder="" value={officeName} onChange={(e) => setOfficeName(e.target.value)} />
+                  <Form.Control required type="text" placeholder="" value={officeName} onChange={(e) => setOfficeName(e.target.value)} />
                 </FloatingLabel>
               </Col>
               <Col>
@@ -59,7 +59,7 @@ function CreateOfficeModal({ showCreateModal, setShowCreateModal, divisionId, ge
                   controlId="floatingInput"
                   label="Office Description"
                 >
-                  <Form.Control type="text" placeholder="" value={officeDescritop} onChange={(e) => setOfficeDescription(e.target.value)} />
+                  <Form.Control required type="text" placeholder="" value={officeDescritop} onChange={(e) => setOfficeDescription(e.target.value)} />
                 </FloatingLabel>
               </Col>
             </Row>

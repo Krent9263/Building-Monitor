@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import QRCode from "qrcode";
-import { Button, Col, FloatingLabel, Form, Container, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  FloatingLabel,
+  Form,
+  Container,
+  Row,
+} from "react-bootstrap";
 import SideBar from "../../components/SideBar";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQrcode } from "@fortawesome/free-solid-svg-icons";
 
 const Qrcodegen = () => {
   const [url, setUrl] = useState();
@@ -10,8 +19,9 @@ const Qrcodegen = () => {
 
   const [qrCodeValue, setCodeValue] = useState("No qrcode scanned");
 
-  const downloadQRCode = () => {
-    toast.success('QR Code Generated', {position: "top-center"})
+  const downloadQRCode = (e) => {
+    e.preventDefault();
+    toast.success("QR Code Generated", { position: "top-center" });
     QRCode.toDataURL(url, (err, url) => {
       if (err) return console.error(err);
       console.log("url:", url);
@@ -45,31 +55,43 @@ const Qrcodegen = () => {
                   </>
                 ) : (
                   <>
-                    <h1>Input Employee ID to generate QR</h1>
+                    <div className="text-center">
+                      <h3>
+                        Input Employee ID <br /> to generate QR
+                      </h3>
+                    </div>
+
+                    <FontAwesomeIcon className="f-10" icon={faQrcode} />
                   </>
                 )}
               </div>
-              <Row className="generator">
-                <Col>
-                  <FloatingLabel controlId="floatingInput" label="QR CODE">
-                    <Form.Control
-                      onChange={(e) => setUrl(e.target.value)}
-                      value={url}
-                      type="email"
-                      placeholder="name@example.com"
-                    />
-                  </FloatingLabel>
-                </Col>
-              </Row>
-              <Button
-                type="button"
-                download={qrCodeText}
-                variant="primary"
-                onClick={downloadQRCode}
-                className="mt-4"
-              >
-                Generate QR Code
-              </Button>
+              <Form onSubmit={downloadQRCode}>
+                <Row className="generator">
+                  <Col>
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Input Employee ID"
+                    >
+                      <Form.Control
+                        onChange={(e) => setUrl(e.target.value)}
+                        value={url}
+                        placeholder="name@example.com"
+                        required
+                      />
+                    </FloatingLabel>
+                  </Col>
+                  <Col>
+                    <Button
+                      type="submit"
+                      download={qrCodeText}
+                      variant="primary"
+                      className="mt-4 generate-btn1"
+                    >
+                      Generate QR Code
+                    </Button>
+                  </Col>
+                </Row>
+              </Form>
               {/* <span className="mt-4">Scan QR for testing: {qrCodeValue}</span> */}
             </div>
           </div>

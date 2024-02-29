@@ -3,7 +3,7 @@ import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 import departmentAPI from "../../../api/DepartmentAPI";
 import { toast } from 'react-toastify';
 
-function EditOfficeModal({setShowEditModal, showEditModal, divisionId, getAllDepartment, departmentId, departments}) {
+function EditOfficeModal({setShowEditModal, showEditModal, divisionId, getAllDepartment, departmentId, departments, setDeparntmentId}) {
 
   const [officeName, setOfficeName] = useState('')
   const [officeDescritop, setOfficeDescription] = useState('')
@@ -16,6 +16,7 @@ function EditOfficeModal({setShowEditModal, showEditModal, divisionId, getAllDep
     setShowEditModal(false)
     setOfficeName('')
     setOfficeDescription('')
+    setDeparntmentId()
   }
 
   const handleOffice = () => {
@@ -64,7 +65,7 @@ function EditOfficeModal({setShowEditModal, showEditModal, divisionId, getAllDep
             <Row className="mt-3">
               <Col>
                 <FloatingLabel controlId="floatingInput" label="Office Name">
-                  <Form.Control type="text" placeholder="" value={officeName} onChange={(e) => setOfficeName(e.target.value)} />
+                  <Form.Control required type="text" placeholder="" value={officeName} onChange={(e) => setOfficeName(e.target.value)} />
                 </FloatingLabel>
               </Col>
               <Col>
@@ -72,7 +73,7 @@ function EditOfficeModal({setShowEditModal, showEditModal, divisionId, getAllDep
                   controlId="floatingInput"
                   label="Office Description"
                 >
-                  <Form.Control type="text" placeholder="" value={officeDescritop} onChange={(e) => setOfficeDescription(e.target.value)} />
+                  <Form.Control required type="text" placeholder="" value={officeDescritop} onChange={(e) => setOfficeDescription(e.target.value)} />
                 </FloatingLabel>
               </Col>
             </Row>

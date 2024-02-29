@@ -92,7 +92,7 @@ function Offices() {
   return (
     <Container fluid className="dashboard">
       <CreateOfficeModal getAllDepartment={getAllDepartment} divisionId={divisionId} showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal} />
-      <EditOfficeModal departments={departments} departmentId={departmentId} getAllDepartment={getAllDepartment} divisionId={divisionId} setShowEditModal={setShowEditModal} showEditModal={showEditModal}  />
+      <EditOfficeModal setDeparntmentId={setDeparntmentId} departments={departments} departmentId={departmentId} getAllDepartment={getAllDepartment} divisionId={divisionId} setShowEditModal={setShowEditModal} showEditModal={showEditModal}  />
       <Row>
         <SideBar />
       </Row>
