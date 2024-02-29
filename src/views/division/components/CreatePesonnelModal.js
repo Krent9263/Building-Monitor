@@ -17,7 +17,7 @@ function CreatePesonnelModal({
   const [middleName, setMiddleName] = useState('')
   const [employeeIdNumber, setEmployeeIdNumber] = useState('')
   const [contactNumber, setContactNumber] = useState()
-  const [officeId, setOfficeId] = useState()
+  const [officeId, setOfficeId] = useState(0)
   var email = 'gilbert.manucduc@deped.gov.ph'
 
   const handleClose = () => {
