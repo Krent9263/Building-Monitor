@@ -57,7 +57,7 @@ const LoginForm = () => {
               <Form.Control
                 type="text"
                 className="form-control"
-                placeholder="Enter email"
+                placeholder="Enter username"
                 value={username}
                 onChange={handleEmailChange}
               />
