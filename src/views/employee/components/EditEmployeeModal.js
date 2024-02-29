@@ -157,12 +157,13 @@ function EditEmployeeModal({
         <Form onSubmit={updateUserAccount}>
           <Modal.Body>
             {showUploadProfile && (
-              <Row>
+              <Row className="mb-3">
                 <Form>
                   <Form.Control
                     accept="image/png, image/gif, image/jpeg"
                     id="inputFile"
                     type="file"
+                    required
                     onChange={(e) => handlefilesUpload(e.target.files)}
                   />
                 </Form>
