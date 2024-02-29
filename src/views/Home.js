@@ -17,16 +17,17 @@ function Home() {
   const [usersOutSide, setUsersOutSide] = useState();
   const [userByDivision, setUserByDivision] = useState();
   const [allUsers, setAllUsers] = useState();
+  const [userInsideBydivision, setUserInsideByDivision] = useState()
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      getLogStatus(allUsers);
+      getLogStatus(allUsers, userByDivision);
     }, 120000);
     return () => clearInterval(intervalId);
   }, [allUsers]);
 
   useEffect(() => {
-    getLogStatus(allUsers);
+    getLogStatus(allUsers, userByDivision);
   }, [allUsers]);
 
   useEffect(() => {
@@ -45,23 +46,19 @@ function Home() {
     }
   };
 
-  console.log("123", userByDivision);
-
-  const getLogStatus = async (data) => {
+  const getLogStatus = async (data, data2) => {
     let res = await new QrCodeAPI().getRecentLog();
     if (res.ok) {
       console.log("data:", data);
       let tempDataInSide = [];
       let tempDataInOutSide = [];
       data?.map((item) => {
-        let tempInsideByDivision = res?.data?.find((i) => i?.userAccountId == item?.id && i?.status == true && i?.divisionId == user?.divisionId)
-        console.log('TEMPDATA', item)
         let tempInSide = res?.data?.find(
           (i) => i?.userAccountId == item?.id && i?.status == true
         );
         let tempOutSide = res?.data
           ?.sort((a, b) => new Date(b.updatedDate) - new Date(a.updatedDate))
-          ?.find((i) => i?.userAccountId == item?.id && i?.status == false);
+          ?.find((i) => i?.userAccountId == item?.userAccountId && i?.status == false);
         if (tempInSide !== undefined) {
           return tempDataInSide.push(tempInSide);
         }
@@ -69,7 +66,17 @@ function Home() {
           return tempDataInOutSide.push(tempOutSide);
         }
       });
-      console.log("tempDataInSide:", tempDataInSide);
+
+      console.log('data2:', res?.data)
+
+      let tempDataByDivision = []
+      data2?.map(item => {
+        let tempByDivisionInside = res?.data?.find(i => i?.userAccountId == item?.userAccountId && i?.status == true && i?.divisionId == user?.divisionId)
+        if (tempByDivisionInside !== undefined) {
+          return tempDataByDivision.push(tempByDivisionInside)
+        }
+      })
+      setUserInsideByDivision(tempDataByDivision)
       setUsersInSide(tempDataInSide);
       setUsersOutSide(tempDataInOutSide);
     } else {
@@ -86,7 +93,7 @@ function Home() {
       </Row>
       <Row className="containers-dashboard">
         <Col>
-          <MainDashboard allUsers={allUsers} usersInSide={usersInSide} userByDivision={userByDivision} />
+          <MainDashboard userInsideBydivision={userInsideBydivision} allUsers={allUsers} usersInSide={usersInSide} userByDivision={userByDivision} />
         </Col>
         <Col className="right-history" sm={12} md={12} lg={12} xl={3}>
           <History usersInSide={usersInSide} usersOutSide={usersOutSide} />

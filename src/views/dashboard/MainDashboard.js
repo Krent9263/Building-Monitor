@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 import departmentAPI from "../../api/DepartmentAPI";
 import DivisionAPI from "../../api/DivisionAPI";
 
-export default function MainDashboard({allUsers, usersInSide, userByDivision}) {
+export default function MainDashboard({allUsers, usersInSide, userByDivision, userInsideBydivision}) {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   const history = useHistory();
@@ -48,12 +48,14 @@ export default function MainDashboard({allUsers, usersInSide, userByDivision}) {
   };
 
   console.log('allUsers', user)
+
   return (
     <Container fluid className="main-dashboard">
       <Row className="row-1">
         <Col className="display-total" sm={12} md={6}>
           <div className="total">
-            {usersInSide?.length} <FontAwesomeIcon icon={faBuilding} />
+            {user?.isOfficeAdmin && <>{userInsideBydivision?.length}</>}
+            {user?.isSystemAdmin && <>{usersInSide?.length}</>}
           </div>
           <div className="total-text">
             <span>Total Employees</span> <br />
@@ -63,7 +65,7 @@ export default function MainDashboard({allUsers, usersInSide, userByDivision}) {
         <Col className="display-total">
           <div className="total">
             {user?.isSystemAdmin && <> {allUsers?.length - usersInSide?.length} <FontAwesomeIcon icon={faRoute} /> </>}
-            {user?.isOfficeAdmin && <> {userByDivision - usersInSide?.length} <FontAwesomeIcon icon={faRoute} />  </>}
+            {user?.isOfficeAdmin && <> {userByDivision?.length - userInsideBydivision?.length} <FontAwesomeIcon icon={faRoute} />  </>}
           </div>
           <div className="total-text">
             <span>Total Employees</span> <br />
