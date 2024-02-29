@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { faBars, faTimes, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faTimes,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SideBarData } from "./SideBarData";
 import SubMenu from "./SubMenu";
-import SDC from '../assets/images/SDC.png'
-// import user from "../../assets/icons/user.svg";
-// import school from "../../assets/icons/logo.png";
+import SDC from "../assets/images/SDC.png";
+import { UserContext } from "../context/UserContext";
 
 const Nav = styled.div`
   background: #68942c;
@@ -71,6 +74,8 @@ const SidebarWrap = styled.div`
 `;
 
 const SideBar = () => {
+  const userContext = useContext(UserContext);
+  const { user } = userContext.data;
   const [sideBar, setSideBar] = useState(false);
 
   const showSideBar = () => setSideBar(!sideBar);
@@ -87,17 +92,9 @@ const SideBar = () => {
         <NavIcon to="#">
           <FontAwesomeIcon icon={faBars} onMouseEnter={showSideBar} />
         </NavIcon>
-
-        {/* <Dropdown>
-          <Dropdown.Toggle className="user-dropdown">
-            <img src='' height="80" />
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item> Profile</Dropdown.Item>
-            <Dropdown.Item onClick={() => logout()}> Log Out</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown> */}
-        <span className="logout" onClick={logout}><FontAwesomeIcon icon={faRightFromBracket} /> <span>Logout</span></span>
+        <span className="logout" onClick={logout}>
+          <FontAwesomeIcon icon={faRightFromBracket} /> <span>Logout</span>
+        </span>
       </Nav>
       <SidebarNav sideBar={sideBar} onMouseLeave={closeSideBar}>
         <SidebarWrap className="school-wrap">
@@ -108,11 +105,14 @@ const SideBar = () => {
           <p className="school-name">PROJECT IN OUT</p>
           <hr />
           {SideBarData.map((item, index) => {
+            if (index === 1 && user?.isOfficeAdmin) {
+              return null; // Don't render the "Departments" item if the user is an office admin
+            }
+
             return (
               <SubMenu item={item} key={index} closeSideBar={closeSideBar} />
             );
           })}
-          
         </SidebarWrap>
       </SidebarNav>
     </>

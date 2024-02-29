@@ -21,14 +21,12 @@ export const SideBarData = [
   {
     title: "Departments",
     path: '/divisions',
-    icon: <FontAwesomeIcon icon={faSitemap} />,
-    iconClosed: <FontAwesomeIcon icon={faAngleDown} />,
-    iconOpened: <FontAwesomeIcon icon={faAngleUp} />,
+    icon: <FontAwesomeIcon icon={faSitemap} />
   },
   {
-    title: "Reports ",
-    path: "/reports",
-    icon: <FontAwesomeIcon icon={faTable} />
+    title: "QR Screen",
+    path: "/qrscreen",
+    icon: <FontAwesomeIcon icon={faDisplay} />
   },
   {
     title: "QR Generator ",
@@ -36,8 +34,8 @@ export const SideBarData = [
     icon: <FontAwesomeIcon icon={faQrcode} />
   },
   {
-    title: "QR Screen",
-    path: "/qrscreen",
-    icon: <FontAwesomeIcon icon={faDisplay} />
-  }
+    title: "Reports ",
+    path: "/reports",
+    icon: <FontAwesomeIcon icon={faTable} />
+  },
 ];

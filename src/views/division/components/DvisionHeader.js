@@ -13,7 +13,7 @@ function DvisionHeader({ setShowCreateModal, handlePersonnelModal }) {
 
   return (
     <div>
-      <h1 className="dept-name">DIVISION</h1>
+      <h1 className="dept-name">DIVISIONS</h1>
       <div className="reports-header">
         <div>
           <Button onClick={handleBackButton}><FontAwesomeIcon icon={faArrowLeftLong} /> Back</Button> &nbsp;

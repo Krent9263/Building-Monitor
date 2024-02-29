@@ -31,4 +31,11 @@ export default class DivisionAPI extends Base {
     })
   }
 
+  getDivisionById = async (id) => {
+    return this.sendRequest ({
+      path: `/api/Division/${id}`,
+      method: 'GET'
+    })
+  }
+
 }

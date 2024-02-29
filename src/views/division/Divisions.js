@@ -108,7 +108,7 @@ console.log('user:', user)
               <Table striped bordered hover className='table'>
                 <thead>
                   <tr>
-                    <th className='table-titles'>Division</th>
+                    <th className='table-titles'>Divisions</th>
                     <th className='table-titles'>Divisions Description</th>
                     {/* <th className='table-titles'>Total Employee</th> */}
                     <th className='table-titles'>Action </th>

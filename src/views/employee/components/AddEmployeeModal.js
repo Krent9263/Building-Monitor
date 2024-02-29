@@ -18,7 +18,7 @@ export default function AddEmployeeModal({
   const [employeeIdNumber, setEmployeeIdNumber] = useState('')
   const [contactNumber, setContactNumber] = useState()
   const [departmentId, setDepartmentId] = useState(officeId)
-  var email = 'gilbert.manucduc@deped.gov.ph'
+  const [email, setEmail] = useState('@deped.com.ph')
 
   const handleClose = () => {
     setShowAddEmployee(false);
@@ -27,6 +27,7 @@ export default function AddEmployeeModal({
     setMiddleName('')
     setEmployeeIdNumber('')
     setContactNumber('')
+    setEmail('@deped.com.ph')
   }
 
   const createUserAccount = async (e) => {
@@ -108,7 +109,7 @@ export default function AddEmployeeModal({
                   controlId="floatingInput"
                   label="Email"
                 >
-                  <Form.Control type="email" placeholder="name@example.com" value={email} />
+                  <Form.Control type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </FloatingLabel>
               </Col>
 							<Col>

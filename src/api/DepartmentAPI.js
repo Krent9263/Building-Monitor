@@ -31,4 +31,11 @@ export default class departmentAPI extends Base {
     })
   }
 
+  getDepartmentById = async (id) => {
+    return this.sendRequest ({
+      path: `/api/Department/${id}`,
+      method: 'GET'
+    })
+  }
+
 }

@@ -22,7 +22,7 @@ function EditEmployeeModal({
   const [employeeIdNumber, setEmployeeIdNumber] = useState("");
   const [contactNumber, setContactNumber] = useState();
   const [departmentId, setDepartmentId] = useState(officeId);
-  var email = "gilbert.manucduc@deped.gov.ph";
+  const [email, setEmail] = useState('@deped.com.ph')
 
   useEffect(() => {
     handleEmployeeData();
@@ -35,6 +35,7 @@ function EditEmployeeModal({
     setMiddleName("");
     setEmployeeIdNumber("");
     setContactNumber("");
+    setEmail('@deped.com.ph')
     setUserAccountId()
   };
 
@@ -48,6 +49,7 @@ function EditEmployeeModal({
         setMiddleName(item?.middleName);
         setEmployeeIdNumber(item?.employeeId);
         setContactNumber(item?.contactNumber);
+        setEmail(item?.emailAddress)
       });
   };
 
@@ -76,7 +78,7 @@ function EditEmployeeModal({
       handleClose();
       getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId);
     } else {
-      alert("err");
+      toast.warn("Something went wrong while updating employee");
     }
   };
 
@@ -136,6 +138,7 @@ function EditEmployeeModal({
                     type="email"
                     placeholder="name@example.com"
                     value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </FloatingLabel>
               </Col>

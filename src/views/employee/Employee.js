@@ -21,7 +21,7 @@ function Employee() {
   const [showBulkUpload, setShowBulkUpload] = useState(false);
   const [showEditEmployee, setShowEditEmployee] = useState(false);
   const [deleteNotify, setDeleteNotify] = useState(false);
-
+  const [departmentInfo, setDepartmentInfo] = useState()
   const [departments, setDepartments] = useState();
 
   const [employees, setEmployees] = useState();
@@ -30,6 +30,7 @@ function Employee() {
 
   useEffect(() => {
     getAllDepartment();
+    getDepartmentById();
   }, []);
 
   useEffect(() => {
@@ -68,22 +69,16 @@ function Employee() {
     }
   };
 
-  // const handleDeleteEmployee = () => {
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#35482e",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!"
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       console.log("Deleting employee...");
-  //       deleteUserAccount();
-  //     }
-  //   });
-  // };
+  const getDepartmentById = async () => {
+    let response = await new departmentAPI().getDepartmentById(divisionId)
+    if (response.ok) {
+      setDepartmentInfo(response.data)
+    } else {
+      console.error('Something went wrong while fetching DepartmentById')
+    }
+  }
+
+  console.log('1231',departmentInfo)
 
   const getAllUserAccountByDivisionIdAndOfficeId = async () => {
     let response = await new UserAccountAPI().getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId);
@@ -123,7 +118,7 @@ function Employee() {
         <Col>
           <div className="reports">
             <EditEmployeeModal setUserAccountId={setUserAccountId} userAccountId={userAccountId} divisionId={divisionId} getAllUserAccountByDivisionIdAndOfficeId={getAllUserAccountByDivisionIdAndOfficeId} officeId={officeId} employees={employees} departments={departments} employeeId={employeeId} setEmployeeId={setEmployeeId} showEditEmployee={showEditEmployee} setShowEditEmployee={setShowEditEmployee} />
-            <EmployeeHeader divisionId={divisionId} setShowBulkUpload={setShowBulkUpload} setShowAddEmployee={setShowAddEmployee} addEmployee={addEmployee} bulkUpload={bulkUpload} />
+            <EmployeeHeader departmentInfo={departmentInfo} divisionId={divisionId} setShowBulkUpload={setShowBulkUpload} setShowAddEmployee={setShowAddEmployee} addEmployee={addEmployee} bulkUpload={bulkUpload} />
             <BulkUpload showBulkUpload={showBulkUpload} setShowBulkUpload={setShowBulkUpload} />
             <AddEmployeeModal divisionId={divisionId} getAllUserAccountByDivisionIdAndOfficeId={getAllUserAccountByDivisionIdAndOfficeId} officeId={officeId} departments={departments} showAddEmployee={showAddEmployee} setShowAddEmployee={setShowAddEmployee} />
             <div className="table-container">

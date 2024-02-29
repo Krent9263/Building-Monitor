@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 import { Row, Col, Container, Table, Button } from 'react-bootstrap'
 import SideBar from '../../components/SideBar';
 import { useHistory, useParams } from "react-router-dom";
@@ -9,14 +10,18 @@ import { toast } from 'react-toastify';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditOfficeModal from './components/EditOfficeModal';
 import Swal from 'sweetalert2'
+import DivisionAPI from '../../api/DivisionAPI';
 
 
 function Offices() {
+  const userContext = useContext(UserContext);
+  const { user } = userContext.data;
   const history = useHistory();
   const { divisionId } = useParams();
   const [showCreateModal, setShowCreateModal] = useState()
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
+  const [division, setDivision] = useState()
 
   const [departments, setDepartments] = useState()
   const [departmentId, setDeparntmentId] = useState()
@@ -43,6 +48,21 @@ function Offices() {
     setShowEditModal(true)
   }
 
+  useEffect(() => {
+    getDivisionById()
+  }, []);
+
+  const getDivisionById = async () => {
+    let response = await new DivisionAPI().getDivisionById(
+      user?.isOfficeAdmin ? user?.divisionId : divisionId
+      )
+    if (response.ok) {
+      setDivision(response.data)
+    } else {
+      console.error('Something went wrong while fetching division')
+    }
+  }
+
   const getAllDepartment = async () => {
     let response = await new departmentAPI().getAllDepartment()
     if (response.ok) {
@@ -52,6 +72,8 @@ function Offices() {
       console.error('Something went wrong while fetching offices')
     }
   }
+
+  console.log('asdasda', departments)
 
   const deleteDepartment = async () => {
     let response = await new departmentAPI().deleteDepartment(departmentId)
@@ -77,7 +99,7 @@ function Offices() {
       <Row className="containers-dashboard">
         <Col>
           <div className="reports" >
-            <OfficeHeader setShowCreateModal={setShowCreateModal} />
+            <OfficeHeader setShowCreateModal={setShowCreateModal} division={division} />
             <div className="table-container">
               <Table striped bordered hover className='table' >
                 <thead>
