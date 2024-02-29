@@ -134,7 +134,7 @@ export default function AddEmployeeModal({
 							<Col>
                 <FloatingLabel
                   controlId="floatingInput"
-                  label="Division"
+                  label="Department"
                 >
                   <Form.Select placeholder="Office Department" value={departmentId} onChange={(e) => setDepartmentId(parseInt(e.target.value))} >
 										<option disabled> Select Department </option>
