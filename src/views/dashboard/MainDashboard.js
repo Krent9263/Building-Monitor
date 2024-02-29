@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 import departmentAPI from "../../api/DepartmentAPI";
 import DivisionAPI from "../../api/DivisionAPI";
 
-export default function MainDashboard() {
+export default function MainDashboard({allUsers, usersInSide, userByDivision}) {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   const history = useHistory();
@@ -47,12 +47,13 @@ export default function MainDashboard() {
     console.log("err");
   };
 
+  console.log('allUsers', user)
   return (
     <Container fluid className="main-dashboard">
       <Row className="row-1">
         <Col className="display-total" sm={12} md={6}>
           <div className="total">
-            45 <FontAwesomeIcon icon={faBuilding} />
+            {usersInSide?.length} <FontAwesomeIcon icon={faBuilding} />
           </div>
           <div className="total-text">
             <span>Total Employees</span> <br />
@@ -61,7 +62,7 @@ export default function MainDashboard() {
         </Col>
         <Col className="display-total">
           <div className="total">
-            45 <FontAwesomeIcon icon={faRoute} />
+            {allUsers?.length - usersInSide?.length} <FontAwesomeIcon icon={faRoute} />
           </div>
           <div className="total-text">
             <span>Total Employees</span> <br />

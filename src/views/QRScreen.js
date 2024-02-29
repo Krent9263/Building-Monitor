@@ -28,8 +28,11 @@ function QRScreen() {
 
   useEffect(() => {
     getLogStatus(allUsers);
-    getAllUsers();
   }, [allUsers]);
+
+  useEffect(() => {
+    getAllUsers();
+  }, [])
 
   useScanDetection({
     onComplete: setQrCode,
@@ -109,7 +112,7 @@ function QRScreen() {
             <h2 className="date">{dateCompareNow}</h2>
           </Col>
         </Row>
-        <Col sm={12} md={12} lg={9} xl={9}>
+        <Col sm={12} md={12} lg={8} xl={8}>
           <div className="display">
             <div className="id">
               <div className="img-holder">
@@ -133,7 +136,7 @@ function QRScreen() {
             </div>
           </div>
         </Col>
-        <Col className="display-history">
+        <Col className="display-history" sm={12} md={12} lg={4} xl={4}>
           <div className="in">
             <span className="header">
               <img className="icon" src={IN} alt="" /> <h3>In Scan:</h3>{" "}
