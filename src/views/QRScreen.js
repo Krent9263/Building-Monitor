@@ -41,7 +41,7 @@ function QRScreen() {
   const qrCodeScanner = async () => {
     let data = {
       deviceId: 1,
-      qrCode: '12345-151',
+      qrCode: qrCode,
     };
     let res = await new QrCodeAPI().qrCodeScanner(data);
     if (res.ok) {
@@ -133,7 +133,7 @@ function QRScreen() {
                   <div className="name">Please Scan Your QR Code</div>
                   <div className="office"></div>
                   <div className="department"></div>
-                  <Button onClick={qrCodeScanner}>123</Button>
+                  {/* <Button onClick={qrCodeScanner}>123</Button> */}
                 </div>
               )}
             </div>
