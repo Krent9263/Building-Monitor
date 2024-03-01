@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-import Auth from '../api/Auth';
-
+import React, { Component } from "react";
+import Auth from "../api/Auth";
 
 export const UserContext = React.createContext();
 export class UserContextProvider extends Component {
@@ -14,38 +13,38 @@ export class UserContextProvider extends Component {
   }
 
   refreshUser = async () => {
-    await this.setState({loading: true})
-    let response = await new Auth().profile()
-    if(response.ok) {
-      let user = response?.data
-      console.log('res', response?.data) 
+    await this.setState({ loading: true });
+    let response = await new Auth().profile();
+    if (response.ok) {
+      let user = response?.data;
+      console.log("res", response?.data);
 
-      user.role = user?.roleName || user?.roleId
+      user.role = user?.roleName || user?.roleId;
       switch (user.role) {
         case "Administrator":
-          user.userAccountId = user.userAccountId
-          user.firstName =  user?.firstName
-          user.isSystemAdmin = true
+          user.userAccountId = user.userAccountId;
+          user.firstName = user?.firstName;
+          user.isSystemAdmin = true;
           break;
-          case "Office Admin":
-            user.userAccountId = user.userAccountId
-            user.firstName =  user?.firstName
-            user.isOfficeAdmin = true
-            break;
-            case "Front Desk Personel":
-              user.userAccountId = user.userAccountId
-              user.firstName =  user?.firstName
-              user.isFrontDesk= true
-              break;
+        case "Office Admin":
+          user.userAccountId = user.userAccountId;
+          user.firstName = user?.firstName;
+          user.isOfficeAdmin = true;
+          break;
+        case "Front Desk Personel":
+          user.userAccountId = user.userAccountId;
+          user.firstName = user?.firstName;
+          user.isFrontDesk = true;
+          break;
         default:
-          user.name = 'No name'
+          user.name = "No name";
           break;
       }
 
-      await this.setState({loading: false, user})
-    } else  {
-      await this.setState({ loading: false, user: null})
-    // Admin
+      await this.setState({ loading: false, user });
+    } else {
+      await this.setState({ loading: false, user: null });
+      // Admin
       // const id = localStorage.getItem("id")
       // let response = await new Auth().profileAdmin(id)
 
@@ -67,20 +66,18 @@ export class UserContextProvider extends Component {
   // };
 
   render() {
-    const {children} = this.props;
-    const {
-      user,
-      loading
-    } = this.state;
+    const { children } = this.props;
+    const { user, loading } = this.state;
     return (
       <UserContext.Provider
         value={{
           data: {
             user,
             loading,
-            refreshUser: this.refreshUser
+            refreshUser: this.refreshUser,
           },
-        }}>
+        }}
+      >
         {children}
       </UserContext.Provider>
     );

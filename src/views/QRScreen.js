@@ -133,7 +133,6 @@ function QRScreen() {
                   <div className="name">Please Scan Your QR Code</div>
                   <div className="office"></div>
                   <div className="department"></div>
-                  {/* <Button onClick={qrCodeScanner}>123</Button> */}
                 </div>
               )}
             </div>

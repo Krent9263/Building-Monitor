@@ -617,13 +617,11 @@
       background-color: #F5F5F5 !important;
       padding: 50px 10px;
       border-radius: 10px;
-      // border: 1px solid #000000;
       height: 80vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
-      flex-wrap: wrap;
       align-items: center;
+      flex-direction: column;
       .qr-gen {
         // background-color: #918484;
         height: 500px;
