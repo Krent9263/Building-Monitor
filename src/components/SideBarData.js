@@ -8,6 +8,7 @@ import {
   faSitemap,
   faQrcode,
   faRightFromBracket,
+  faUserGroup,
   faDisplay
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -32,6 +33,11 @@ export const SideBarData = [
     title: "QR Generator ",
     path: "/qrcode",
     icon: <FontAwesomeIcon icon={faQrcode} />
+  },
+  {
+    title: "Personnel ",
+    path: "/home",
+    icon: <FontAwesomeIcon icon={faUserGroup} />
   },
   {
     title: "Reports ",

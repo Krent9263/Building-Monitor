@@ -32,6 +32,11 @@ export class UserContextProvider extends Component {
             user.firstName =  user?.firstName
             user.isOfficeAdmin = true
             break;
+            case "Front Desk Personel":
+              user.userAccountId = user.userAccountId
+              user.firstName =  user?.firstName
+              user.isFrontDesk= true
+              break;
         default:
           user.name = 'No name'
           break;

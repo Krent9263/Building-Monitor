@@ -9,19 +9,11 @@ export default function AuthRoute(props) {
 
   useEffect(() => {
     if(user != null){
-      // if(user.isSystemAdmin) return window.location.href = "/dashboard"
-       return window.location.href = "/home"
-
-      
-    // if(user.isTeacher && user.isAssessment_status == "true" )  return window.location.href = "/dashboard"
-
-    // if(user.isTeacher && user.isAssessment_status == "false") return window.location.href = "/assessmentpage1"
-      
-      // if(user.isTeacher && user.isAssessment_status){
-      //   return window.location.href = "/dashboard"
-      // }else{
-      //   if
-      // }
+      if(user?.isSystemAdmin || user?.isOfficeAdmin){
+        return window.location.href = "/home"
+      }else{
+        return window.location.href = "/qrscreen"
+      }
       }
   }, [user])
 

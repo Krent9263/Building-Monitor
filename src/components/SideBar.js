@@ -105,8 +105,8 @@ const SideBar = () => {
           <p className="school-name">PROJECT IN OUT</p>
           <hr />
           {SideBarData.map((item, index) => {
-            if (index === 1 && user?.isOfficeAdmin) {
-              return null; // Don't render the "Departments" item if the user is an office admin
+            if (index === 1 && user?.isOfficeAdmin || index === 4 && user?.isOfficeAdmin ) {
+              return null;
             }
 
             return (
