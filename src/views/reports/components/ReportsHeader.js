@@ -27,19 +27,26 @@ function OfficeHeader({setShowFilterModal, setFilter, exportToExcel, user}) {
 
   return (
     <div>
-    <h1 className="dept-name">REPORTS</h1>
-    <h2 className="dept-name">OFFICE OF ACCOUNTING</h2>
-    <div className="reports-header">
-      <div>
-       <Button className="btn-r" onClick={handleFilter}><FontAwesomeIcon icon={faFilter} /> Filter By Division and Department</Button> {' '}
-      <Button className="btn-r" onClick={handleFilter1}><FontAwesomeIcon icon={faFilter} /> Filter By Date</Button>
-      </div>
-      <div className="btn-group-header" >
-        <Button className="btn-r" onClick={exportToExcel}>Generate Report</Button>
+      <h1 className="dept-name">REPORTS</h1>
+      <h2 className="dept-name">OFFICE OF ACCOUNTING</h2>
+      <div className="reports-header">
+        <div>
+          <Button className="btn-r" onClick={handleFilter}>
+            <FontAwesomeIcon icon={faFilter} /> Filter By Division and
+            Department
+          </Button>{" "}
+          <Button className="btn-r" onClick={handleFilter1}>
+            <FontAwesomeIcon icon={faFilter} /> Filter By Date
+          </Button>
+        </div>
+        <div className="btn-group-header">
+          <Button className="btn-r" onClick={exportToExcel}>
+            Generate Report
+          </Button>
+        </div>
       </div>
     </div>
-  </div>
-  )
+  );
 }
 
 export default OfficeHeader

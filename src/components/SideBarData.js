@@ -36,7 +36,7 @@ export const SideBarData = [
   },
   {
     title: "Personnel ",
-    path: "/home",
+    path: "/personnel",
     icon: <FontAwesomeIcon icon={faUserGroup} />
   },
   {

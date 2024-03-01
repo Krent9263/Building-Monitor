@@ -56,6 +56,7 @@ export default function MainDashboard({allUsers, usersInSide, userByDivision, us
           <div className="total">
             {user?.isOfficeAdmin && <>{userInsideBydivision?.length} <FontAwesomeIcon icon={faBuilding} /></>}
             {user?.isSystemAdmin && <>{usersInSide?.length} <FontAwesomeIcon icon={faBuilding} /></>}
+            
           </div>
           <div className="total-text">
             <span>Total Employees</span> <br />

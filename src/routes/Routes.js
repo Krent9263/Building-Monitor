@@ -16,6 +16,7 @@ import Offices from "../views/office/Offices";
 import Qrcodegen from "../views/QRCODE/Qrcodegen";
 import Employee from "../views/employee/Employee";
 import Reports from "../views/reports/Reports";
+import Personnel from "../views/Personnel/Personnel";
 
 export default function Routing() {
   // const [loading, setLoading] = useState(false)
@@ -45,6 +46,7 @@ export default function Routing() {
             <PrivateRoute path="/divisions/office/employees" exact component={Employee} />
             <PrivateRoute path="/reports" exact component={Reports} />
             <PrivateRoute path="/qrcode" exact component={Qrcodegen}/>
+            <PrivateRoute path="/personnel" exact component={Personnel}/>
           </Switch>
         )}
       </Router>
