@@ -105,7 +105,16 @@ const SideBar = () => {
           <p className="school-name">PROJECT IN OUT</p>
           <hr />
           {SideBarData.map((item, index) => {
-            if (index === 1 && user?.isOfficeAdmin || index === 4 && user?.isOfficeAdmin ) {
+            if (
+              (index === 1 &&
+                user?.isOfficeAdmin &&
+                user?.departmentId != 12 &&
+                user?.departmentId != 27) ||
+              (index === 4 &&
+                user?.isOfficeAdmin &&
+                user?.departmentId != 12 &&
+                user?.departmentId != 27)
+            ) {
               return null;
             }
 

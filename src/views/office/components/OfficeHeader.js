@@ -22,22 +22,25 @@ function OfficeHeader({ setShowCreateModal, division }) {
     <div>
       <h1 className="dept-name">{division?.divisionName} Offices</h1>
       <div className="reports-header">
-        {user?.roleId != 1 ? (
+        {(user?.isOfficeAdmin && user?.departmentId === 12) ||
+        user?.departmentId === 27 ? (
+          <div>
+            <Button onClick={handleBackButton}>
+              <FontAwesomeIcon icon={faArrowLeftLong} /> Back
+            </Button>
+            &nbsp;
+          </div>
+        ) : (
+          <></>
+        )}
+        {user?.isOfficeAdmin ? (
           <></>
         ) : (
-          <>
-            <div>
-              <Button onClick={handleBackButton}>
-                <FontAwesomeIcon icon={faArrowLeftLong} /> Back
-              </Button>
-              &nbsp;
-            </div>
-            <div className="btn-group-header">
-              <Button className="btn-r" onClick={handleCreateOffice}>
-                Create Office
-              </Button>
-            </div>
-          </>
+          <div className="btn-group-header">
+            <Button className="btn-r" onClick={handleCreateOffice}>
+              Create Office
+            </Button>
+          </div>
         )}
       </div>
     </div>

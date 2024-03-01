@@ -14,7 +14,12 @@ import { useHistory } from "react-router-dom";
 import departmentAPI from "../../api/DepartmentAPI";
 import DivisionAPI from "../../api/DivisionAPI";
 
-export default function MainDashboard({allUsers, usersInSide, userByDivision, userInsideBydivision}) {
+export default function MainDashboard({
+  allUsers,
+  usersInSide,
+  userByDivision,
+  userInsideBydivision,
+}) {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   const history = useHistory();
@@ -47,26 +52,66 @@ export default function MainDashboard({allUsers, usersInSide, userByDivision, us
     console.log("err");
   };
 
-  console.log('allUsers', user)
+  console.log("allUsers", user);
 
   return (
     <Container fluid className="main-dashboard">
       <Row className="row-1">
         <Col className="display-total" sm={12} md={6}>
           <div className="total">
-            {user?.isOfficeAdmin && <>{userInsideBydivision?.length} <FontAwesomeIcon icon={faBuilding} /></>}
-            {user?.isSystemAdmin && <>{usersInSide?.length} <FontAwesomeIcon icon={faBuilding} /></>}
-            
+            {user?.isOfficeAdmin &&
+              user?.departmentId !== 12 &&
+              user?.departmentId !== 27 && (
+                <>
+                  {userInsideBydivision?.length}
+                  <FontAwesomeIcon icon={faBuilding} />
+                </>
+              )}
+
+            {user?.isOfficeAdmin &&
+              (user?.departmentId === 12 || user?.departmentId === 27) && (
+                <>
+                  {usersInSide?.length} <FontAwesomeIcon icon={faBuilding} />
+                </>
+              )}
+
+            {user?.isSystemAdmin && (
+              <>
+                {usersInSide?.length} <FontAwesomeIcon icon={faBuilding} />
+              </>
+            )}
           </div>
           <div className="total-text">
             <span>Total Employees</span> <br />
             <span>Inside the Office</span>
           </div>
         </Col>
+
         <Col className="display-total">
           <div className="total">
-            {user?.isSystemAdmin && <> {allUsers?.length - usersInSide?.length} <FontAwesomeIcon icon={faRoute} /> </>}
-            {user?.isOfficeAdmin && <> {userByDivision?.length - userInsideBydivision?.length} <FontAwesomeIcon icon={faRoute} />  </>}
+            {user?.isSystemAdmin && (
+              <>
+                {allUsers?.length - usersInSide?.length}
+                <FontAwesomeIcon icon={faRoute} />
+              </>
+            )}
+
+            {user?.isOfficeAdmin &&
+              (user?.departmentId === 12 || user?.departmentId === 27) && (
+                <>
+                  {allUsers?.length - usersInSide?.length}
+                  <FontAwesomeIcon icon={faRoute} />
+                </>
+              )}
+
+            {user?.isOfficeAdmin &&
+              user?.departmentId !== 12 &&
+              user?.departmentId !== 27 && (
+                <>
+                  {userByDivision?.length - userInsideBydivision?.length}
+                  <FontAwesomeIcon icon={faRoute} />
+                </>
+              )}
           </div>
           <div className="total-text">
             <span>Total Employees</span> <br />
@@ -74,7 +119,10 @@ export default function MainDashboard({allUsers, usersInSide, userByDivision, us
           </div>
         </Col>
       </Row>
-      {user?.roleId === 1 ? (
+
+      {user?.isSystemAdmin ||
+      (user?.isOfficeAdmin &&
+        (user?.departmentId === 12 || user?.departmentId === 27)) ? (
         <Row className="row-2">
           <div className="sdo-department">
             <span className="header-sdo">
@@ -90,8 +138,7 @@ export default function MainDashboard({allUsers, usersInSide, userByDivision, us
               </span>
             </span>
             <div className="departments">
-              {divisions?.slice(0, 3)
-              .map((item) => {
+              {divisions?.slice(0, 3).map((item) => {
                 return (
                   <div className="icon-holder">
                     <img className="icons" src={CID} alt="" />
