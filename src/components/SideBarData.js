@@ -20,7 +20,7 @@ export const SideBarData = [
     icon: <FontAwesomeIcon icon={faHouse} />
   },
   {
-    title: "Departments",
+    title: "Divisions",
     path: '/divisions',
     icon: <FontAwesomeIcon icon={faSitemap} />
   },
@@ -34,11 +34,11 @@ export const SideBarData = [
     path: "/qrcode",
     icon: <FontAwesomeIcon icon={faQrcode} />
   },
-  {
-    title: "Personnel ",
-    path: "/personnel",
-    icon: <FontAwesomeIcon icon={faUserGroup} />
-  },
+  // {
+  //   title: "Personnel ",
+  //   path: "/personnel",
+  //   icon: <FontAwesomeIcon icon={faUserGroup} />
+  // },
   {
     title: "Reports ",
     path: "/reports",

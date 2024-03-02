@@ -105,19 +105,32 @@ const SideBar = () => {
           <p className="school-name">PROJECT IN OUT</p>
           <hr />
           {SideBarData.map((item, index) => {
-            if (
-              (index === 1 &&
-                user?.isOfficeAdmin &&
-                user?.departmentId != 12 &&
-                user?.departmentId != 27) ||
-              (index === 4 &&
-                user?.isOfficeAdmin &&
-                user?.departmentId != 12 &&
-                user?.departmentId != 27)
-            ) {
-              return null;
+            switch (index) {
+              case 1:
+                if (
+                  user?.isOfficeAdmin &&
+                  user?.departmentId !== 12 &&
+                  user?.departmentId !== 27
+                ) {
+                  return null;
+                }
+                break;
+              case 3:
+                if (
+                  user?.isOfficeAdmin &&
+                  user?.departmentId != 12
+                ) {
+                  return null;
+                }
+                break;
+              case 2:
+                if (!user?.isSystemAdmin ||
+                  user?.roleId != 4
+                  ) {
+                  return null;
+                }
+                break;
             }
-
             return (
               <SubMenu item={item} key={index} closeSideBar={closeSideBar} />
             );
