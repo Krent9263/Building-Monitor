@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 // import Template from "../../../assets/template/";
 
 function EmployeeHeader({
@@ -25,8 +25,19 @@ function EmployeeHeader({
   const downloadExcel = () => {
     // Data to be converted to Excel
     const data = [
-        ["username", "password", "roleid", "employeeIdno", "FirstName", "LastName", "MiddleName", "EmailAddress", "ContactNumber", "DepartmentId"],
-        // Add your data rows here
+      [
+        "username",
+        "password",
+        "roleid",
+        "employeeIdno",
+        "FirstName",
+        "LastName",
+        "MiddleName",
+        "EmailAddress",
+        "ContactNumber",
+        "DepartmentId",
+      ],
+      // Add your data rows here
     ];
 
     // Create a new workbook
@@ -37,10 +48,15 @@ function EmployeeHeader({
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
     // Convert the workbook to a binary XLSX file
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
 
     // Create a Blob from the array buffer
-    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
 
     // Create a link element
     const url = URL.createObjectURL(blob);
@@ -54,7 +70,7 @@ function EmployeeHeader({
 
     // Clean up
     URL.revokeObjectURL(url);
-};
+  };
 
   console.log("departmentInfo", officeId, departmentInfo);
 
@@ -73,12 +89,10 @@ function EmployeeHeader({
             <></>
           ) : (
             <>
-              <Button onClick={downloadExcel}>
-            Download Template
-        </Button>
               <Button className="btn-r" onClick={addEmployee}>
                 Create Employee
               </Button>
+              <Button onClick={downloadExcel}>Download Template</Button>
               <Button className="btn-r" onClick={bulkUpload}>
                 Bulk Upload
               </Button>

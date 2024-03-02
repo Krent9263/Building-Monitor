@@ -154,6 +154,7 @@ function Employee() {
               setShowBulkUpload={setShowBulkUpload}
             />
             <AddEmployeeModal
+              user={user}
               divisionId={divisionId}
               getAllUserAccountByDivisionIdAndOfficeId={
                 getAllUserAccountByDivisionIdAndOfficeId
@@ -162,12 +163,14 @@ function Employee() {
               departments={departments}
               showAddEmployee={showAddEmployee}
               setShowAddEmployee={setShowAddEmployee}
+              departmentInfo={departmentInfo}
             />
             <div className="table-container">
               <Table striped bordered hover className="table">
                 <thead>
                   <tr>
                     <th>Employee ID</th>
+                    <th>Role</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Contact Number</th>
@@ -182,6 +185,7 @@ function Employee() {
                   {employees?.map((employee) => (
                     <tr key={employee.id}>
                       <td>{employee.employeeId}</td>
+                      <td>{employee.roleName}</td>
                       <td>
                         {employee.firstName} {employee.middleName}{" "}
                         {employee.lastName}
