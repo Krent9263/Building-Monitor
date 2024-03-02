@@ -22,8 +22,7 @@ function OfficeHeader({ setShowCreateModal, division }) {
     <div>
       <h1 className="dept-name">{division?.divisionName} Offices</h1>
       <div className="reports-header">
-        {(user?.isOfficeAdmin && user?.departmentId === 12) ||
-        user?.departmentId === 27 ? (
+        {user?.isSystemAdmin || user?.isOfficeAdmin && (user?.departmentId === 12 || user?.departmentId === 27) ? (
           <div>
             <Button onClick={handleBackButton}>
               <FontAwesomeIcon icon={faArrowLeftLong} /> Back

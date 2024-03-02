@@ -138,10 +138,18 @@ export default function MainDashboard({
               </span>
             </span>
             <div className="departments">
-              {divisions?.slice(0, 3).map((item) => {
+              {divisions?.slice(0, 3).map((item, index) => {
+                let src;
+                if (item.id === 2) {
+                  src = CID;
+                } else if (item.id === 3) {
+                  src = SGOD;
+                } else if (item.id === 1) {
+                  src = OSDS;
+                }
                 return (
-                  <div className="icon-holder">
-                    <img className="icons" src={CID} alt="" />
+                  <div key={index} className="icon-holder">
+                    <img className="icons" src={src} alt="" />
                     <span className="titles">{item?.divisionName}</span>
                   </div>
                 );
@@ -171,6 +179,9 @@ export default function MainDashboard({
                     <th>Office ID</th>
                     <th>Office</th>
                     <th>Office Description</th>
+                    <th>In</th>
+                    <th>Out</th>
+                    <th>Total Employees</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -180,6 +191,9 @@ export default function MainDashboard({
                         <td>{item?.id}</td>
                         <td>{item?.departmentName}</td>
                         <td>{item?.departmentDescription}</td>
+                        <td>1232313</td>
+                        <td>12</td>
+                        <td>21</td>
                       </tr>
                     );
                   })}

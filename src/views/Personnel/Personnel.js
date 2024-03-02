@@ -1,9 +1,14 @@
-import React from "react";
+import React, {useContext} from "react";
+import { UserContext } from "../../context/UserContext";
 import { Row, Col, Container, Table } from "react-bootstrap";
 import SideBar from "../../components/SideBar";
 import PersonnelHeader from "./components/PersonnelHeader";
 
 function Personnel() {
+  const userContext = useContext(UserContext);
+  const { user } = userContext.data;
+
+
   return (
     <Container fluid className="dashboard">
       <Row>
@@ -12,7 +17,7 @@ function Personnel() {
       <Row className="containers-dashboard">
         <Col>
           <div className="reports">
-            <PersonnelHeader />
+            <PersonnelHeader user={user} />
 
             <div className="table-container">
               <Table striped bordered hover className="table">

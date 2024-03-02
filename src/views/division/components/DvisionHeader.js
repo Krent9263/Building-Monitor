@@ -16,7 +16,7 @@ function DvisionHeader({ setShowCreateModal, handlePersonnelModal }) {
 
   return (
     <div>
-      <h1 className="dept-name">DIVISIONS</h1>
+      <h1 className="dept-name">DIVISION LISTS</h1>
       <div className="reports-header">
         <div>
           <Button onClick={handleBackButton}><FontAwesomeIcon icon={faArrowLeftLong} /> Back</Button> &nbsp;
@@ -25,11 +25,11 @@ function DvisionHeader({ setShowCreateModal, handlePersonnelModal }) {
           {/* <Button className="btn-r" onClick={() => handlePersonnelModal()} >
             Add Personnel
           </Button> */}
-          {!user?.isOfficeAdmin &&
+          {/* {!user?.isOfficeAdmin &&
           <Button className="btn-r" onClick={() => setShowCreateModal(true)}>
             Create Division
           </Button>
-          }
+          } */}
         </div>
       </div>
     </div>
