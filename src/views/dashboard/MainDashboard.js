@@ -26,10 +26,12 @@ export default function MainDashboard({
 
   const [departments, setDepartments] = useState();
   const [divisions, setDivisions] = useState();
+  const [loggedPerDepartment, setLoggedPerDepartment] = useState();
 
   useEffect(() => {
     getAllDepartment();
     getAllDivision();
+    getLogginPerDepartment();
   }, [user]);
 
   const getAllDepartment = async () => {
@@ -52,7 +54,16 @@ export default function MainDashboard({
     console.log("err");
   };
 
-  console.log("allUsers", user);
+  const getLogginPerDepartment = async () => {
+    let response = await new departmentAPI().getLogginPerDepartment()
+    if (response.ok) {
+      setLoggedPerDepartment(response.data)
+    } else {
+      console.error('Something went wrong while fetching getLogginPerDepartment')
+    }
+  }
+
+  console.log("allUsers", loggedPerDepartment);
 
   return (
     <Container fluid className="main-dashboard">
@@ -178,22 +189,20 @@ export default function MainDashboard({
                   <tr>
                     <th>Office ID</th>
                     <th>Office</th>
-                    <th>Office Description</th>
                     <th>In</th>
                     <th>Out</th>
                     <th>Total Employees</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {departments?.map((item) => {
+                  {loggedPerDepartment?.map((item) => {
                     return (
-                      <tr key={item?.id}>
-                        <td>{item?.id}</td>
+                      <tr key={item?.departmentId}>
+                        <td>{item?.departmentId}</td>
                         <td>{item?.departmentName}</td>
-                        <td>{item?.departmentDescription}</td>
-                        <td>1232313</td>
-                        <td>12</td>
-                        <td>21</td>
+                        <td>{item?.totalEmployeeLogin}</td>
+                        <td>{item?.totalEmployeesRegistered - item?.totalEmployeeLogin}</td>
+                        <td>{item?.totalEmployeesRegistered}</td>
                       </tr>
                     );
                   })}

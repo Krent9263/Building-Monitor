@@ -38,4 +38,11 @@ export default class departmentAPI extends Base {
     })
   }
 
+  getLogginPerDepartment = async () => {
+    return this.sendRequest ({
+      path: `/api/DeviceLog/logginPerDeparment`,
+      method: 'GET'
+    })
+  }
+
 }
