@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import { Row, Col, Container, Table } from "react-bootstrap";
+import { Row, Col, Container, Table, Badge } from "react-bootstrap";
 import CID from "../../assets/images/CID.png";
 import SGOD from "../../assets/images/SGOD.png";
 import OSDS from "../../assets/images/OSDS.png";
@@ -13,6 +13,7 @@ import {
 import { useHistory } from "react-router-dom";
 import departmentAPI from "../../api/DepartmentAPI";
 import DivisionAPI from "../../api/DivisionAPI";
+import UserAccountAPI from "../../api/UserAccountAPI";
 
 export default function MainDashboard({
   allUsers,
@@ -27,11 +28,13 @@ export default function MainDashboard({
   const [departments, setDepartments] = useState();
   const [divisions, setDivisions] = useState();
   const [loggedPerDepartment, setLoggedPerDepartment] = useState();
+  const [employeePerOffice, setEmployeePerOffice] = useState([]);
 
   useEffect(() => {
     getAllDepartment();
     getAllDivision();
     getLogginPerDepartment();
+    getAllUserAccountByDivisionIdAndOfficeId();
   }, [user]);
 
   const getAllDepartment = async () => {
@@ -55,15 +58,30 @@ export default function MainDashboard({
   };
 
   const getLogginPerDepartment = async () => {
-    let response = await new departmentAPI().getLogginPerDepartment()
+    let response = await new departmentAPI().getLogginPerDepartment();
     if (response.ok) {
-      setLoggedPerDepartment(response.data)
+      setLoggedPerDepartment(response.data);
     } else {
-      console.error('Something went wrong while fetching getLogginPerDepartment')
+      console.error(
+        "Something went wrong while fetching getLogginPerDepartment"
+      );
     }
-  }
+  };
 
-  console.log("allUsers", loggedPerDepartment);
+  const getAllUserAccountByDivisionIdAndOfficeId = async () => {
+    let response =
+      await new UserAccountAPI().getAllUserAccountByDivisionIdAndOfficeId(
+        user?.departmentId,
+        user?.divisionId
+      );
+    if (response.ok) {
+      setEmployeePerOffice(response?.data);
+    } else {
+      console.error("Something went wrong while fetching data");
+    }
+  };
+
+  console.log("allUsers", employeePerOffice);
 
   return (
     <Container fluid className="main-dashboard">
@@ -119,7 +137,7 @@ export default function MainDashboard({
               user?.departmentId !== 12 &&
               user?.departmentId !== 27 && (
                 <>
-                  {userByDivision?.length - userInsideBydivision?.length}
+                  {employeePerOffice?.length - userInsideBydivision?.length}
                   <FontAwesomeIcon icon={faRoute} />
                 </>
               )}
@@ -174,7 +192,7 @@ export default function MainDashboard({
             <span className="header-sdo">
               <span className="title-holder">
                 <FontAwesomeIcon icon={faSitemap} className="dept-ficon" />
-                {user?.divisionName.toUpperCase()}
+                {user?.departmentName.toUpperCase()}
               </span>
               <span
                 className="see-all"
@@ -187,22 +205,21 @@ export default function MainDashboard({
               <Table striped bordered hover className="table">
                 <thead>
                   <tr>
-                    <th>Office ID</th>
-                    <th>Office</th>
-                    <th>In</th>
-                    <th>Out</th>
-                    <th>Total Employees</th>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {loggedPerDepartment?.map((item) => {
+                  {employeePerOffice?.map((item) => {
                     return (
                       <tr key={item?.departmentId}>
                         <td>{item?.departmentId}</td>
-                        <td>{item?.departmentName}</td>
-                        <td>{item?.totalEmployeeLogin}</td>
+                        <td>{`${item?.firstName} ${item?.middleName} ${item?.lastName}`}</td>
+                        {/* <td>{item?.totalEmployeeLogin}</td>
                         <td>{item?.totalEmployeesRegistered - item?.totalEmployeeLogin}</td>
-                        <td>{item?.totalEmployeesRegistered}</td>
+                        <td>{item?.totalEmployeesRegistered}</td> */}
+                        <td><Badge>Inside</Badge></td>
                       </tr>
                     );
                   })}

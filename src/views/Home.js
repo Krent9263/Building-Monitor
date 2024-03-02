@@ -71,7 +71,7 @@ function Home() {
 
       let tempDataByDivision = []
       data2?.map(item => {
-        let tempByDivisionInside = res?.data?.find(i => i?.userAccountId == item?.userAccountId && i?.status == true && i?.divisionId == user?.divisionId)
+        let tempByDivisionInside = res?.data?.find(i => i?.userAccountId == item?.userAccountId && i?.status == true && i?.departmentId == user?.departmentId)
         if (tempByDivisionInside !== undefined) {
           return tempDataByDivision.push(tempByDivisionInside)
         }
@@ -96,7 +96,7 @@ function Home() {
           <MainDashboard userInsideBydivision={userInsideBydivision} allUsers={allUsers} usersInSide={usersInSide} userByDivision={userByDivision} />
         </Col>
         <Col className="right-history" sm={12} md={12} lg={12} xl={3}>
-          <History usersInSide={usersInSide} usersOutSide={usersOutSide} />
+          <History usersInSide={usersInSide} usersOutSide={usersOutSide} user={user} />
         </Col>
       </Row>
     </Container>
