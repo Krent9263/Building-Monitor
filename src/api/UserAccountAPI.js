@@ -46,4 +46,11 @@ export default class UserAccountAPI extends Base {
     })
   }
 
+  getLogginPerDepartmentPerUser = async () => {
+    return this.sendRequest ({
+      path: `/api/DeviceLog/logginPerDeparmentByLoginUser`,
+      method: 'GET'
+    })
+  }
+
 }

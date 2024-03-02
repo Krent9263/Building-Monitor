@@ -28,13 +28,13 @@ export default function MainDashboard({
   const [departments, setDepartments] = useState();
   const [divisions, setDivisions] = useState();
   const [loggedPerDepartment, setLoggedPerDepartment] = useState();
-  const [employeePerOffice, setEmployeePerOffice] = useState([]);
+  const [employeePerOffice, setEmployeePerOffice] = useState([{}]);
 
   useEffect(() => {
     getAllDepartment();
     getAllDivision();
-    getLogginPerDepartment();
-    getAllUserAccountByDivisionIdAndOfficeId();
+    // getLogginPerDepartment();
+    getLogginPerDepartmentPerUser();
   }, [user]);
 
   const getAllDepartment = async () => {
@@ -57,31 +57,41 @@ export default function MainDashboard({
     console.log("err");
   };
 
-  const getLogginPerDepartment = async () => {
-    let response = await new departmentAPI().getLogginPerDepartment();
-    if (response.ok) {
-      setLoggedPerDepartment(response.data);
-    } else {
-      console.error(
-        "Something went wrong while fetching getLogginPerDepartment"
-      );
-    }
-  };
+  // const getLogginPerDepartment = async () => {
+  //   let response = await new departmentAPI().getLogginPerDepartment();
+  //   if (response.ok) {
+  //     setLoggedPerDepartment(response.data);
+  //   } else {
+  //     console.error(
+  //       "Something went wrong while fetching getLogginPerDepartment"
+  //     );
+  //   }
+  // };
 
-  const getAllUserAccountByDivisionIdAndOfficeId = async () => {
-    let response =
-      await new UserAccountAPI().getAllUserAccountByDivisionIdAndOfficeId(
-        user?.departmentId,
-        user?.divisionId
-      );
+  // const getAllUserAccountByDivisionIdAndOfficeId = async () => {
+  //   let response =
+  //     await new UserAccountAPI().getAllUserAccountByDivisionIdAndOfficeId(
+  //       user?.departmentId,
+  //       user?.divisionId
+  //     );
+  //   if (response.ok) {
+  //     setEmployeePerOffice(response?.data);
+  //   } else {
+  //     console.error("Something went wrong while fetching data");
+  //   }
+  // };
+
+  const getLogginPerDepartmentPerUser = async () => {
+    let response = await new UserAccountAPI().getLogginPerDepartmentPerUser()
     if (response.ok) {
       setEmployeePerOffice(response?.data);
     } else {
       console.error("Something went wrong while fetching data");
     }
-  };
+  }
 
-  console.log("allUsers", employeePerOffice);
+  console.log("allUsers", employeePerOffice
+);
 
   return (
     <Container fluid className="main-dashboard">
@@ -211,14 +221,12 @@ export default function MainDashboard({
                   </tr>
                 </thead>
                 <tbody>
-                  {employeePerOffice?.map((item) => {
+                  {employeePerOffice?.employeeLoginDetails?.map((item) => {
+                    {console.log('HAHAHA:', item?.employeeLoginDetails)}
                     return (
-                      <tr key={item?.departmentId}>
-                        <td>{item?.departmentId}</td>
-                        <td>{`${item?.firstName} ${item?.middleName} ${item?.lastName}`}</td>
-                        {/* <td>{item?.totalEmployeeLogin}</td>
-                        <td>{item?.totalEmployeesRegistered - item?.totalEmployeeLogin}</td>
-                        <td>{item?.totalEmployeesRegistered}</td> */}
+                      <tr>
+                        <td>ID</td>
+                        <td>{item.employeeName}</td>
                         <td><Badge>Inside</Badge></td>
                       </tr>
                     );
