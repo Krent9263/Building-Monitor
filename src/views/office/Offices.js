@@ -142,7 +142,7 @@ function Offices() {
                           >
                             View
                           </Button>
-                          {user?.isOfficeAdmin && user?.departmentId === 27 ? (
+                          {user?.isOfficeAdmin && (user?.departmentId === 27 || user?.departmentId === 12) ? (
                             <></>
                           ) : (
                             <>
