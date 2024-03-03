@@ -33,8 +33,16 @@ export default function MainDashboard({
   useEffect(() => {
     getAllDepartment();
     getAllDivision();
-    // getLogginPerDepartment();
+    getLogginPerDepartment();
     getLogginPerDepartmentPerUser();
+    // getAllUserAccountByDivisionIdAndOfficeId()
+  }, [user]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getLogginPerDepartmentPerUser();
+    }, 120000);
+    return () => clearInterval(intervalId);
   }, [user]);
 
   const getAllDepartment = async () => {
@@ -57,25 +65,26 @@ export default function MainDashboard({
     console.log("err");
   };
 
-  // const getLogginPerDepartment = async () => {
-  //   let response = await new departmentAPI().getLogginPerDepartment();
-  //   if (response.ok) {
-  //     setLoggedPerDepartment(response.data);
-  //   } else {
-  //     console.error(
-  //       "Something went wrong while fetching getLogginPerDepartment"
-  //     );
-  //   }
-  // };
+  const getLogginPerDepartment = async () => {
+    let response = await new departmentAPI().getLogginPerDepartment();
+    if (response.ok) {
+      setLoggedPerDepartment(response.data);
+      console.log('res:', response?.data)
+    } else {
+      console.error(
+        "Something went wrong while fetching getLogginPerDepartment"
+      );
+    }
+  };
 
   // const getAllUserAccountByDivisionIdAndOfficeId = async () => {
   //   let response =
   //     await new UserAccountAPI().getAllUserAccountByDivisionIdAndOfficeId(
   //       user?.departmentId,
-  //       user?.divisionId
   //     );
   //   if (response.ok) {
   //     setEmployeePerOffice(response?.data);
+  //     console.log('res:', response?.data)
   //   } else {
   //     console.error("Something went wrong while fetching data");
   //   }
@@ -84,7 +93,15 @@ export default function MainDashboard({
   const getLogginPerDepartmentPerUser = async () => {
     let response = await new UserAccountAPI().getLogginPerDepartmentPerUser()
     if (response.ok) {
-      setEmployeePerOffice(response?.data);
+      console.log('res11:', response?.data)
+      let tempData = response?.data?.map(i => {
+        return i?.employeeLoginDetails?.map(x =>{
+          return x
+        })
+      })
+      setEmployeePerOffice(tempData);
+
+      console.log('res22:', tempData)
     } else {
       console.error("Something went wrong while fetching data");
     }
@@ -147,7 +164,7 @@ export default function MainDashboard({
               user?.departmentId !== 12 &&
               user?.departmentId !== 27 && (
                 <>
-                  {employeePerOffice?.length - userInsideBydivision?.length}
+                  {employeePerOffice[0]?.length - userInsideBydivision?.length}
                   <FontAwesomeIcon icon={faRoute} />
                 </>
               )}
@@ -220,16 +237,14 @@ export default function MainDashboard({
                   </tr>
                 </thead>
                 <tbody>
-                  {employeePerOffice?.employeeLoginDetails?.map((item) => {
-                    {console.log('HAHAHA:', item?.employeeLoginDetails)}
+                  {Array.isArray(employeePerOffice[0]) && employeePerOffice[0].map((item) => {
                     return (
-                      <tr>
-                        <td>ID</td>
-                        <td>{item.employeeName}</td>
-                        <td><Badge>Inside</Badge></td>
+                      <tr >
+                        <td>{item?.employeeName}</td>
+                        <td>{item?.loginCount === 1 ? <Badge>Inside</Badge> : <Badge bg="danger">OutSide</Badge> }</td>
                       </tr>
                     );
-                  })}
+                  }).reverse()}
                 </tbody>
               </Table>
             </div>
