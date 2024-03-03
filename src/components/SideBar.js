@@ -121,7 +121,12 @@ const SideBar = () => {
                 }
                 break;
               case 2:
-                if (user?.isOfficeAdmin && user?.roleId !=4) {
+                if (user?.isOfficeAdmin && user?.roleId != 4) {
+                  return null;
+                }
+                break;
+              case 4:
+                if (!user?.isSystemAdmin) {
                   return null;
                 }
                 break;

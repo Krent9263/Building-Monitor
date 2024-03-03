@@ -215,7 +215,6 @@ export default function MainDashboard({
               <Table striped bordered hover className="table">
                 <thead>
                   <tr>
-                    <th>Employee ID</th>
                     <th>Name</th>
                     <th>Status</th>
                   </tr>

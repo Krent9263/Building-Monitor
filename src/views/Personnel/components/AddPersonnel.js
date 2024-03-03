@@ -3,42 +3,42 @@ import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 import UserAccountAPI from "../../../api/UserAccountAPI";
 import { toast } from "react-toastify";
 
-export default function AddEmployeeModal({
-  setShowAddEmployee,
-  showAddEmployee,
+export default function AddPersonnel({
+  setShowAddPersonnel,
+  showAddPersonnel,
   departments,
   officeId,
-  getAllUserAccountByDivisionIdAndOfficeId,
   divisionId,
-  departmentInfo,
-  user
+  getAllUsers,
 }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [employeeIdNumber, setEmployeeIdNumber] = useState("");
   const [contactNumber, setContactNumber] = useState();
-  const [departmentId, setDepartmentId] = useState(officeId);
+  const [departmentId, setDepartmentId] = useState();
   const [email, setEmail] = useState("@deped.com.ph");
-  // const [role, setRole] = useState(3)
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleClose = () => {
-    setShowAddEmployee(false);
+    setShowAddPersonnel(false);
     setFirstName("");
     setLastName("");
     setMiddleName("");
     setEmployeeIdNumber("");
     setContactNumber("");
     setEmail("@deped.com.ph");
-    // setRole(3)
+    setUsername("");
+    setPassword("");
   };
 
   const createUserAccount = async (e) => {
     e.preventDefault();
     let data = {
-      username: "string",
-      password: "string",
-      roleId: 3,
+      username: username,
+      password: password,
+      roleId: 2,
       firstName: firstName,
       lastName: lastName,
       middleName: middleName,
@@ -55,7 +55,7 @@ export default function AddEmployeeModal({
         autoClose: 5000,
       });
       handleClose();
-      getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId);
+      getAllUsers();
     } else {
       toast.warning(response?.data?.ErrorMessage, {
         position: "top-center",
@@ -67,18 +67,42 @@ export default function AddEmployeeModal({
   return (
     <>
       <Modal
-        show={showAddEmployee}
+        show={showAddPersonnel}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Employee</Modal.Title>
+          <Modal.Title>Add Personnel</Modal.Title>
         </Modal.Header>
         <Form onSubmit={createUserAccount}>
           <Modal.Body>
             <Row>
+              <Col>
+                <FloatingLabel controlId="floatingInput" label="Username">
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder=""
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col>
+                <FloatingLabel controlId="floatingInput" label="Password (Must be at least 8 characters)">
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder=""
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </FloatingLabel>
+              </Col>
+            </Row>
+            <Row className="mt-3">
               <Col>
                 <FloatingLabel controlId="floatingInput" label="First Name">
                   <Form.Control
@@ -113,26 +137,6 @@ export default function AddEmployeeModal({
                 </FloatingLabel>
               </Col>
             </Row>
-            {/* {user?.isSystemAdmin &&
-            <Row className="mt-3">
-              <Col>
-                <FloatingLabel controlId="floatingInput" label="Role">
-                  <Form.Select
-                    required
-                    type="text"
-                    placeholder=""
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                  >
-                    <option disabled>Select Role</option>
-                    <option value={2}>ADMIN of {departmentInfo?.departmentName}</option>
-                    <option value={3}>Employee</option>
-                    <option value={4}>Front Desk</option>
-                  </Form.Select>
-                </FloatingLabel>
-              </Col>
-            </Row>
-            } */}
             <Row className="mt-3">
               <Col>
                 <FloatingLabel controlId="floatingInput" label="Email">
@@ -181,23 +185,21 @@ export default function AddEmployeeModal({
                     onChange={(e) => setDepartmentId(parseInt(e.target.value))}
                   >
                     <option disabled> Select Department </option>
-                    {departments?.map((item) => {
-                      return (
-                        <option value={item?.id}>
-                          {" "}
-                          {item?.departmentName}{" "}
-                        </option>
-                      );
-                    })}
+                    {departments
+                      ?.filter((item) => item?.id === 12 || item?.id === 27)
+                      .map((item) => {
+                        return (
+                          <option value={item?.id}>
+                            {item?.departmentName}
+                          </option>
+                        );
+                      })}
                   </Form.Select>
                 </FloatingLabel>
               </Col>
             </Row>
           </Modal.Body>
           <Modal.Footer>
-            {/* <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button> */}
             <Button type="submit" variant="primary">
               Submit
             </Button>

@@ -1,83 +1,177 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 import UserAccountAPI from "../../../api/UserAccountAPI";
 import { toast } from "react-toastify";
 
-export default function AddEmployeeModal({
-  setShowAddEmployee,
-  showAddEmployee,
-  departments,
+function EditPersonnel({
+  userAccountId,
+  showEditEmployee,
+  setShowEditEmployee,
+  personnel,
   officeId,
-  getAllUserAccountByDivisionIdAndOfficeId,
-  divisionId,
-  departmentInfo,
-  user
+  setUserAccountId,
+  getAllUsers
 }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [employeeIdNumber, setEmployeeIdNumber] = useState("");
-  const [contactNumber, setContactNumber] = useState();
+  const [contactNumber, setContactNumber] = useState("");
   const [departmentId, setDepartmentId] = useState(officeId);
   const [email, setEmail] = useState("@deped.com.ph");
-  // const [role, setRole] = useState(3)
+  const [showUploadProfile, setShowUploadProfile] = useState(false);
+  const [filesToUpload, setFilesToUpload] = useState("");
+  const [profileDataImage, setProfileDataImage] = useState({});
+  const [tempProfileImage, setTempProfileImage] = useState("");
+  const [departmentName, setDepartmentName] = useState("");
+
+  useEffect(() => {
+    handleEmployeeData();
+  }, [userAccountId]);
 
   const handleClose = () => {
-    setShowAddEmployee(false);
+    setShowEditEmployee(false);
     setFirstName("");
     setLastName("");
     setMiddleName("");
     setEmployeeIdNumber("");
     setContactNumber("");
     setEmail("@deped.com.ph");
-    // setRole(3)
+    setUserAccountId();
   };
 
-  const createUserAccount = async (e) => {
+  const handleEmployeeData = () => {
+    personnel
+      ?.filter((item) => item?.userAccountId === userAccountId)
+      ?.map((item) => {
+        console.log("item:", item);
+        setFirstName(item?.firstName);
+        setLastName(item?.lastName);
+        setMiddleName(item?.middleName);
+        setEmployeeIdNumber(item?.employeeId);
+        setContactNumber(item?.contactNumber);
+        setEmail(item?.emailAddress);
+        setDepartmentName(item?.departmentName);
+        setDepartmentId(item?.departmentId);
+      });
+  };
+
+  const updateUserAccount = async (e) => {
     e.preventDefault();
     let data = {
-      username: "string",
-      password: "string",
-      roleId: 3,
+      id: userAccountId,
       firstName: firstName,
       lastName: lastName,
       middleName: middleName,
       contactNumber: contactNumber,
       emailAddress: email,
+      password: "string",
       qrCode: employeeIdNumber,
       departmentId: departmentId,
-      employeeId: employeeIdNumber,
     };
-    let response = await new UserAccountAPI().createUserAccount(data);
+    let response = await new UserAccountAPI().updateUserAccount(
+      userAccountId,
+      data
+    );
     if (response.ok) {
       toast.success("Successfully add employee!", {
         position: "top-center",
         autoClose: 5000,
       });
       handleClose();
-      getAllUserAccountByDivisionIdAndOfficeId(officeId, divisionId);
+      getAllUsers();
     } else {
-      toast.warning(response?.data?.ErrorMessage, {
-        position: "top-center",
-        autoClose: 5000,
+      toast.warn("Something went wrong while updating employee");
+    }
+  };
+
+  const uploadProfile = () => {
+    setShowUploadProfile(!showUploadProfile);
+  };
+
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   handleGetUploadedFile(file);
+  // };
+
+  const handlefilesUpload = (file) => {
+    if (file != "") {
+      getBase64(file[0]).then((data) => {
+        setTempProfileImage(data);
+        // let toAdd = {
+        //   fileName: file[0].name,
+        //   base64String: data,
+        // };
+        let toAdd = {
+          id: userAccountId,
+          profileImage: {
+            fileName: file[0].name,
+            base64String: data,
+          },
+        };
+        setProfileDataImage(toAdd);
       });
     }
   };
 
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  console.log("filesToUpload:", filesToUpload);
+
+  const uploadProfileImage = async (e) => {
+    e.preventDefault();
+    let response = await new UserAccountAPI().uploadEmployeeProfile(
+      userAccountId,
+      profileDataImage
+    );
+    if (response.ok) {
+      handleClose();
+      toast.success("Successfully uploaded the employee list.");
+      getAllUsers();
+    } else {
+      toast.error("Something went wrong while uploading employee list.");
+    }
+  };
+
+  console.log("userAccnoutId:", userAccountId);
+
   return (
     <>
       <Modal
-        show={showAddEmployee}
+        show={showEditEmployee}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Employee</Modal.Title>
+          <Modal.Title>Edit Employee Details</Modal.Title>
         </Modal.Header>
-        <Form onSubmit={createUserAccount}>
+        <Form onSubmit={updateUserAccount}>
           <Modal.Body>
+            {showUploadProfile && (
+              <Row className="mb-3">
+                <div className="img-profile-img">
+                  <img src={tempProfileImage} />
+                </div>
+                <Form>
+                  <Form.Control
+                    accept="image/png, image/gif, image/jpeg"
+                    id="inputFile"
+                    type="file"
+                    required
+                    onChange={(e) => handlefilesUpload(e.target.files)}
+                  />
+                </Form>
+              </Row>
+            )}
             <Row>
               <Col>
                 <FloatingLabel controlId="floatingInput" label="First Name">
@@ -113,26 +207,7 @@ export default function AddEmployeeModal({
                 </FloatingLabel>
               </Col>
             </Row>
-            {/* {user?.isSystemAdmin &&
-            <Row className="mt-3">
-              <Col>
-                <FloatingLabel controlId="floatingInput" label="Role">
-                  <Form.Select
-                    required
-                    type="text"
-                    placeholder=""
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                  >
-                    <option disabled>Select Role</option>
-                    <option value={2}>ADMIN of {departmentInfo?.departmentName}</option>
-                    <option value={3}>Employee</option>
-                    <option value={4}>Front Desk</option>
-                  </Form.Select>
-                </FloatingLabel>
-              </Col>
-            </Row>
-            } */}
+
             <Row className="mt-3">
               <Col>
                 <FloatingLabel controlId="floatingInput" label="Email">
@@ -174,30 +249,24 @@ export default function AddEmployeeModal({
                 </FloatingLabel>
               </Col>
               <Col>
-                <FloatingLabel controlId="floatingInput" label="Department">
+                <FloatingLabel controlId="floatingInput" label="Division">
                   <Form.Select
                     placeholder="Office Department"
-                    value={departmentId}
-                    onChange={(e) => setDepartmentId(parseInt(e.target.value))}
+                    value={departmentName}
+                    disabled
                   >
-                    <option disabled> Select Department </option>
-                    {departments?.map((item) => {
-                      return (
-                        <option value={item?.id}>
-                          {" "}
-                          {item?.departmentName}{" "}
-                        </option>
-                      );
-                    })}
+                    <option disabled>{departmentName}</option>
                   </Form.Select>
                 </FloatingLabel>
               </Col>
             </Row>
           </Modal.Body>
           <Modal.Footer>
-            {/* <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button> */}
+            {!showUploadProfile ? (
+              <Button onClick={uploadProfile}>Open Upload Profile</Button>
+            ) : (
+              <Button onClick={uploadProfileImage}>Upload Profile Image</Button>
+            )}
             <Button type="submit" variant="primary">
               Submit
             </Button>
@@ -207,3 +276,5 @@ export default function AddEmployeeModal({
     </>
   );
 }
+
+export default EditPersonnel;

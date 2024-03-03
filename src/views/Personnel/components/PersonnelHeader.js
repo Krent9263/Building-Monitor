@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import AddPersonnel from './AddPersonnel';
 
-export default function PersonnelHeader({user}) {
+export default function PersonnelHeader({user, departments, getAllUsers}) {
+  const [showAddPersonnel, setShowAddPersonnel] = useState(false)
+  
+
+  const handleAddPersonnel = () => {
+    setShowAddPersonnel(true)
+  }
+
   return (
     <div>
       <h1 className="dept-name">PERSONNEL LISTS</h1>
@@ -19,11 +27,10 @@ export default function PersonnelHeader({user}) {
           </Button> */}
         </div>
         <div className="btn-group-header">
-          {user?.isSystemAdmin &&
-          <Button className="btn-r">
+          <AddPersonnel showAddPersonnel={showAddPersonnel} setShowAddPersonnel={setShowAddPersonnel} departments={departments} getAllUsers={getAllUsers} />
+          <Button className="btn-r" onClick={handleAddPersonnel}>
             Create Personnel
           </Button>
-          }
         </div>
       </div>
     </div>

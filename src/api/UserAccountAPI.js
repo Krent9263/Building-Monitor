@@ -53,4 +53,11 @@ export default class UserAccountAPI extends Base {
     })
   }
 
+  getAllUsers = async () => {
+    return this.sendRequest ({
+      path: `/api/User`,
+      method: 'GET'
+    })
+  }
+
 }
