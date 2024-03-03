@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import SweetAlert from "react-bootstrap-sweetalert";
 import EditPersonnel from "./components/EditPersonnel";
 import departmentAPI from "../../api/DepartmentAPI";
+import ChangePassword from "./components/ChangePassword";
 
 function Personnel() {
   const [personnel, setPersonnel] = useState();
@@ -18,6 +19,12 @@ function Personnel() {
   const [userAccountId, setUserAccountId] = useState();
   const [showEditEmployee, setShowEditEmployee] = useState(false);
   const [departments, setDepartments] = useState([])
+  const [showChangePassword, setShowChangePassword] = useState(false)
+
+  const handleChangePassword = (id) => {
+    setShowChangePassword(true)
+    setEmployeeId(id)
+  }
 
   const getAllUsers = async () => {
     let response = await new UserAccountAPI().getAllUsers();
@@ -93,6 +100,7 @@ function Personnel() {
               setShowEditEmployee={setShowEditEmployee}
               getAllUsers={getAllUsers}
             />
+            <ChangePassword employeeId={employeeId} showChangePassword={showChangePassword} setShowChangePassword={setShowChangePassword} />
             <div className="table-container">
               <Table striped bordered hover className="table">
                 <thead>
@@ -122,6 +130,12 @@ function Personnel() {
                             onClick={() => handleDelete(item?.id)}
                           >
                             Delete
+                          </Button>
+                          <Button
+                            variant="primary"
+                            onClick={() => handleChangePassword(item?.id)}
+                          >
+                            Change Password
                           </Button>
                         </td>
                       </tr>

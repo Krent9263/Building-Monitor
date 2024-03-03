@@ -60,4 +60,12 @@ export default class UserAccountAPI extends Base {
     })
   }
 
+  changePassword = async (userAccountId, data) =>{
+    return this.sendRequest({
+      path:`/api/User/${userAccountId}/changepassword`,
+      method: 'PUT',
+      data
+    })
+  }
+
 }
