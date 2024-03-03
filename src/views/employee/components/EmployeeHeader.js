@@ -79,13 +79,17 @@ function EmployeeHeader({
       <h1 className="dept-name">{departmentInfo?.departmentName} Employees</h1>
       <div className="reports-header">
         <div>
+        {user?.isOfficeAdmin || user?.departmentId === 27 ? (
+            <></>
+          ) : (
           <Button onClick={handleBackButton}>
             <FontAwesomeIcon icon={faArrowLeftLong} /> Back
-          </Button>{" "}
+          </Button>
+          )}
           &nbsp;
         </div>
         <div className="btn-group-header">
-          {user?.isOfficeAdmin && user?.departmentId === 27 ? (
+          {user?.isOfficeAdmin || user?.departmentId === 27 ? (
             <></>
           ) : (
             <>

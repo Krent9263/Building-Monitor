@@ -223,7 +223,7 @@ export default function MainDashboard({
               </span>
               <span
                 className="see-all"
-                onClick={() => history.push(`/office/${user?.divisionId}`)}
+                onClick={() => history.push(`/divisions/${user?.divisionId}/office/${user?.departmentId}/employee`)}
               >
                 See all
               </span>

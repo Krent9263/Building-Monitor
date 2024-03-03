@@ -174,7 +174,7 @@ function Employee() {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Contact Number</th>
-                    {user?.isOfficeAdmin && user?.departmentId === 27 ? (
+                    {user?.isOfficeAdmin || user?.departmentId === 27 ? (
                       <></>
                     ) : (
                       <th>Action </th>
@@ -192,7 +192,7 @@ function Employee() {
                       </td>
                       <td>{employee.emailAddress}</td>
                       <td>{employee.contactNumber}</td>
-                      {user?.isOfficeAdmin && user?.departmentId === 27 ? (
+                      {user?.isOfficeAdmin || user?.departmentId === 27 ? (
                         <></>
                       ) : (
                         <td className="act-grp-btn">
